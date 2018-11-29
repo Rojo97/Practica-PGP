@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Route, Link } from "react-router-dom";
+import Plantilla from './Plantilla';
 
 class Login extends Component {
     render() {
@@ -12,17 +14,18 @@ class Login extends Component {
                     {/* <form method="post"> */}
                     <form action="plantilla.html">
                         <div class="form-group has-feedback">
-                            <input type="email" class="form-control" placeholder="Email"/>
+                            <input type="email" class="form-control" placeholder="Email" />
                             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                         </div>
                         <div class="form-group has-feedback">
-                            <input type="password" class="form-control" placeholder="Password"/>
+                            <input type="password" class="form-control" placeholder="Password" />
                             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                         </div>
                         <div class="col-xs-14">
                             <button type="submit" class="btn btn-primary btn-block btn-flat">Iniciar sesión</button>
                         </div>
                     </form>
+                    <Link to="/plantilla">Plantilla</Link>
                 </div>
             </div>
         )
