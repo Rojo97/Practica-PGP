@@ -5,9 +5,10 @@ import Plantilla from './Plantilla';
 class Login extends Component {
     render() {
         return (
+            <div class="hold-transition login-page">
             <div class="login-box">
                 <div class="login-logo">
-                    <a href="../plantilla.html"><b>Aqui</b>VaElNombre</a>
+                    <a href="../plantilla.html"><b>Gea</b>Pros</a>
                 </div>
                 <div class="login-box-body">
                     <p class="login-box-msg">Inicie sesión</p>
@@ -28,6 +29,7 @@ class Login extends Component {
                     <Link to="/plantilla">Plantilla</Link>
                 </div>
             </div>
+           </div>
         )
     }
 }

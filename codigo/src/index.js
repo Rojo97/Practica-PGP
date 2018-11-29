@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from "react-router-dom";
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import Login from './pagesScript/Login';
-import Plantilla from './pagesScript/Plantilla';
 import App from './App';
 
 ReactDOM.render(<BrowserRouter><App /></BrowserRouter>, document.getElementById('login'));

@@ -7,9 +7,9 @@ export default class Header extends Component {
                 {/* <!-- Logo --> */}
                 <a href="index2.html" class="logo">
                     {/* <!-- mini logo for sidebar mini 50x50 pixels --> */}
-                    <span class="logo-mini"><b>A</b>LT</span>
+                    <span class="logo-mini"><b>G</b>P</span>
                     {/* <!-- logo for regular state and mobile devices --> */}
-                    <span class="logo-lg"><b>Admin</b>LTE</span>
+                    <span class="logo-lg"><b>Gea</b>Pros</span>
                 </a>
                 {/* <!-- Header Navbar: style can be found in header.less --> */}
                 <nav class="navbar navbar-static-top">
@@ -157,7 +157,7 @@ export default class Header extends Component {
                                                         <small class="pull-right">20%</small>
                                                     </h3>
                                                     <div class="progress xs">
-                                                        <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar"
+                                                        <div class="progress-bar progress-bar-aqua" style={{width: '20%'}} role="progressbar"
                                                             aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
                                                             <span class="sr-only">20% Complete</span>
                                                         </div>
@@ -172,7 +172,7 @@ export default class Header extends Component {
                         <small class="pull-right">40%</small>
                                                     </h3>
                                                     <div class="progress xs">
-                                                        <div class="progress-bar progress-bar-green" style="width: 40%" role="progressbar"
+                                                        <div class="progress-bar progress-bar-green" style={{width: '40%'}} role="progressbar"
                                                             aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
                                                             <span class="sr-only">40% Complete</span>
                                                         </div>
@@ -187,7 +187,7 @@ export default class Header extends Component {
                         <small class="pull-right">60%</small>
                                                     </h3>
                                                     <div class="progress xs">
-                                                        <div class="progress-bar progress-bar-red" style="width: 60%" role="progressbar"
+                                                        <div class="progress-bar progress-bar-red" style={{width: '60%'}} role="progressbar"
                                                             aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
                                                             <span class="sr-only">60% Complete</span>
                                                         </div>
@@ -202,7 +202,7 @@ export default class Header extends Component {
                         <small class="pull-right">80%</small>
                                                     </h3>
                                                     <div class="progress xs">
-                                                        <div class="progress-bar progress-bar-yellow" style="width: 80%" role="progressbar"
+                                                        <div class="progress-bar progress-bar-yellow" style={{width: '80%'}} role="progressbar"
                                                             aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
                                                             <span class="sr-only">80% Complete</span>
                                                         </div>
