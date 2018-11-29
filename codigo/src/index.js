@@ -5,7 +5,7 @@ import './index.css';
 import * as serviceWorker from './serviceWorker';
 import App from './App';
 
-ReactDOM.render(<BrowserRouter><App /></BrowserRouter>, document.getElementById('login'));
+ReactDOM.render(<BrowserRouter><App /></BrowserRouter>, document.getElementById('app'));
 
 
 // If you want your app to work offline and load faster, you can change
