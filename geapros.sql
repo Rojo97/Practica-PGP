@@ -1,11 +1,11 @@
-DROP TABLE TipoUsuario;
-DROP TABLE EstadoActividad;
-DROP TABLE EstadoProyecto;
-DROP TABLE Participacion;
-DROP TABLE Predecesora;
-DROP TABLE Actividad;
-DROP TABLE Usuario;
-DROP TABLE Proyecto;
+DROP TABLE IF EXISTS TipoUsuario;
+DROP TABLE  IF EXISTS EstadoActividad;
+DROP TABLE  IF EXISTS EstadoProyecto;
+DROP TABLE  IF EXISTS Participacion;
+DROP TABLE  IF EXISTS Predecesora;
+DROP TABLE  IF EXISTS Actividad;
+DROP TABLE  IF EXISTS Usuario;
+DROP TABLE  IF EXISTS Proyecto;
 
 CREATE TABLE EstadoProyecto(
     estado INTEGER,
