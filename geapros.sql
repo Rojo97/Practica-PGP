@@ -21,7 +21,9 @@ CREATE TABLE Proyecto(
     presupuesto REAL,
     informeDeSeguimiento CHAR(50),
     resumen CHAR(50),
-    CONSTRAINT fk_proyecto FOREIGN KEY (estado) REFERENCES EstadoProyecto(estado),
+    CONSTRAINT fk_proyecto FOREIGN KEY (estado) REFERENCES EstadoProyecto(estado)
+        ON DELETE CASCADE
+        ON UPDATE NO ACTION,
     CONSTRAINT pk_proyecto PRIMARY KEY (nombreProyecto)
 );
 
@@ -43,7 +45,7 @@ CREATE TABLE Usuario(
     tipoUsuario INTEGER NOT NULL,
     categoriaUsuario INTEGER NOT NULL,
     UNIQUE (dni),
-    FOREIGN KEY (tipoUsuario) REFERENCES TipoUsuario
+    FOREIGN KEY (tipoUsuario) REFERENCES TipoUsuario(tipoUsuario)
         ON DELETE CASCADE
         ON UPDATE NO ACTION,
     CONSTRAINT pk_usuario PRIMARY KEY (nickUsuario),
@@ -66,13 +68,13 @@ CREATE TABLE Actividad(
     fechaFinEstimada DATE,
     fechaFinReal DATE,
     estado INTEGER,
-    FOREIGN KEY (nombreProyecto) REFERENCES Proyecto
+    FOREIGN KEY (nombreProyecto) REFERENCES Proyecto(nombreProyecto)
         ON DELETE CASCADE
         ON UPDATE NO ACTION,
-    FOREIGN KEY (nickUsuario) REFERENCES Usuario
+    FOREIGN KEY (nickUsuario) REFERENCES Usuario(nickUsuario)
         ON DELETE NO ACTION
         ON UPDATE NO ACTION,
-    FOREIGN KEY (estado) REFERENCES EstadoActividad 
+    FOREIGN KEY (estado) REFERENCES EstadoActividad(estado)
         ON DELETE NO ACTION
         ON UPDATE NO ACTION,
     CONSTRAINT pk_actividad PRIMARY KEY (numeroActividad,nombreProyecto,nickUsuario)
@@ -82,7 +84,7 @@ CREATE TABLE Predecesora(
     precedida INTEGER,
     predecesora INTEGER,
     nombreProyecto CHAR(50),
-    FOREIGN KEY (precedida, predecesora, nombreProyecto) REFERENCES Actividad
+    FOREIGN KEY (precedida, predecesora, nombreProyecto) REFERENCES Actividad(numeroActividad,nombreProyecto)
         ON DELETE CASCADE
         ON UPDATE NO ACTION,
     CONSTRAINT pk_predecesora PRIMARY KEY (precedida,predecesora,nombreProyecto)
@@ -93,10 +95,10 @@ CREATE TABLE Participacion(
     porcentajeParticipacion REAL,
     nombreProyecto CHAR(50),
     nickUsuario CHAR(50),
-    FOREIGN KEY (nombreProyecto) REFERENCES Proyecto
+    FOREIGN KEY (nombreProyecto) REFERENCES Proyecto(nombreProyecto)
         ON DELETE CASCADE
         ON UPDATE NO ACTION,
-    FOREIGN KEY (nickUsuario)  REFERENCES Usuario
+    FOREIGN KEY (nickUsuario)  REFERENCES Usuario(nickUsuario)
         ON DELETE NO ACTION
         ON UPDATE NO ACTION,
     CONSTRAINT pk_participacion PRIMARY KEY (nombreProyecto,nickUsuario,fechaParticipacion)
