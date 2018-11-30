@@ -84,7 +84,13 @@ CREATE TABLE Predecesora(
     precedida INTEGER,
     predecesora INTEGER,
     nombreProyecto CHAR(50),
-    FOREIGN KEY (precedida, predecesora, nombreProyecto) REFERENCES Actividad(numeroActividad,numeroActividad,nombreProyecto)
+    FOREIGN KEY (precedida) REFERENCES Actividad(numeroActividad)
+        ON DELETE CASCADE
+        ON UPDATE NO ACTION,
+    FOREIGN KEY (predecesora) REFERENCES Actividad(numeroActividad)
+        ON DELETE CASCADE
+        ON UPDATE NO ACTION,
+    FOREIGN KEY (nombreProyecto) REFERENCES Actividad(nombreProyecto)
         ON DELETE CASCADE
         ON UPDATE NO ACTION,
     CONSTRAINT pk_predecesora PRIMARY KEY (precedida,predecesora,nombreProyecto)
