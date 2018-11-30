@@ -48,7 +48,7 @@ CREATE TABLE Usuario(
     FOREIGN KEY (tipoUsuario) REFERENCES TipoUsuario
         ON DELETE CASCADE
         ON UPDATE NO ACTION,
-    CONSTRAINT pk_usuario PRIMARY KEY (nick),
+    CONSTRAINT pk_usuario PRIMARY KEY (nickUsuario),
     CONSTRAINT nacimiento CHECK(fechaNacimiento < NOW())
 );
 
