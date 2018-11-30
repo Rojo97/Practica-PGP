@@ -21,7 +21,7 @@ CREATE TABLE Proyecto(
     presupuesto REAL,
     informeDeSeguimiento CHAR(50),
     resumen CHAR(50),
-    FOREIGN KEY (estado) REFERENCES EstadoProyecto
+    CONSTRAINT fk_proyecto FOREIGN KEY (estado) REFERENCES EstadoProyecto
         ON DELETE NO ACTION
         ON UPDATE NO ACTION,
     CONSTRAINT pk_proyecto PRIMARY KEY (nombreProyecto)
