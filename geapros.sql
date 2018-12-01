@@ -109,3 +109,20 @@ CREATE TABLE Participacion(
         ON UPDATE NO ACTION,
     CONSTRAINT pk_participacion PRIMARY KEY (nombreProyecto,nickUsuario,fechaParticipacion)
 );
+
+INSERT INTO EstadoProyecto(estado,valorEstado) VALUES (0,'En curso'),
+                                                      (1,'Cerrado'),
+                                                      (2,'Finalizado');
+
+INSERT INTO EstadoActividad(estado,valorEstado) VALUES (0,'En curso'),
+                                                      (1,'Cerrada'),
+                                                      (2,'Aprobada'),
+                                                      (3,'Finalizada');
+
+INSERT INTO TipoUsuario(tipoUsuario,valorTipo) VALUES (0,'Administrador'),
+                                                      (1,'Jefe de proyecto'),
+                                                      (2,'Desarrollador');
+                                                    
+INSERT INTO Proyecto(nombreProyecto,fechaInicial,estado,presupuesto,informeDeSeguimiento,resumen)
+VALUES ('ProyectoA','01-12-28',0,2000.0,'InformeDeSeguimiento','Resumen'),
+       ('ProyectoB','01-12-28',0,2000.0,'InformeDeSeguimiento','Resumen');
