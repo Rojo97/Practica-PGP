@@ -128,15 +128,15 @@ VALUES ('ProyectoA','01-12-18',0,2000.0,'InformeDeSeguimiento','Resumen'),
        ('ProyectoB','01-12-18',0,2000.0,'InformeDeSeguimiento','Resumen');
 
 INSERT INTO Usuario(nickUsuario,contrasenia,dni,nombre,apellido1,apellido2,fechaNacimiento,tipoUsuario,categoriaUsuario)
-VALUES  ('admin','admin','23456789A','fulanito','fulano','fulanete','01-01-1990',0,0),
-        ('ivan','ivan','12345678A','ivan','gonzalez','rincon','17-10-94',1,1);
+VALUES  ('admin','admin','23456789A','fulanito','fulano','fulanete','1990-01-01',0,0),
+        ('ivan','ivan','12345678A','ivan','gonzalez','rincon','94-10-17',1,1);
 
 INSERT INTO Actividad(numeroActividad,nombreProyecto,nickUsuario,descripcion,fechaInicio,fechaFinEstimada,fechaFinReal,estado)
-VALUES (1,'ProyectoA','ivan','Descripcion','01-12-18','07-12-18',null,0),
-       (2,'ProyectoA','ivan','Descripcion','07-12-18','14-12-18',null,1);
+VALUES (1,'ProyectoA','ivan','Descripcion','18-12-01','18-12-07',null,0),
+       (2,'ProyectoA','ivan','Descripcion','18-12-07','14-12-18',null,1);
 
 INSERT INTO Predecesora(precedida,predecesora,nombreProyecto) VALUES (2,1,'ProyectoA');
 
 INSERT INTO Participacion(fechaParticipacion,porcentajeParticipacion,nombreProyecto,nickUsuario)
-VALUES ('01-12-18','0.25','ProyectoA','ivan');
+VALUES ('18-12-01','0.25','ProyectoA','ivan');
 
