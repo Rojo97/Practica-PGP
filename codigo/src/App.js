@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Route, Switch } from "react-router-dom";
-import ReactDOM from 'react-dom';
 import Login from './pagesScript/Login';
 import Plantilla from './pagesScript/Plantilla';
 
