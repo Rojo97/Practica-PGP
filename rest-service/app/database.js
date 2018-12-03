@@ -10,6 +10,9 @@ const db = {
         usuarios: {
             getUsuariosCategoriaUno: 'SELECT * FROM Usuario U WHERE U.categoriaUsuario = ?',
             insert: 'INSERT INTO Usuario(nickUsuario,contrasenia,dni,nombre,apellido1,apellido2,fechaNacimiento,tipoUsuario,categoriaUsuario) VALUES (?,?,?,?,?,?,?,?,?)'
+        },
+        proyectos: {
+            insert: 'INSERT INTO Proyecto(nombreProyecto) VALUES (?)'
         }
     },
     execQuery: function (dbPool, query, args, cb, res) {

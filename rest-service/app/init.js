@@ -9,5 +9,6 @@ const dbPool = mysql.createPool(db.conf);
 app.use(cors());
 
 require('./usuarios').route(app, dbPool, db);
+require('./proyectos').route(app, dbPool, db);
 
 module.exports = app;
