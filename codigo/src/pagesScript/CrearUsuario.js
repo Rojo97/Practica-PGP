@@ -1,6 +1,27 @@
 import React, { Component } from 'react';
 
 export default class CrearUsuario extends Component {
+    constructor(props){
+        super(props);
+        this.state={
+            login:'Rojo',
+            password:'soylapuñeterapass',
+            dni:'soyeldni',
+            nombre:'Corde',
+            apellido1:'benito',
+            apellido2:'camelas',
+            fechaNacimiento:'2018-12-3',
+            tipo:'0',
+            categoria:'3',
+        }
+    }
+
+    addUser = _ => {
+        fetch(`http://localhost:8080/usuario/post?nickUsuario=${this.state.login}&contrasenia=${this.state.password}&dni=${this.state.dni}&nombre=${this.state.nombre}&apellido1=${this.state.apellido1}&apellido2=${this.state.apellido2}&fechaNacimiento=${this.state.fechaNacimiento}&tipoUsuario=${this.state.tipo}&categoriaUsuario=${this.state.categoria}`)
+        .then(response => response.json())
+        .catch(err => console.error(err));
+    }
+
     render() {
         return (
             <div className="content-wrapper">
