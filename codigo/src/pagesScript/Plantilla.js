@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Route, Switch } from "react-router-dom";
 import Header from '../components/Header';
 import Sidebar from '../components/SideBar';
 import Content from '../components/Content';
@@ -10,9 +11,7 @@ class Plantilla extends Component {
       <div class="hold-transition skin-purple sidebar-mini">
         <Header />
         <Sidebar />
-        {/* TODO switch de redirecciones en content */}
-        {/* <Content /> */}
-        <CrearUsuario/>
+        <CrearUsuario />
       </div>
     );
   }
