@@ -4,23 +4,42 @@ export default class CrearUsuario extends Component {
     constructor(props){
         super(props);
         this.state={
-            login:'Rojo',
-            password:'soylapuñeterapass',
-            dni:'soyeldni',
-            nombre:'Corde',
-            apellido1:'benito',
-            apellido2:'camelas',
-            fechaNacimiento:'2018-12-3',
-            tipo:'0',
-            categoria:'3',
+            login:'',
+            password:'',
+            password2: '',
+            dni:'',
+            nombre:'',
+            apellido1:'',
+            apellido2:'',
+            fechaNacimiento:'',
+            tipo:'',
+            categoria:'',
         }
+
+        this.handleInputChange = this.handleInputChange.bind(this);
+    }
+
+    handleInputChange(event){
+        let target = event.target;
+        let name = target.name;
+        let value = target.value;
+        this.setState( prevState => {
+            return{
+                ...prevState, [name]: value
+            }
+        }, () => console.log(this.state)
+        )
     }
 
     addUser = _ => {
+        console.log(this.state);
+
         fetch(`http://localhost:8080/usuario/post?nickUsuario=${this.state.login}&contrasenia=${this.state.password}&dni=${this.state.dni}&nombre=${this.state.nombre}&apellido1=${this.state.apellido1}&apellido2=${this.state.apellido2}&fechaNacimiento=${this.state.fechaNacimiento}&tipoUsuario=${this.state.tipo}&categoriaUsuario=${this.state.categoria}`)
         .then(response => response.json())
         .catch(err => console.error(err));
     }
+
+
 
     render() {
         return (
@@ -29,15 +48,10 @@ export default class CrearUsuario extends Component {
                     <h1>
                         Crear usuario
                     </h1>
-                    <ol class="breadcrumb">
-                        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li><a href="#">Forms</a></li>
-                        <li class="active">General Elements</li>
-                    </ol>
                 </section>
                 <section class="content">
                     <div class="row box-body">
-                        <form role="form">
+                        <form>
                             <div class="col-md-12">
                                 <div class="box box-primary">
                                     <div class="box-header with-border">
@@ -47,58 +61,56 @@ export default class CrearUsuario extends Component {
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="inputNombre">Nombre</label>
-                                                <input type="text" class="form-control" id="inputNombre" placeholder="Nombre" />
+                                                <input type="text" class="form-control" name="nombre" placeholder="Nombre" value={this.state.nombre} onChange={this.handleInputChange}/>
                                             </div>
                                             <div class="form-group">
                                                 <label for="inputApellido1">Primer apellido</label>
-                                                <input type="text" class="form-control" id="inputApellido1" placeholder="Primer apellido" />
+                                                <input type="text" class="form-control" name="apellido1" placeholder="Primer apellido" value={this.state.apellido1} onChange={this.handleInputChange}/>
                                             </div>
                                             <div class="form-group">
                                                 <label for="inputApellido2">Segundo apellido</label>
-                                                <input type="text" class="form-control" id="inputApellido2" placeholder="Segundo apellido" />
+                                                <input type="text" class="form-control" name="apellido2" placeholder="Segundo apellido" value={this.state.apellido2} onChange={this.handleInputChange}/>
                                             </div>
                                             <div class="form-group">
                                                 <label for="inputPassword">Contraseña</label>
-                                                <input type="password" class="form-control" id="inputPassword" placeholder="Contraseña" />
+                                                <input type="password" class="form-control" name="password" placeholder="Contraseña" value={this.state.password} onChange={this.handleInputChange}/>
                                             </div>
                                             <div class="form-group">
                                                 <label for="inputPassword2">Repetir contraseña</label>
-                                                <input type="password" class="form-control" id="inputPassword2" placeholder="Repetir contraseña" />
+                                                <input type="password" class="form-control" name="password2" placeholder="Repetir contraseña" value={this.state.password2} onChange={this.handleInputChange}/>
                                             </div>
                                         </div>
-
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="inputLogin">Nombre de usuario</label>
-                                                <input type="text" class="form-control" id="inputLogin" placeholder="Intorduzca el nombre de usuario" />
+                                                <input type="text" class="form-control" name="login" placeholder="Intorduzca el nombre de usuario" value={this.state.login} onChange={this.handleInputChange}/>
                                             </div>
                                             <div class="form-group">
                                                 <label>Fecha de nacimiendo:</label>
-
                                                 <div class="input-group">
                                                     <div class="input-group-addon">
                                                         <i class="fa fa-calendar"></i>
                                                     </div>
-                                                    <input type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask />
+                                                    <input type="text" class="form-control" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask name="fechaNacimiento" value={this.state.fechaNacimiento} onChange={this.handleInputChange}/>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label>Tipo de usuario</label>
-                                                <select class="form-control">
+                                                <select class="form-control" name="tipo" value={this.state.tipo} onChange={this.handleInputChange}>
                                                     <option disabled selected value> -- Seleccione un tipo de usuario -- </option>
-                                                    <option>Administrador</option>
-                                                    <option>Jefe de proyecto</option>
-                                                    <option>Desarrollador</option>
+                                                    <option value="0">Administrador</option>
+                                                    <option value="1">Jefe de proyecto</option>
+                                                    <option value="2">Desarrollador</option>
                                                 </select>
                                             </div>
                                             <div class="form-group">
                                                 <label>Categoria</label>
-                                                <select class="form-control">
+                                                <select class="form-control" name="categoria" value={this.state.categoria} onChange={this.handleInputChange}>
                                                     <option disabled selected value> -- Seleccione una categoría -- </option>
-                                                    <option>1</option>
-                                                    <option>2</option>
-                                                    <option>3</option>
-                                                    <option>4</option>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
                                                 </select>
                                             </div>
                                         </div>
