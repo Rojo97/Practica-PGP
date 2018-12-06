@@ -1,30 +1,36 @@
 import React, { Component } from 'react';
 
 export default class CrearUsuario extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state={
-            login:'',
-            password:'',
+        this.state = {
+            login: '',
+            password: '',
             password2: '',
-            dni:'',
-            nombre:'',
-            apellido1:'',
-            apellido2:'',
-            fechaNacimiento:'',
-            tipo:'',
-            categoria:'',
+            dni: '',
+            nombre: '',
+            apellido1: '',
+            apellido2: '',
+            fechanacimiento: '',
+            tipo: '',
+            categoria: '',
         }
 
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.chane = this.chane.bind(this);
     }
 
-    handleInputChange(event){
+    chane(event) {
+        window.alert("CAMBIO");
+    }
+
+    handleInputChange(event) {
         let target = event.target;
         let name = target.name;
         let value = target.value;
-        this.setState( prevState => {
-            return{
+        console.log(value);
+        this.setState(prevState => {
+            return {
                 ...prevState, [name]: value
             }
         }, () => console.log(this.state)
@@ -32,11 +38,9 @@ export default class CrearUsuario extends Component {
     }
 
     addUser = _ => {
-        console.log(this.state);
-
-        fetch(`http://localhost:8080/usuario/post?nickUsuario=${this.state.login}&contrasenia=${this.state.password}&dni=${this.state.dni}&nombre=${this.state.nombre}&apellido1=${this.state.apellido1}&apellido2=${this.state.apellido2}&fechaNacimiento=${this.state.fechaNacimiento}&tipoUsuario=${this.state.tipo}&categoriaUsuario=${this.state.categoria}`)
-        .then(response => response.json())
-        .catch(err => console.error(err));
+        fetch(`http://localhost:8080/usuario/post?nickUsuario=${this.state.login}&contrasenia=${this.state.password}&dni=${this.state.dni}&nombre=${this.state.nombre}&apellido1=${this.state.apellido1}&apellido2=${this.state.apellido2}&fechaNacimiento=${this.state.fechanacimiento}&tipoUsuario=${this.state.tipo}&categoriaUsuario=${this.state.categoria}`)
+            .then(response => response.json())
+            .catch(err => console.error(err));
     }
 
 
@@ -61,38 +65,42 @@ export default class CrearUsuario extends Component {
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="inputNombre">Nombre</label>
-                                                <input type="text" class="form-control" name="nombre" placeholder="Nombre" value={this.state.nombre} onChange={this.handleInputChange}/>
+                                                <input type="text" class="form-control" name="nombre" placeholder="Nombre" value={this.state.nombre} onChange={this.handleInputChange} />
                                             </div>
                                             <div class="form-group">
                                                 <label for="inputApellido1">Primer apellido</label>
-                                                <input type="text" class="form-control" name="apellido1" placeholder="Primer apellido" value={this.state.apellido1} onChange={this.handleInputChange}/>
+                                                <input type="text" class="form-control" name="apellido1" placeholder="Primer apellido" value={this.state.apellido1} onChange={this.handleInputChange} />
                                             </div>
                                             <div class="form-group">
                                                 <label for="inputApellido2">Segundo apellido</label>
-                                                <input type="text" class="form-control" name="apellido2" placeholder="Segundo apellido" value={this.state.apellido2} onChange={this.handleInputChange}/>
+                                                <input type="text" class="form-control" name="apellido2" placeholder="Segundo apellido" value={this.state.apellido2} onChange={this.handleInputChange} />
                                             </div>
                                             <div class="form-group">
-                                                <label for="inputPassword">Contraseña</label>
-                                                <input type="password" class="form-control" name="password" placeholder="Contraseña" value={this.state.password} onChange={this.handleInputChange}/>
+                                                <label>Fecha de nacimiendo:</label>
+                                                <div class="input-group date">
+                                                    <div class="input-group-addon">
+                                                        <i class="fa fa-calendar"></i>
+                                                    </div>
+                                                    <input type="date" class="form-control pull-right" name="fechanacimiento" value={this.state.fechanacimiento} onChange={this.handleInputChange} />
+                                                </div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="inputPassword2">Repetir contraseña</label>
-                                                <input type="password" class="form-control" name="password2" placeholder="Repetir contraseña" value={this.state.password2} onChange={this.handleInputChange}/>
+                                                <label for="dni">DNI</label>
+                                                <input type="password" class="form-control" name="dni" placeholder="DNI" value={this.state.dni} onChange={this.handleInputChange}/>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="inputLogin">Nombre de usuario</label>
-                                                <input type="text" class="form-control" name="login" placeholder="Intorduzca el nombre de usuario" value={this.state.login} onChange={this.handleInputChange}/>
+                                                <input type="text" class="form-control" name="login" placeholder="Intorduzca el nombre de usuario" value={this.state.login} onChange={this.handleInputChange} />
                                             </div>
                                             <div class="form-group">
-                                                <label>Fecha de nacimiendo:</label>
-                                                <div class="input-group">
-                                                    <div class="input-group-addon">
-                                                        <i class="fa fa-calendar"></i>
-                                                    </div>
-                                                    <input type="text" class="form-control" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask name="fechaNacimiento" value={this.state.fechaNacimiento} onChange={this.handleInputChange}/>
-                                                </div>
+                                                <label for="inputPassword">Contraseña</label>
+                                                <input type="password" class="form-control" name="password" placeholder="Contraseña" value={this.state.password} onChange={this.handleInputChange} />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="inputPassword2">Repetir contraseña</label>
+                                                <input type="password" class="form-control" name="password2" placeholder="Repetir contraseña" value={this.state.password2} onChange={this.handleInputChange} />
                                             </div>
                                             <div class="form-group">
                                                 <label>Tipo de usuario</label>
