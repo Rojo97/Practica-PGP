@@ -17,11 +17,6 @@ export default class CrearUsuario extends Component {
         }
 
         this.handleInputChange = this.handleInputChange.bind(this);
-        this.chane = this.chane.bind(this);
-    }
-
-    chane(event) {
-        window.alert("CAMBIO");
     }
 
     handleInputChange(event) {
@@ -54,10 +49,10 @@ export default class CrearUsuario extends Component {
                     </h1>
                 </section>
                 <section class="content">
-                    <div class="row box-body">
+                    <div class="row">
                         <form>
                             <div class="col-md-12">
-                                <div class="box box-primary">
+                                <div class="box">
                                     <div class="box-header with-border">
                                         <h3 class="box-title">Datos del usuario</h3>
                                     </div>
@@ -86,7 +81,7 @@ export default class CrearUsuario extends Component {
                                             </div>
                                             <div class="form-group">
                                                 <label for="dni">DNI</label>
-                                                <input type="password" class="form-control" name="dni" placeholder="DNI" value={this.state.dni} onChange={this.handleInputChange}/>
+                                                <input type="text" class="form-control" name="dni" placeholder="DNI" value={this.state.dni} onChange={this.handleInputChange}/>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -105,7 +100,7 @@ export default class CrearUsuario extends Component {
                                             <div class="form-group">
                                                 <label>Tipo de usuario</label>
                                                 <select class="form-control" name="tipo" value={this.state.tipo} onChange={this.handleInputChange}>
-                                                    <option disabled selected value> -- Seleccione un tipo de usuario -- </option>
+                                                    <option disabled selected value=''> -- Seleccione un tipo de usuario -- </option>
                                                     <option value="0">Administrador</option>
                                                     <option value="1">Jefe de proyecto</option>
                                                     <option value="2">Desarrollador</option>
@@ -114,7 +109,7 @@ export default class CrearUsuario extends Component {
                                             <div class="form-group">
                                                 <label>Categoria</label>
                                                 <select class="form-control" name="categoria" value={this.state.categoria} onChange={this.handleInputChange}>
-                                                    <option disabled selected value> -- Seleccione una categoría -- </option>
+                                                    <option disabled selected value=""> -- Seleccione una categoría -- </option>
                                                     <option value="1">1</option>
                                                     <option value="2">2</option>
                                                     <option value="3">3</option>
@@ -122,9 +117,7 @@ export default class CrearUsuario extends Component {
                                                 </select>
                                             </div>
                                         </div>
-
                                     </div>
-
                                     <div class="box-footer">
                                         <button type="submit" class="btn btn-info pull-right">Enviar</button>
                                     </div>
