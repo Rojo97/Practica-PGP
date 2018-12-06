@@ -119,9 +119,8 @@ export default class CrearUsuario extends Component {
                                         </div>
                                     </div>
                                     <div class="box-footer">
-                                        <button type="submit" class="btn btn-info pull-right">Enviar</button>
+                                        <button type="submit" class="btn btn-info pull-right" onClick={this.addUser}>Enviar</button>
                                     </div>
-
                                 </div>
                             </div>
                         </form>
