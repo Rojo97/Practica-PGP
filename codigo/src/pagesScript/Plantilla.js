@@ -4,6 +4,7 @@ import Header from '../components/Header';
 import Sidebar from '../components/SideBar';
 import Content from '../components/Content';
 import CrearUsuario from './CrearUsuario';
+import DarAltaProyecto from './DarAltaProyecto';
 
 class Plantilla extends Component {
   render() {
@@ -11,7 +12,7 @@ class Plantilla extends Component {
       <div class="hold-transition skin-purple sidebar-mini">
         <Header />
         <Sidebar />
-        <CrearUsuario />
+        <DarAltaProyecto />
       </div>
     );
   }
