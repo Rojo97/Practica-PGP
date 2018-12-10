@@ -17,6 +17,7 @@ export default class CrearUsuario extends Component {
         }
 
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.addUser = this.addUser.bind(this);
     }
 
     handleInputChange(event) {
@@ -32,17 +33,32 @@ export default class CrearUsuario extends Component {
         )
     }
 
-    addUser = _ => {
-        fetch(`http://localhost:8080/usuario/post?nickUsuario=${this.state.login}&contrasenia=${this.state.password}&dni=${this.state.dni}&nombre=${this.state.nombre}&apellido1=${this.state.apellido1}&apellido2=${this.state.apellido2}&fechaNacimiento=${this.state.fechanacimiento}&tipoUsuario=${this.state.tipo}&categoriaUsuario=${this.state.categoria}`)
-            .then(response => response.json())
-            .catch(err => console.error(err));
+    addUser(event) {
+        event.preventDefault();
+        fetch(`http://virtual.lab.inf.uva.es:27014/usuario`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                nickUsuario: this.state.login,
+                contrasenia: this.state.password,
+                dni: this.state.dni,
+                nombre: this.state.nombre,
+                apellido1: this.state.apellido1,
+                apellido2: this.state.apellido2,
+                fechaNacimiento: this.state.fechanacimiento,
+                tipoUsuario: this.state.tipo,
+                categoriaUsuario: this.state.categoria,
+            })
+        }).then(function (res) { console.log(res) })
+            .catch(function (res) { console.log(res) });
     }
-
-
 
     render() {
         return (
-            <div className="content-wrapper">
+            <div className="content-wrapper" >
                 <section class="content-header">
                     <h1>
                         Crear usuario
@@ -81,7 +97,7 @@ export default class CrearUsuario extends Component {
                                             </div>
                                             <div class="form-group">
                                                 <label for="dni">DNI</label>
-                                                <input type="text" class="form-control" name="dni" placeholder="DNI" value={this.state.dni} onChange={this.handleInputChange}/>
+                                                <input type="text" class="form-control" name="dni" placeholder="DNI" value={this.state.dni} onChange={this.handleInputChange} />
                                             </div>
                                         </div>
                                         <div class="col-md-6">
