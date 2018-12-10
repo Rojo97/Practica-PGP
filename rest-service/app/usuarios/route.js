@@ -40,7 +40,7 @@ function init(app, dbPool, db) {
     })
 
     app.post('/usuario', (req, res) => {
-        console.log(req.body.nickUsuario, req.body.contrasenia, req.body.dni, req.body.nombre, req.body.apellido1, req.body.apellido2, req.body.fechaNacimiento, req.body.tipoUsuario, req.body.categoriaUsuario);
+        console.log(req.body);
         var args = [req.body.nickUsuario, req.body.contrasenia, req.body.dni, req.body.nombre, req.body.apellido1, req.body.apellido2, req.body.fechaNacimiento, req.body.tipoUsuario, req.body.categoriaUsuario];
         const query = db.querys.usuarios.insert;
 
