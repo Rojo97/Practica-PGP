@@ -1,14 +1,16 @@
 const db = {
     conf: {
         connectionLimit: 10,
-        host: 'jair.lab.inf.uva.es',
-        user: 'PGP_Grupo01',
-        password: 'NU57B0S2',
-        database: 'PGP_Grupo01'
+        host: 'localhost',
+        user: 'root',
+        password: 'toor',
+        database: 'geapros'
     },
     querys: {
         usuarios: {
-            getUsuariosCategoriaUno: 'SELECT * FROM Usuario U WHERE U.categoriaUsuario = ?',
+            getUsuarios: 'SELECT * FROM Usuario',
+            getUsuariosByNick: 'SELECT * FROM Usuario U WHERE U.nickUsuario = ?',
+            getUsuariosByCategoria: 'SELECT * FROM Usuario U WHERE U.categoriaUsuario = ?',
             insert: 'INSERT INTO Usuario(nickUsuario,contrasenia,dni,nombre,apellido1,apellido2,fechaNacimiento,tipoUsuario,categoriaUsuario) VALUES (?,?,?,?,?,?,?,?,?)'
         },
         proyectos: {
