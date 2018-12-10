@@ -18,7 +18,8 @@ const db = {
             insert: 'INSERT INTO Usuario(nickUsuario,contrasenia,dni,nombre,apellido1,apellido2,fechaNacimiento,tipoUsuario,categoriaUsuario) VALUES (?,?,?,?,?,?,?,?,?)'
         },
         proyectos: {
-            insert: 'INSERT INTO Proyecto(nombreProyecto,fechaInicial,estado,resumen) VALUES (?,2018-01-01,0,?)'
+            insert: 'INSERT INTO Proyecto(nombreProyecto,fechaInicial,estado,resumen) VALUES (?,2018-01-01,0,?)',
+            getProyectosByNombre:'SELECT * FROM Proyecto Pr WHERE Pr.nombreProyecto = ?'
 
         },
         participacion: {

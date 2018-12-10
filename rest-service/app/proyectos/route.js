@@ -1,5 +1,8 @@
 function init(app, dbPool, db) {
-    app.post('/proyecto', (req, res) => {
+
+    //ToDo: Comprobar que no exista el nombre de un proyecto cuando se va a crear
+
+    app.post('/api/proyecto', (req, res) => {
         console.log(req.body);
         var args = [req.body.nombreProyecto, req.body.resumen];
         var args2 = [req.body.nombreProyecto, req.body.nickUsuario];

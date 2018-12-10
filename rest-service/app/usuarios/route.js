@@ -1,5 +1,5 @@
 function init(app, dbPool, db) {
-    app.get('/usuario', (req, res) => {
+    app.get('/api/usuario', (req, res) => {
         if(req.query.selectableAsJefe){
             var query = db.querys.usuarios.getJefesSinProyecto;
         }else{
@@ -22,7 +22,7 @@ function init(app, dbPool, db) {
         db.execQuery(dbPool, query, args, onResults, res);
     })
 
-    app.get('/usuario/:nickUsuario', (req, res) => {
+    app.get('/api/usuario/:nickUsuario', (req, res) => {
         const nickUsuario = req.params.nickUsuario;
         var query = db.querys.usuarios.getUsuariosByNick;
         console.log(nickUsuario);
@@ -43,7 +43,7 @@ function init(app, dbPool, db) {
         db.execQuery(dbPool, query, args, onResults, res);
     })
 
-    app.post('/usuario', (req, res) => {
+    app.post('/api/usuario', (req, res) => {
         console.log(req.body);
         var args = [req.body.nickUsuario, req.body.contrasenia, req.body.dni, req.body.nombre, req.body.apellido1, req.body.apellido2, req.body.fechaNacimiento, req.body.tipoUsuario, req.body.categoriaUsuario];
         const query = db.querys.usuarios.insert;
