@@ -1,6 +1,10 @@
 function init(app, dbPool, db) {
     app.get('/usuario', (req, res) => {
-        var query = db.querys.usuarios.getUsuarios;
+        if(req.query.selectableAsJefe){
+            var query = db.querys.usuarios.getJefesSinProyecto;
+        }else{
+            var query = db.querys.usuarios.getUsuarios;
+        }
         var args = [];
 
         function onResults(error, results, response) {

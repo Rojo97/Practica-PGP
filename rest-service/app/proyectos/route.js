@@ -1,9 +1,10 @@
 function init(app, dbPool, db) {
-    app.get('/proyecto/post', (req, res) => {
-        const { nombreProyecto} = req.query;
-        console.log(nombreProyecto);
-        var args = [nombreProyecto];
+    app.post('/proyecto', (req, res) => {
+        console.log(req.body);
+        var args = [req.body.nombreProyecto, req.body.resumen];
+        var args2 = [req.body.nombreProyecto, req.body.nickUsuario];
         const query = db.querys.proyectos.insert;
+        const query2 = db.querys.participacion.insertParticipacionJefe;
 
         function onResults(error, results, response) {
             if (!error) {
@@ -12,6 +13,7 @@ function init(app, dbPool, db) {
         };
 
         db.execQuery(dbPool, query, args, onResults, res);
+        db.execQuery(dbPool, query2, args2, onResults, res);
     })
 }
 

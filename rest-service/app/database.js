@@ -1,20 +1,28 @@
 const db = {
     conf: {
         connectionLimit: 10,
-        host: 'jair.lab.inf.uva.es',
-        user: 'PGP_grupo01',
-        password: 'NU57B0S2',
-        database: 'PGP_grupo01'
+        host: 'localhost',
+        user: 'root',
+        password: 'trebuchet',
+        database: 'pgp'
     },
     querys: {
         usuarios: {
             getUsuarios: 'SELECT * FROM Usuario',
             getUsuariosByNick: 'SELECT * FROM Usuario U WHERE U.nickUsuario = ?',
             getUsuariosByCategoria: 'SELECT * FROM Usuario U WHERE U.categoriaUsuario = ?',
+            getJefesSinProyecto: 'SELECT DISTINCT U.nickUsuario FROM Usuario U '+
+                                 'INNER JOIN Participacion P ON P.nickUsuario = U.nickUsuario ' +
+                                 'INNER JOIN Proyecto Pr ON Pr.nombreProyecto = P.nombreProyecto '+
+                                 'WHERE U.categoriaUsuario = 1 AND Pr.estado = 2',
             insert: 'INSERT INTO Usuario(nickUsuario,contrasenia,dni,nombre,apellido1,apellido2,fechaNacimiento,tipoUsuario,categoriaUsuario) VALUES (?,?,?,?,?,?,?,?,?)'
         },
         proyectos: {
-            insert: 'INSERT INTO Proyecto(nombreProyecto) VALUES (?)'
+            insert: 'INSERT INTO Proyecto(nombreProyecto,fechaInicial,estado,resumen) VALUES (?,2018-01-01,0,?)'
+
+        },
+        participacion: {
+            insertParticipacionJefe: 'INSERT INTO Participacion(fechaParticipacion,porcentajeParticipacion,nombreProyecto,nickUsuario) VALUES (2018-01-01,1,?,?)'
         }
     },
     execQuery: function (dbPool, query, args, cb, res) {
