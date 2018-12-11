@@ -15,7 +15,7 @@ function init(app, dbPool, db) {
             console.log("Segunda consulta")
             if (!error) {
                 response.status(201).json({});
-            }
+            } response.status(500).json({});
         };
         db.execQuery(dbPool, query, args, onResults, res);  
         
