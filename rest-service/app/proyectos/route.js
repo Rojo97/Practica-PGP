@@ -8,14 +8,14 @@ function init(app, dbPool, db) {
         const query2 = db.querys.participacion.insertParticipacionJefe;
         function onResults(error, results, response) {
             if (!error) {
-                db.execQuery(dbPool, query2, args2, onResults2, response);
+                db.execQuery(dbPool, query2, args2, onResults2, res);
             }
         };
         function onResults2(error, results, response) {
             console.log("Segunda consulta")
             if (!error) {
                 response.status(201).json({});
-            } else response.status(500).json({});
+            }
         };
         db.execQuery(dbPool, query, args, onResults, res);  
         

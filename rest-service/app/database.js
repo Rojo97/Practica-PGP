@@ -1,7 +1,7 @@
 const db = {
     conf: {
         connectionLimit: 10,
-        host: 'jair.lab.inf.uva.es',
+        host: 'virtual.lab.in.uva.es',
         user: 'PGP_grupo01',
         password: 'NU57B0S2',
         database: 'PGP_grupo01'
