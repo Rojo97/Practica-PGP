@@ -1,26 +1,37 @@
 import React, { Component } from 'react';
 
 export default class DarAltaProyecto extends Component {
-    //     constructor(props){
-    //         super(props);
-    //         this.state={
-    //             login:'Rojo',
-    //             password:'soylapuñeterapass',
-    //             dni:'soyeldni',
-    //             nombre:'Corde',
-    //             apellido1:'benito',
-    //             apellido2:'camelas',
-    //             fechaNacimiento:'2018-12-3',
-    //             tipo:'0',
-    //             categoria:'3',
-    //         }
-    //     }
+    constructor(props) {
+        super(props);
+        this.state = {
+            nombre: '',
+            fechaComienzo: '',
+            presupuesto: '',
+            idJefeProyecto: '',
+            descripccion: '',
+        }
 
-    //     addUser = _ => {
-    //         fetch(`http://localhost:8080/usuario/post?nickUsuario=${this.state.login}&contrasenia=${this.state.password}&dni=${this.state.dni}&nombre=${this.state.nombre}&apellido1=${this.state.apellido1}&apellido2=${this.state.apellido2}&fechaNacimiento=${this.state.fechaNacimiento}&tipoUsuario=${this.state.tipo}&categoriaUsuario=${this.state.categoria}`)
-    //         .then(response => response.json())
-    //         .catch(err => console.error(err));
-    //     }
+        this.handleInputChange = this.handleInputChange.bind(this);
+    }
+
+    handleInputChange(event) {
+        let target = event.target;
+        let name = target.name;
+        let value = target.value;
+        console.log(value);
+        this.setState(prevState => {
+            return {
+                ...prevState, [name]: value
+            }
+        }, () => console.log(this.state)
+        )
+    }
+
+    addProject = _ => {
+        fetch(`http://virtual.lab.inf.uva.es:27014/api/proyecto/post?nombreProyecto=${this.state.nombre}&resumen=${this.state.descripccion}&nickUsuario=${this.state.idJefeProyecto}`)
+        .then(response => response.json())
+        .catch(err => console.error(err));
+    }
 
     render() {
         return (
@@ -41,41 +52,41 @@ export default class DarAltaProyecto extends Component {
                                     <div class="box-body">
                                         <div class="form-group">
                                             <label for="nombre">Nombre</label>
-                                            <input type="text" class="form-control" id="nombre" placeholder="Nombre" />
+                                            <input type="text" class="form-control" name="nombre" placeholder="Nombre" value={this.state.nombre} onChange={this.handleInputChange} />
                                         </div>
                                         <div class="form-group">
                                             <label>Fecha de comienzo:</label>
-
-                                            <div class="input-group">
+                                            <div class="input-group date">
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
                                                 </div>
-                                                <input type="text" class="form-control" data-inputmask="'alias': 'dd-mm-yyyy'" data-mask />
+                                                <input type="date" class="form-control pull-right" name="fechaComienzo" value={this.state.fechaComienzo} onChange={this.handleInputChange} />
                                             </div>
                                         </div>
                                         <label for="nombre">Presupuesto</label>
                                         <div class="input-group">
                                             <span class="input-group-addon">€</span>
-                                            <input type="text" class="form-control" id="presupuesto" placeholder="Presupuesto"/>
+                                            <input type="text" class="form-control" name="presupuesto" placeholder="Presupuesto" value={this.state.presupuesto} onChange={this.handleInputChange} />
                                             <span class="input-group-addon">.00</span>
                                         </div>
                                         <label></label>
                                         <div class="form-group">
                                             <label>Jefe de proyecto</label>
-                                            <select class="form-control" id="idJefeProyecto">
-                                                <option selected value> -- Sin determinar -- </option>
-                                                <option>Jefe 1</option>
-                                                <option>Jefe 2</option>
-                                                <option>Jefe 3</option>
+                                            <select class="form-control" name="idJefeProyecto" value={this.state.jefeProyecto} onChange={this.handleInputChange}>
+                                                <option disabled selected value=""> -- Sin determinar -- </option>
+                                                <option value="1">Jefe 1</option>
+                                                <option value="2">Jefe 2</option>
+                                                <option value="3">Jefe 3</option>
                                             </select>
                                         </div>
-                                        
+                                        <div class="form-group">
+                                            <label>Descripcción</label>
+                                            <textarea class="form-control" rows="3" name="descripccion" placeholder="Descripccion del proyecto" value={this.state.descripccion} onChange={this.handleInputChange}></textarea>
+                                        </div>
                                     </div>
-
                                     <div class="box-footer">
-                                        <button type="submit" class="btn btn-info pull-right">Dar de alta</button>
+                                        <button type="submit" class="btn btn-info pull-right" onClick={this.addProject}>Dar de alta</button>
                                     </div>
-
                                 </div>
                             </div>
                         </form>
