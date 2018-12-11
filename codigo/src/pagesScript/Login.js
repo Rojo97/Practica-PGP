@@ -36,7 +36,6 @@ class Login extends Component {
 
     render() {
         return (
-            <div class="hold-transition login-page">
             <div class="login-box">
                 <div class="login-logo">
                     <a><b>Gea</b>Pros</a>
@@ -60,7 +59,6 @@ class Login extends Component {
                     <Link to="/plantilla">Plantilla</Link>
                 </div>
             </div>
-           </div>
         )
     }
 }

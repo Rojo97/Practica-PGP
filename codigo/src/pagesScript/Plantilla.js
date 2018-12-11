@@ -11,7 +11,10 @@ class Plantilla extends Component {
       <div class="hold-transition skin-purple sidebar-mini">
         <Header />
         <Sidebar />
-        <CrearUsuario />
+        <Switch>
+          <Route exact path="/createUser" component={CrearUsuario} />
+          <Route exact path="/createProject" component={Content} />
+        </Switch>
       </div>
     );
   }
