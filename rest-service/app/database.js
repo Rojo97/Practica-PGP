@@ -18,12 +18,12 @@ const db = {
             insert: 'INSERT INTO Usuario(nickUsuario,contrasenia,dni,nombre,apellido1,apellido2,fechaNacimiento,tipoUsuario,categoriaUsuario) VALUES (?,?,?,?,?,?,?,?,?)'
         },
         proyectos: {
-            insert: 'INSERT INTO Proyecto(nombreProyecto,fechaInicial,estado,resumen) VALUES (?,2018-01-01,0,?)',
+            insert: 'INSERT INTO Proyecto(nombreProyecto,fechaInicial,estado,resumen) VALUES (?,NOW(),0,?)',
             countProyectosByNombre:'SELECT COUNT(*) AS numeroProyectos FROM Proyecto Pr WHERE Pr.nombreProyecto = ?'
 
         },
         participacion: {
-            insertParticipacionJefe: 'INSERT INTO Participacion(fechaParticipacion,porcentajeParticipacion,nombreProyecto,nickUsuario) VALUES (2018-01-01,1,?,?)'
+            insertParticipacionJefe: 'INSERT INTO Participacion(fechaParticipacion,porcentajeParticipacion,nombreProyecto,nickUsuario) VALUES (NOW(),1,?,?)'
         }
     },
     execQuery: function (dbPool, query, args, cb, res) {
