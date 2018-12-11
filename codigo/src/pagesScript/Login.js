@@ -36,7 +36,6 @@ class Login extends Component {
 
     render() {
         return (
-            <div class="hold-transition login-page">
             <div class="login-box">
                 <div class="login-logo">
                     <a><b>Gea</b>Pros</a>
@@ -57,10 +56,9 @@ class Login extends Component {
                             <button type="submit" class="btn btn-primary btn-block btn-flat">Iniciar sesión</button>
                         </div>
                     </form>
-                    <Link to="/plantilla/createUser">Plantilla</Link>
+                    <Link to="/plantilla">Plantilla</Link>
                 </div>
             </div>
-           </div>
         )
     }
 }

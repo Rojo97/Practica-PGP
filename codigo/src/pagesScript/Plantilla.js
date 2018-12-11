@@ -12,8 +12,8 @@ class Plantilla extends Component {
         <Header />
         <Sidebar />
         <Switch>
-          <Route exact path="/plantilla/createUser" component={CrearUsuario} />
-          <Route exact path="/plantilla/createProject" component={Content} />
+          <Route exact path="/createUser" component={CrearUsuario} />
+          <Route exact path="/createProject" component={Content} />
         </Switch>
       </div>
     );

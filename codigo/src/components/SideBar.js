@@ -19,14 +19,13 @@ export default class SideBar extends Component {
                 </span>
               </a>
               <ul class="treeview-menu">
-                <li class="active"><Link to="/plantilla/createUser"><i class="fa fa-circle-o"></i>Crear Usuario</Link></li>
-                <li class="active"><Link to="/plantilla/createProject"><i class="fa fa-circle-o"></i>Crear Proyecto</Link></li>
+                <li class="active"><Link to="/createUser"><i class="fa fa-circle-o"></i>Crear Usuario</Link></li>
+                <li class="active"><Link to="/createProject"><i class="fa fa-circle-o"></i>Crear Proyecto</Link></li>
               </ul>
             </li>
             <li><a href="https://adminlte.io/docs"><i class="fa fa-book"></i> <span>Documentation</span></a></li>
           </ul>
         </section>
-        {/* <!-- /.sidebar --> */}
       </aside>
     )
   }
