@@ -57,7 +57,7 @@ class Login extends Component {
                             <button type="submit" class="btn btn-primary btn-block btn-flat">Iniciar sesión</button>
                         </div>
                     </form>
-                    <Link to="/plantilla">Plantilla</Link>
+                    <Link to="/plantilla/createUser">Plantilla</Link>
                 </div>
             </div>
            </div>
