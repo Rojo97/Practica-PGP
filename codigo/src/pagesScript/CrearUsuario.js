@@ -35,7 +35,7 @@ export default class CrearUsuario extends Component {
 
     addUser(event) {
         event.preventDefault();
-        fetch(`http://virtual.lab.inf.uva.es:27014/usuario`, {
+        fetch(`http://virtual.lab.inf.uva.es:27014/api/usuario`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
