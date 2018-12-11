@@ -5,7 +5,6 @@ const db = {
         user: 'PGP_grupo01',
         password: 'NU57B0S2',
         database: 'PGP_grupo01'
-
     },
     querys: {
         usuarios: {
@@ -24,7 +23,7 @@ const db = {
 
         },
         participacion: {
-            insertParticipacionJefe: 'INSERT INTO Participacion(fechaParticipacion,porcentajeParticipacion,nombreProyecto,nickUsuario) VALUES (NOW(),1,?,?)'
+        
         }
     },
     execQuery: function (dbPool, query, args, cb, res) {
