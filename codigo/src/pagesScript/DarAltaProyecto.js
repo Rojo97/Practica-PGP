@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+// import axios from 'axios'
 
 export default class DarAltaProyecto extends Component {
     constructor(props) {
@@ -12,6 +13,8 @@ export default class DarAltaProyecto extends Component {
         }
 
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.addProject = this.addProject.bind(this);
+        this.getJefesProyecto = this.getJefesProyecto.bind(this);
     }
 
     handleInputChange(event) {
@@ -27,10 +30,53 @@ export default class DarAltaProyecto extends Component {
         )
     }
 
-    addProject = _ => {
-        fetch(`http://virtual.lab.inf.uva.es:27014/api/proyecto/post?nombreProyecto=${this.state.nombre}&resumen=${this.state.descripccion}&nickUsuario=${this.state.idJefeProyecto}`)
-        .then(response => response.json())
-        .catch(err => console.error(err));
+    // handleClick() {
+    //     axios.get('http://virtual.lab.inf.uva.es:27014/api/usuario?selectableAsJefe=true')
+    //         .then(response => console.log(response))
+    // }
+
+    getJefesProyecto(event) {
+        console.log("ESTOY VIVO")
+        event.preventDefault();
+        fetch('virtual.lab.inf.uva.es:27014/api/usuario?selectableAsJefe=true')
+            .then(function (response) {
+                if (response.status >= 400) {
+                    throw new Error("Bad response from server");
+                    console.log("Mensaje");
+                }else{
+                    console.log("hOLAAAA");
+                }
+                return response.json();
+            })
+            .then(function (data) {
+                console.log(data);
+            });
+    }
+
+
+
+    // getJefesProyecto(event) {
+    //     fetch(`http://virtual.lab.inf.uva.es:27014/api/usuario?selectableAsJefe=true`)
+    //         .then(response => response.json())
+    //         .catch(function (res) { console.log(res) });
+    // }
+
+    addProject(event) {
+        event.preventDefault();
+        fetch(`http://virtual.lab.inf.uva.es:27014/api/proyecto`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                nombreProyecto: this.state.nombre,
+                resumen: this.state.descripccion,
+                nickUsuario: this.state.idJefeProyecto,
+            })
+        }).then(function (res) { console.log(res) })
+            .catch(function (res) { console.log(res) });
+
     }
 
     render() {
@@ -50,6 +96,7 @@ export default class DarAltaProyecto extends Component {
                                         <h3 class="box-title">Datos del proyecto</h3>
                                     </div>
                                     <div class="box-body">
+                                    <button onClick={this.getJefesProyecto}>Pulsa</button>
                                         <div class="form-group">
                                             <label for="nombre">Nombre</label>
                                             <input type="text" class="form-control" name="nombre" placeholder="Nombre" value={this.state.nombre} onChange={this.handleInputChange} />
@@ -72,7 +119,7 @@ export default class DarAltaProyecto extends Component {
                                         <label></label>
                                         <div class="form-group">
                                             <label>Jefe de proyecto</label>
-                                            <select class="form-control" name="idJefeProyecto" value={this.state.jefeProyecto} onChange={this.handleInputChange}>
+                                            <select class="form-control" name="idJefeProyecto" value={this.state.jefeProyecto} onChange={this.handleInputChange} onClick={this.getJefesProyecto}>
                                                 <option disabled selected value=""> -- Sin determinar -- </option>
                                                 <option value="1">Jefe 1</option>
                                                 <option value="2">Jefe 2</option>
