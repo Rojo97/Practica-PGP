@@ -8,7 +8,7 @@ function init(app, dbPool, db) {
         const query2 = db.querys.participacion.insertParticipacionJefe;
         function onResults(error, results, response) {
             if (!error) {
-                db.execQuery(dbPool, query2, args2, onResults2, res);
+                db.execQuery(dbPool, query2, args2, onResults2, response);
             }
         };
         function onResults2(error, results, response) {
