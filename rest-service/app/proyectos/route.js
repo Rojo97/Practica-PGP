@@ -6,7 +6,6 @@ function init(app, dbPool, db) {
         var args2 = [req.body.nombreProyecto, req.body.nickUsuario];
         const query = db.querys.proyectos.insert;
         const query2 = db.querys.participacion.insertParticipacionJefe;
-
         function onResults(error, results, response) {
             if (!error) {
                 response.status(201).json({});
@@ -16,7 +15,7 @@ function init(app, dbPool, db) {
             if (count == 0) {
                 console.log("Entro bien");
                 db.execQuery(dbPool, query, args, onResults, res);
-                //db.execQuery(dbPool, query2, args2, onResults, res);
+                db.execQuery(dbPool, query2, args2, onResults, res);
             } else {
                 console.log("El proyecto ya existe");
             }

@@ -5,6 +5,7 @@ const db = {
         user: 'PGP_grupo01',
         password: 'NU57B0S2',
         database: 'PGP_grupo01'
+
     },
     querys: {
         usuarios: {
