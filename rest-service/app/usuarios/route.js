@@ -12,6 +12,7 @@ function init(app, dbPool, db) {
                 if (results.length == 0) {
                     response.sendStatus(404);
                 } else {
+                    console.log("Peticion recibida");
                     return res.status(200).json({
                         data: results
                     })
