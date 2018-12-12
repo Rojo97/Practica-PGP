@@ -11,7 +11,7 @@ const db = {
             getUsuarios: 'SELECT * FROM Usuario',
             getUsuariosByNick: 'SELECT * FROM Usuario U WHERE U.nickUsuario = ?',
             getUsuariosByCategoria: 'SELECT * FROM Usuario U WHERE U.categoriaUsuario = ?',
-            getJefesSinProyecto: 'SELECT U.nickUsuario, COUNT(*) as participaciones FROM Usuario U NATURAL JOIN Participacion P WHERE P.estado = 2 AND U.categoriaUsuario = 1 GROUP BY U.nickUsuario;',
+            getJefesSinProyecto: 'select U.nickUsuario FROM Usuario U WHERE U.categoriaUsuario = 1 AND U.nickUsuario NOT IN (SELECT P.nickUsuario FROM Participacion P WHERE P.estado = 0 OR P.estado = 1)',
             insert: 'INSERT INTO Usuario(nickUsuario,contrasenia,dni,nombre,apellido1,apellido2,fechaNacimiento,tipoUsuario,categoriaUsuario) VALUES (?,?,?,?,?,?,?,?,?)'
         },
         proyectos: {
