@@ -13,5 +13,5 @@ with NParticipaciones AS (SELECT P.nickUsuario, COUNT(*) AS npart
                          GROUP BY P.nickUsuario)
             
 SELECT U.nickUsuario
-FROM Usuario U 
+FROM Usuario U, NParticipaciones NP
 WHERE U.categoriaUsuario = 1 AND NP.npart = 0;
