@@ -1,20 +1,21 @@
 const db = {
     conf: {
         connectionLimit: 10,
-        host: 'jair.lab.inf.uva.es',
+        /* host: 'jair.lab.inf.uva.es',
         user: 'PGP_grupo01',
         password: 'NU57B0S2',
-        database: 'PGP_grupo01'
+        database: 'PGP_grupo01' */
+        host : 'localhost',
+        user : 'root',
+        password : 'trebuchet',
+        database : 'pgp'
     },
     querys: {
         usuarios: {
             getUsuarios: 'SELECT * FROM Usuario',
             getUsuariosByNick: 'SELECT * FROM Usuario U WHERE U.nickUsuario = ?',
             getUsuariosByCategoria: 'SELECT * FROM Usuario U WHERE U.categoriaUsuario = ?',
-            getJefesSinProyecto: 'SELECT DISTINCT U.nickUsuario FROM Usuario U '+
-                                 'INNER JOIN Participacion P ON P.nickUsuario = U.nickUsuario ' +
-                                 'INNER JOIN Proyecto Pr ON Pr.nombreProyecto = P.nombreProyecto '+
-                                 'WHERE U.categoriaUsuario = 1 AND Pr.estado = 2',
+            getJefesSinProyecto: 'SELECT U.nickUsuario, COUNT(*) as participaciones FROM Usuario U NATURAL JOIN Participacion P WHERE P.estado = 2 AND U.categoriaUsuario = 1 GROUP BY U.nickUsuario;',
             insert: 'INSERT INTO Usuario(nickUsuario,contrasenia,dni,nombre,apellido1,apellido2,fechaNacimiento,tipoUsuario,categoriaUsuario) VALUES (?,?,?,?,?,?,?,?,?)'
         },
         proyectos: {

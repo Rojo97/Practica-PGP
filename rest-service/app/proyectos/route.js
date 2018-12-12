@@ -12,7 +12,7 @@ function init(app, dbPool, db) {
             }
         };
         function onResults2(error, results, response) {
-            console.log("Segunda consulta")
+            console.log("Segunda consulta") 
             if (!error) {
                 response.status(201).json({});
             }
