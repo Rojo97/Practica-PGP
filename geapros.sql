@@ -42,12 +42,9 @@ CREATE TABLE Usuario(
     apellido1 CHAR(50),
     apellido2 CHAR(50),
     fechaNacimiento DATE,
-    tipoUsuario INTEGER NOT NULL,
+    tipoUsuario INTEGER,
     categoriaUsuario INTEGER NOT NULL,
     UNIQUE (dni),
-    FOREIGN KEY (tipoUsuario) REFERENCES TipoUsuario(tipoUsuario)
-        ON DELETE CASCADE
-        ON UPDATE NO ACTION,
     CONSTRAINT pk_usuario PRIMARY KEY (nickUsuario),
     CONSTRAINT nacimiento CHECK(fechaNacimiento < NOW())
 );
@@ -101,9 +98,13 @@ CREATE TABLE Participacion(
     porcentajeParticipacion REAL,
     nombreProyecto CHAR(50),
     nickUsuario CHAR(50),
+    estado INTEGER,
     FOREIGN KEY (nombreProyecto) REFERENCES Proyecto(nombreProyecto)
         ON DELETE CASCADE
         ON UPDATE NO ACTION,
+    FOREIGN KEY (estado) REFERENCES Proyecto (estado)
+        ON DELETE CASCADE
+        ON UPDATE NO ACTION,    
     FOREIGN KEY (nickUsuario)  REFERENCES Usuario(nickUsuario)
         ON DELETE NO ACTION
         ON UPDATE NO ACTION,
@@ -132,7 +133,8 @@ INSERT INTO Usuario(nickUsuario,contrasenia,dni,nombre,apellido1,apellido2,fecha
 VALUES  ('admin','admin','23456789A','fulanito','fulano','fulanete','1990-01-01',0,0),
         ('ivan','ivan','12345678A','ivan','gonzalez','rincon','94-10-17',1,1),
         ('pepe','pepe','32456798B','pepe','el','tramas','90-10-16',1,1),
-        ('chicho','pepe','32456799B','pepe','el','tramas','90-10-16',1,1);
+        ('chicho','pepe','32456799B','pepe','el','tramas','90-10-16',1,1),
+        ('El jefe','pepe','33456799B','pepe','el','tramas','90-10-16',1,1);
 
 INSERT INTO Actividad(numeroActividad,nombreProyecto,nickUsuario,descripcion,fechaInicio,fechaFinEstimada,fechaFinReal,estado)
 VALUES (1,'ProyectoA','ivan','Descripcion','18-12-01','18-12-07',null,0),
@@ -140,8 +142,8 @@ VALUES (1,'ProyectoA','ivan','Descripcion','18-12-01','18-12-07',null,0),
 
 INSERT INTO Predecesora(precedida,predecesora,nombreProyecto) VALUES (2,1,'ProyectoA');
 
-INSERT INTO Participacion(fechaParticipacion,porcentajeParticipacion,nombreProyecto,nickUsuario)
-VALUES ('18-12-01','0.25','ProyectoA','ivan'),
-       ('18-12-01','0.25','ProyectoA','pepe'),
-       ('17-12-01','0.25','ProyectoC','chicho');
+INSERT INTO Participacion(fechaParticipacion,porcentajeParticipacion,nombreProyecto,nickUsuario,estado)
+VALUES ('18-12-01','0.25','ProyectoA','ivan',0),
+       ('18-12-01','0.25','ProyectoA','pepe',0),
+       ('17-12-01','0.25','ProyectoC','chicho',2);
 
