@@ -15,3 +15,9 @@ with NParticipaciones AS (SELECT P.nickUsuario, COUNT(*) AS npart
 SELECT U.nickUsuario
 FROM Usuario U, NParticipaciones NP
 WHERE U.categoriaUsuario = 1 AND NP.npart = 0;
+
+SELECT *
+FROM  Participacion P, Proyecto Pr
+WHERE Pr.nombreProyecto = P.nombreProyecto AND
+      P.estado = 0 AND
+      P.nickUsuario = 'chicho';
