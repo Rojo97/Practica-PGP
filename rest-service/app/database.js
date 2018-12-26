@@ -1,10 +1,10 @@
 const db = {
     conf: {
         connectionLimit: 10,
-        host: 'localhost',
-        user: 'root',
-        password: 'trebuchet',
-        database: 'pgp'
+        host: 'jair.lab.inf.uva.es',
+        user: 'PGP_grupo01',
+        password: 'NU57B0S2',
+        database: 'PGP_grupo01'
     },
     querys: {
         usuarios: {
