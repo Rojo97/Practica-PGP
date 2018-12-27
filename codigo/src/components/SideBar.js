@@ -23,6 +23,17 @@ export default class SideBar extends Component {
                 <li class="active"><Link to="/createProject"><i class="fa fa-circle-o"></i>Crear Proyecto</Link></li>
               </ul>
             </li>
+            <li class="active treeview">
+              <a href="#">
+                <i class="fa fa-dashboard"></i> <span>Desarrollador</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li class="active"><Link to="/selectProject"><i class="fa fa-circle-o"></i>Seleccionar proyecto</Link></li>
+              </ul>
+            </li>
             <li><a href="https://adminlte.io/docs"><i class="fa fa-book"></i> <span>Documentation</span></a></li>
           </ul>
         </section>
