@@ -60,73 +60,73 @@ export default class CrearUsuario extends Component {
     render() {
         return (
             <div className="content-wrapper" >
-                <section class="content-header">
+                <section className="content-header">
                     <h1>
                         Crear usuario
                     </h1>
                 </section>
-                <section class="content">
-                    <div class="row">
+                <section className="content">
+                    <div className="row">
                         <form>
-                            <div class="col-md-12">
-                                <div class="box">
-                                    <div class="box-header with-border">
-                                        <h3 class="box-title">Datos del usuario</h3>
+                            <div className="col-md-12">
+                                <div className="box">
+                                    <div className="box-header with-border">
+                                        <h3 className="box-title">Datos del usuario</h3>
                                     </div>
-                                    <div class="box-body">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="inputNombre">Nombre</label>
-                                                <input type="text" class="form-control" name="nombre" placeholder="Nombre" value={this.state.nombre} onChange={this.handleInputChange} />
+                                    <div className="box-body">
+                                        <div className="col-md-6">
+                                            <div className="form-group">
+                                                <label htmlFor="inputNombre">Nombre</label>
+                                                <input type="text" className="form-control" name="nombre" placeholder="Nombre" value={this.state.nombre} onChange={this.handleInputChange} />
                                             </div>
-                                            <div class="form-group">
-                                                <label for="inputApellido1">Primer apellido</label>
-                                                <input type="text" class="form-control" name="apellido1" placeholder="Primer apellido" value={this.state.apellido1} onChange={this.handleInputChange} />
+                                            <div className="form-group">
+                                                <label htmlFor="inputApellido1">Primer apellido</label>
+                                                <input type="text" className="form-control" name="apellido1" placeholder="Primer apellido" value={this.state.apellido1} onChange={this.handleInputChange} />
                                             </div>
-                                            <div class="form-group">
-                                                <label for="inputApellido2">Segundo apellido</label>
-                                                <input type="text" class="form-control" name="apellido2" placeholder="Segundo apellido" value={this.state.apellido2} onChange={this.handleInputChange} />
+                                            <div className="form-group">
+                                                <label htmlFor="inputApellido2">Segundo apellido</label>
+                                                <input type="text" className="form-control" name="apellido2" placeholder="Segundo apellido" value={this.state.apellido2} onChange={this.handleInputChange} />
                                             </div>
-                                            <div class="form-group">
+                                            <div className="form-group">
                                                 <label>Fecha de nacimiendo:</label>
-                                                <div class="input-group date">
-                                                    <div class="input-group-addon">
-                                                        <i class="fa fa-calendar"></i>
+                                                <div className="input-group date">
+                                                    <div className="input-group-addon">
+                                                        <i className="fa fa-calendar"></i>
                                                     </div>
-                                                    <input type="date" class="form-control pull-right" name="fechanacimiento" value={this.state.fechanacimiento} onChange={this.handleInputChange} />
+                                                    <input type="date" className="form-control pull-right" name="fechanacimiento" value={this.state.fechanacimiento} onChange={this.handleInputChange} />
                                                 </div>
                                             </div>
-                                            <div class="form-group">
-                                                <label for="dni">DNI</label>
-                                                <input type="text" class="form-control" name="dni" placeholder="DNI" value={this.state.dni} onChange={this.handleInputChange} />
+                                            <div className="form-group">
+                                                <label htmlFor="dni">DNI</label>
+                                                <input type="text" className="form-control" name="dni" placeholder="DNI" value={this.state.dni} onChange={this.handleInputChange} />
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="inputLogin">Nombre de usuario</label>
-                                                <input type="text" class="form-control" name="login" placeholder="Intorduzca el nombre de usuario" value={this.state.login} onChange={this.handleInputChange} />
+                                        <div className="col-md-6">
+                                            <div className="form-group">
+                                                <label htmlFor="inputLogin">Nombre de usuario</label>
+                                                <input type="text" className="form-control" name="login" placeholder="Intorduzca el nombre de usuario" value={this.state.login} onChange={this.handleInputChange} />
                                             </div>
-                                            <div class="form-group">
-                                                <label for="inputPassword">Contraseña</label>
-                                                <input type="password" class="form-control" name="password" placeholder="Contraseña" value={this.state.password} onChange={this.handleInputChange} />
+                                            <div className="form-group">
+                                                <label htmlFor="inputPassword">Contraseña</label>
+                                                <input type="password" className="form-control" name="password" placeholder="Contraseña" value={this.state.password} onChange={this.handleInputChange} />
                                             </div>
-                                            <div class="form-group">
-                                                <label for="inputPassword2">Repetir contraseña</label>
-                                                <input type="password" class="form-control" name="password2" placeholder="Repetir contraseña" value={this.state.password2} onChange={this.handleInputChange} />
+                                            <div className="form-group">
+                                                <label htmlFor="inputPassword2">Repetir contraseña</label>
+                                                <input type="password" className="form-control" name="password2" placeholder="Repetir contraseña" value={this.state.password2} onChange={this.handleInputChange} />
                                             </div>
-                                            <div class="form-group">
+                                            <div className="form-group">
                                                 <label>Tipo de usuario</label>
-                                                <select class="form-control" name="tipo" value={this.state.tipo} onChange={this.handleInputChange}>
-                                                    <option disabled selected value=''> -- Seleccione un tipo de usuario -- </option>
+                                                <select className="form-control" name="tipo" value={this.state.tipo} onChange={this.handleInputChange} >
+                                                    <option disabled value=''> -- Seleccione un tipo de usuario -- </option>
                                                     <option value="0">Administrador</option>
                                                     <option value="1">Jefe de proyecto</option>
                                                     <option value="2">Desarrollador</option>
                                                 </select>
                                             </div>
-                                            <div class="form-group">
+                                            <div className="form-group">
                                                 <label>Categoria</label>
-                                                <select class="form-control" name="categoria" value={this.state.categoria} onChange={this.handleInputChange}>
-                                                    <option disabled selected value=""> -- Seleccione una categoría -- </option>
+                                                <select className="form-control" name="categoria" value={this.state.categoria} onChange={this.handleInputChange}>
+                                                    <option disabled value=''> -- Seleccione una categoría -- </option>
                                                     <option value="1">1</option>
                                                     <option value="2">2</option>
                                                     <option value="3">3</option>
@@ -135,8 +135,8 @@ export default class CrearUsuario extends Component {
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="box-footer">
-                                        <button type="submit" class="btn btn-info pull-right" onClick={this.addUser}>Enviar</button>
+                                    <div className="box-footer">
+                                        <button type="submit" className="btn btn-info pull-right" onClick={this.addUser}>Enviar</button>
                                     </div>
                                 </div>
                             </div>

@@ -9,7 +9,7 @@ import selectProject from '../components/SelectProject';
 class Plantilla extends Component {
   render() {
     return (
-      <div class="hold-transition skin-purple sidebar-mini">
+      <div className="hold-transition skin-purple sidebar-mini">
         <Header />
         <Sidebar />
         <Switch>
