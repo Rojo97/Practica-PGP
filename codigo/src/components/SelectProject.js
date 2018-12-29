@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom";
 
 export default class SelectProject extends Component {
     render() {
@@ -15,25 +16,22 @@ export default class SelectProject extends Component {
                             <div class="small-box bg-purple">
                                 <div class="inner">
                                     <h3>Tu puto proyecto 1</h3>
-
                                     <p>Soy la fucking descripción</p>
                                 </div>
                                 <div class="icon">
                                     <i class="fa fa-ge"></i>
                                 </div>
-                                <a href="#" class="small-box-footer">Seleccionar <i class="fa fa-arrow-circle-right"></i></a>
+                                <Link href="#" class="small-box-footer">Seleccionar <i class="fa fa-arrow-circle-right"></i></Link>
                             </div>
-
                             <div class="small-box bg-purple">
                                 <div class="inner">
                                     <h3>Tu puto proyecto 2</h3>
-
                                     <p>Soy la fucking descripción</p>
                                 </div>
                                 <div class="icon">
                                     <i class="fa fa-rebel"></i>
                                 </div>
-                                <a href="#" class="small-box-footer">Seleccionar <i class="fa fa-arrow-circle-right"></i></a>
+                                <Link href="#" class="small-box-footer">Seleccionar <i class="fa fa-arrow-circle-right"></i></Link>
                             </div>
                         </div>
                     </div>

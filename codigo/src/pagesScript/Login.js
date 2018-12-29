@@ -53,10 +53,9 @@ class Login extends Component {
                             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                         </div>
                         <div class="col-xs-14">
-                            <button type="submit" class="btn btn-primary btn-block btn-flat">Iniciar sesión</button>
+                        <Link to="/plantilla"><button type="submit" class="btn btn-primary btn-block btn-flat">Iniciar sesión</button></Link>
                         </div>
                     </form>
-                    <Link to="/plantilla">Plantilla</Link>
                 </div>
             </div>
         )
