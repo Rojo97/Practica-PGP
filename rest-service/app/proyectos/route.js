@@ -9,7 +9,7 @@ function init(app, dbPool, db) {
 
         function onResults(error, results, response) {
             if (!error) {
-                db.execQuery(dbPool, db.querys.participacion.insertParticipacionJefe, args2, onResults2, res);
+                db.execQuery(dbPool, query2, args2, onResults2, res);
             }
         };
 
