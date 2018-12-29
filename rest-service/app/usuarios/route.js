@@ -47,14 +47,10 @@ function init(app, dbPool, db) {
     app.get('/api/usuario/:nickUsuario/proyectos', (req, res) => {
         const nickUsuario = req.params.nickUsuario;
         if(req.query.actual == 1){
-            console.log("Actuales");
             var query = db.querys.usuarios.getProyectosActualesUsuario;
         }else{
-            console.log("Todos");
             var query =  db.querys.usuarios.getProyectosUsuario;
         }
-        console.log(nickUsuario);
-        console.log(req.query.actual);
         var args = [nickUsuario];
 
         function onResults(error, results, response) {
