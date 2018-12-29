@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import axios from 'axios'
 
 export default class DarAltaProyecto extends Component {
     constructor(props) {
@@ -10,11 +9,19 @@ export default class DarAltaProyecto extends Component {
             presupuesto: '',
             idJefeProyecto: '',
             descripccion: '',
+            listaJefes: [],
+            jefe: {
+                nickUsuario: ''
+            }
         }
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.addProject = this.addProject.bind(this);
-        this.getJefesProyecto = this.getJefesProyecto.bind(this);
+
+    }
+
+    componentDidMount() {
+        this.getJefesProyecto();
     }
 
     handleInputChange(event) {
@@ -30,36 +37,31 @@ export default class DarAltaProyecto extends Component {
         )
     }
 
-    // handleClick() {
-    //     axios.get('http://virtual.lab.inf.uva.es:27014/api/usuario?selectableAsJefe=true')
-    //         .then(response => console.log(response))
-    // }
-
-    getJefesProyecto(event) {
-        console.log("ESTOY VIVO")
-        event.preventDefault();
-        fetch('virtual.lab.inf.uva.es:27014/api/usuario?selectableAsJefe=true')
-            .then(function (response) {
-                if (response.status >= 400) {
-                    throw new Error("Bad response from server");
-                    console.log("Mensaje");
-                }else{
-                    console.log("hOLAAAA");
+    getJefesProyecto() {
+        fetch('http://virtual.lab.inf.uva.es:27014/api/usuario?selectableAsJefe=1')
+            .then((response) => {
+                switch (response.status) {
+                    case 200:
+                        console.log(response);
+                        break;
+                    case 404:
+                        this.setState({ listaJefes: [] });
+                        alert("No hay jefes de proyecto disponibles");
+                        break;
+                    default:
+                        throw new Error("Bad response from server");
                 }
                 return response.json();
+
+            }).then((responseJson) => {
+                this.setState({ listaJefes: responseJson.data })
             })
-            .then(function (data) {
-                console.log(data);
+            .catch(function (data) {
+                console.log(data)
             });
     }
 
-
-
-    // getJefesProyecto(event) {
-    //     fetch(`http://virtual.lab.inf.uva.es:27014/api/usuario?selectableAsJefe=true`)
-    //         .then(response => response.json())
-    //         .catch(function (res) { console.log(res) });
-    // }
+    renderJefe = ({ nickUsuario }) => <option value={nickUsuario}>{nickUsuario}</option>
 
     addProject(event) {
         event.preventDefault();
@@ -74,12 +76,29 @@ export default class DarAltaProyecto extends Component {
                 resumen: this.state.descripccion,
                 nickUsuario: this.state.idJefeProyecto,
             })
-        }).then(function (res) { console.log(res) })
-            .catch(function (res) { console.log(res) });
-
+        }).then((response) => {
+            switch (response.status) {
+                case 201:
+                    alert("Proyecto creado");
+                    console.log(response);
+                    this.setState({ nombre: '' });
+                    this.setState({ fechaComienzo: '' });
+                    this.setState({ presupuesto: '' });
+                    this.setState({ idJefeProyecto: '' });
+                    this.setState({ descripccion: '' });
+                    this.getJefesProyecto();
+                    break;
+                default:
+                    throw new Error("Bad response from server");
+            }
+            return response.json();
+        }).then(function (responseJson) {
+            console.log(responseJson)
+        }).catch(function (res) { console.log(res) });
     }
 
     render() {
+        console.log("Renderiza");
         return (
             <div className="content-wrapper">
                 <section class="content-header">
@@ -89,14 +108,13 @@ export default class DarAltaProyecto extends Component {
                 </section>
                 <section class="content">
                     <div class="row box-body">
-                        <form role="form">
+                        <form role="form" id="formularioProyecto">
                             <div class="col-md-12">
                                 <div class="box box-primary">
                                     <div class="box-header with-border">
                                         <h3 class="box-title">Datos del proyecto</h3>
                                     </div>
                                     <div class="box-body">
-                                    <button onClick={this.getJefesProyecto}>Pulsa</button>
                                         <div class="form-group">
                                             <label for="nombre">Nombre</label>
                                             <input type="text" class="form-control" name="nombre" placeholder="Nombre" value={this.state.nombre} onChange={this.handleInputChange} />
@@ -119,11 +137,9 @@ export default class DarAltaProyecto extends Component {
                                         <label></label>
                                         <div class="form-group">
                                             <label>Jefe de proyecto</label>
-                                            <select class="form-control" name="idJefeProyecto" value={this.state.jefeProyecto} onChange={this.handleInputChange} onClick={this.getJefesProyecto}>
+                                            <select class="form-control" name="idJefeProyecto" value={this.state.jefeProyecto} onChange={this.handleInputChange} >
                                                 <option disabled selected value=""> -- Sin determinar -- </option>
-                                                <option value="1">Jefe 1</option>
-                                                <option value="2">Jefe 2</option>
-                                                <option value="3">Jefe 3</option>
+                                                {this.state.listaJefes.map(this.renderJefe)}
                                             </select>
                                         </div>
                                         <div class="form-group">
