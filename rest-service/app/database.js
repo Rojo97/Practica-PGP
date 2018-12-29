@@ -24,7 +24,7 @@ const db = {
         participacion: {
             insertParticipacionJefe : 'INSERT INTO Participacion VALUES (NOW(),1,?,?,0)'
         },
-        actividad : {
+        actividades : {
             getActividadesUsuario : 'SELECT * FROM Actividad A WHERE A.nombreProyecto = ? AND A.nickUsuario = ?'
         }
     },
