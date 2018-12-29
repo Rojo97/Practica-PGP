@@ -52,11 +52,10 @@ class Login extends Component {
                             <input type="password" className="form-control" placeholder="Password" name="password" value={this.props.password} onChange={this.handleChange}/>
                             <span className="glyphicon glyphicon-lock form-control-feedback"></span>
                         </div>
-                        <div className="col-xs-14">
-                            <button type="submit" className="btn btn-primary btn-block btn-flat">Iniciar sesión</button>
+                        <div class="col-xs-14">
+                        <Link to="/plantilla"><button type="submit" class="btn btn-primary btn-block btn-flat">Iniciar sesión</button></Link>
                         </div>
                     </form>
-                    <Link to="/plantilla">Plantilla</Link>
                 </div>
             </div>
         )
