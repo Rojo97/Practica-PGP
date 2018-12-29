@@ -13,25 +13,25 @@ export default class SelectProject extends Component {
                 <section className="content">
                     <div className="row">
                         <div className="col-md-12">
-                            <div class="small-box bg-purple">
-                                <div class="inner">
+                            <div className="small-box bg-purple">
+                                <div className="inner">
                                     <h3>Tu puto proyecto 1</h3>
                                     <p>Soy la fucking descripción</p>
                                 </div>
-                                <div class="icon">
-                                    <i class="fa fa-ge"></i>
+                                <div className="icon">
+                                    <i className="fa fa-ge"></i>
                                 </div>
-                                <Link href="#" class="small-box-footer">Seleccionar <i class="fa fa-arrow-circle-right"></i></Link>
+                                <Link to="#" className="small-box-footer">Seleccionar <i className="fa fa-arrow-circle-right"></i></Link>
                             </div>
-                            <div class="small-box bg-purple">
-                                <div class="inner">
+                            <div className="small-box bg-purple">
+                                <div className="inner">
                                     <h3>Tu puto proyecto 2</h3>
                                     <p>Soy la fucking descripción</p>
                                 </div>
-                                <div class="icon">
-                                    <i class="fa fa-rebel"></i>
+                                <div className="icon">
+                                    <i className="fa fa-rebel"></i>
                                 </div>
-                                <Link href="#" class="small-box-footer">Seleccionar <i class="fa fa-arrow-circle-right"></i></Link>
+                                <Link to="#" className="small-box-footer">Seleccionar <i className="fa fa-arrow-circle-right"></i></Link>
                             </div>
                         </div>
                     </div>
