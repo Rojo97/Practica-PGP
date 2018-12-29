@@ -36,24 +36,24 @@ class Login extends Component {
 
     render() {
         return (
-            <div class="login-box">
-                <div class="login-logo">
+            <div className="login-box">
+                <div className="login-logo">
                     <a><b>Gea</b>Pros</a>
                 </div>
-                <div class="login-box-body">
-                    <p class="login-box-msg">Inicie sesión</p>
+                <div className="login-box-body">
+                    <p className="login-box-msg">Inicie sesión</p>
                     {/* <form method="post"> */}
-                    <form moSubmit={this.handleFormSubmit}>
-                        <div class="form-group has-feedback">
-                            <input type="email" class="form-control" placeholder="Email" name="email" value={this.props.email} onChange={this.handleChange}/>
-                            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    <form onSubmit={this.handleFormSubmit}>
+                        <div className="form-group has-feedback">
+                            <input type="email" className="form-control" placeholder="Email" name="email" value={this.props.email} onChange={this.handleChange}/>
+                            <span className="glyphicon glyphicon-envelope form-control-feedback"></span>
                         </div>
-                        <div class="form-group has-feedback">
-                            <input type="password" class="form-control" placeholder="Password" name="password" value={this.props.password} onChange={this.handleChange}/>
-                            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                        <div className="form-group has-feedback">
+                            <input type="password" className="form-control" placeholder="Password" name="password" value={this.props.password} onChange={this.handleChange}/>
+                            <span className="glyphicon glyphicon-lock form-control-feedback"></span>
                         </div>
-                        <div class="col-xs-14">
-                            <button type="submit" class="btn btn-primary btn-block btn-flat">Iniciar sesión</button>
+                        <div className="col-xs-14">
+                            <button type="submit" className="btn btn-primary btn-block btn-flat">Iniciar sesión</button>
                         </div>
                     </form>
                     <Link to="/plantilla">Plantilla</Link>

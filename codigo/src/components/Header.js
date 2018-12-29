@@ -4,39 +4,39 @@ import {Link} from 'react-router-dom';
 export default class Header extends Component {
     render() {
         return (
-            <header class="main-header">
+            <header className="main-header">
                 {/* <!-- Logo --> */}
-                <Link to="/plantilla" class="logo">
+                <Link to="/plantilla" className="logo">
                     {/* <!-- mini logo for sidebar mini 50x50 pixels --> */}
-                    <span class="logo-mini"><b>G</b>P</span>
+                    <span className="logo-mini"><b>G</b>P</span>
                     {/* <!-- logo for regular state and mobile devices --> */}
-                    <span class="logo-lg"><b>Gea</b>Pros</span>
+                    <span className="logo-lg"><b>Gea</b>Pros</span>
                 </Link>
                 {/* <!-- Header Navbar: style can be found in header.less --> */}
-                <nav class="navbar navbar-static-top">
+                <nav className="navbar navbar-static-top">
                     {/* <!-- Sidebar toggle button--> */}
-                    <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-                        <span class="sr-only">Toggle navigation</span>
+                    <a href="#" className="sidebar-toggle" data-toggle="push-menu" role="button">
+                        <span className="sr-only">Toggle navigation</span>
                     </a>
 
-                    <div class="navbar-custom-menu">
-                        <ul class="nav navbar-nav">
+                    <div className="navbar-custom-menu">
+                        <ul className="nav navbar-nav">
                             {/* <!-- User Account: style can be found in dropdown.less --> */}
-                            <li class="dropdown user user-menu">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <img src="./oneUser.png" class="user-image" alt="User Image" />
-                                    <span class="hidden-xs">User on Develop</span>
+                            <li className="dropdown user user-menu">
+                                <a href="#" className="dropdown-toggle" data-toggle="dropdown">
+                                    <img src="./oneUser.png" className="user-image" alt="User Image" />
+                                    <span className="hidden-xs">User on Develop</span>
                                 </a>
-                                <ul class="dropdown-menu">
+                                <ul className="dropdown-menu">
                                     {/* <!-- User image --> */}
-                                    <li class="user-header">
-                                        <img src="oneUser.png" class="img-circle" alt="User Image" />
+                                    <li className="user-header">
+                                        <img src="oneUser.png" className="img-circle" alt="User Image" />
                                         <p>User on Develop<small>Here goes the rol</small></p>
                                     </li>
                                     {/* <!-- Menu Footer--> */}
-                                    <li class="user-footer">
-                                        <div class="pull-right">
-                                            <Link to="/" class="btn btn-default btn-flat">Sign out</Link>
+                                    <li className="user-footer">
+                                        <div className="pull-right">
+                                            <Link to="/" className="btn btn-default btn-flat">Sign out</Link>
                                         </div>
                                     </li>
                                 </ul>
