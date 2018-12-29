@@ -4,7 +4,7 @@ function init(app, dbPool, db) {
 
         const nickUsuario = req.params.nickUsuario;
         const nombreProyecto = req.params.nombreProyecto;
-        var args = [nickUsuario, nombreProyecto];
+        var args = [nombreProyecto,nickUsuario];
 
         function onResults(error, results, response) {
             if (!error) {
