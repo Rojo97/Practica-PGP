@@ -32,6 +32,7 @@ export default class SideBar extends Component {
               </a>
               <ul className="treeview-menu">
                 <li className="active"><Link to="/selectProject"><i className="fa fa-circle-o"></i>Seleccionar proyecto</Link></li>
+                <li className="active"><Link to="/proyecto/ProyectoA/actividades"><i className="fa fa-circle-o"></i>Ver actividades</Link></li>
               </ul>
             </li>
             <li><a href="https://adminlte.io/docs"><i className="fa fa-book"></i> <span>Documentation</span></a></li>

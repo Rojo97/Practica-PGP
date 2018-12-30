@@ -5,6 +5,7 @@ import Sidebar from '../components/SideBar';
 import Content from '../components/Content';
 import CrearUsuario from '../components/CrearUsuario';
 import SelectProject from '../components/SelectProject';
+import ShowActivity from '../components/ShowActivity';
 
 class Plantilla extends Component {
   render() {
@@ -16,6 +17,7 @@ class Plantilla extends Component {
           <Route exact path="/createUser" component={CrearUsuario} />
           <Route exact path="/createProject" component={Content} />
           <Route exact path="/selectProject" component={SelectProject}/>
+          <Route exact path="/proyecto/:nombre/actividades" component={ShowActivity}/>
         </Switch>
       </div>
     );
