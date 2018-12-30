@@ -1,14 +1,10 @@
 const db = {
     conf: {
         connectionLimit: 10,
-        /*host: 'jair.lab.inf.uva.es',
+        host: 'jair.lab.inf.uva.es',
         user: 'PGP_grupo01',
         password: 'NU57B0S2',
-        database: 'PGP_grupo01'*/
-        host : 'localhost',
-        user : 'root',
-        password : 'trebuchet',
-        database : 'pgp'
+        database: 'PGP_grupo01'
     },
     querys: {
         usuarios: {
@@ -22,7 +18,8 @@ const db = {
         },
         proyectos: {
             insert: 'INSERT INTO Proyecto(nombreProyecto,fechaInicial,estado,resumen) VALUES (?,NOW(),0,?)',
-            countProyectosByNombre: 'SELECT COUNT(*) AS numeroProyectos FROM Proyecto Pr WHERE Pr.nombreProyecto = ?'
+            countProyectosByNombre: 'SELECT COUNT(*) AS numeroProyectos FROM Proyecto Pr WHERE Pr.nombreProyecto = ?',
+            getActividadesProyecto:'SELECT * FROM Actividad A WHERE A.nombreProyecto = ?'
 
         },
         participacion: {
