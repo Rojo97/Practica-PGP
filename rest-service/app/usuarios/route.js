@@ -25,7 +25,7 @@ function init(app, dbPool, db) {
         db.execQuery(dbPool, query, args, onResults, res);
     })
 
-    app.get('/api/usuario/:nickUsuario', (req, res) => {
+    app.get('/api/usuario/:nickUsuario', VerifyToken,(req, res) => {
         const nickUsuario = req.params.nickUsuario;
         var query = db.querys.usuarios.getUsuariosByNick;
         console.log(nickUsuario);
@@ -46,7 +46,7 @@ function init(app, dbPool, db) {
         db.execQuery(dbPool, query, args, onResults, res);
     })
 
-    app.get('/api/usuario/:nickUsuario/proyectos', (req, res) => {
+    app.get('/api/usuario/:nickUsuario/proyectos', VerifyToken,(req, res) => {
         const nickUsuario = req.params.nickUsuario;
         if(req.query.actual == 1){
             var query = db.querys.usuarios.getProyectosActualesUsuario;

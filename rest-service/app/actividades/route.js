@@ -1,5 +1,6 @@
+var VerifyToken = require('../auth/VerifyToken');
 function init(app, dbPool, db) {
-    app.get('/api/actividad/:nickUsuario/:nombreProyecto', (req, res) => {
+    app.get('/api/actividad/:nickUsuario/:nombreProyecto', VerifyToken ,(req, res) => {
         var query = db.querys.actividades.getActividadesUsuario;
 
         const nickUsuario = req.params.nickUsuario;

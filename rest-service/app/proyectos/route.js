@@ -1,6 +1,7 @@
+var VerifyToken = require('../auth/VerifyToken');
 function init(app, dbPool, db) {
 
-    app.post('/api/proyecto', (req, res) => {
+    app.post('/api/proyecto', VerifyToken, (req, res) => {
         console.log(req.body);
         var args = [req.body.nombreProyecto, req.body.resumen];
         var args2 = [req.body.nombreProyecto, req.body.nickUsuario];
@@ -24,7 +25,7 @@ function init(app, dbPool, db) {
 
     })
 
-    app.get('/api/proyecto/:nombreProyecto/actividades', (req, res) => {
+    app.get('/api/proyecto/:nombreProyecto/actividades', VerifyToken, (req, res) => {
         var query = db.querys.proyectos.getActividadesProyecto;
 
         const nombreProyecto = req.params.nombreProyecto;
