@@ -1,5 +1,7 @@
+var VerifyToken = require('../auth/VerifyToken');
+
 function init(app, dbPool, db) {
-    app.get('/api/usuario', (req, res) => {
+    app.get('/api/usuario', VerifyToken, (req, res) => {
         if(req.query.selectableAsJefe == 1){
             var query = db.querys.usuarios.getJefesSinProyecto;
         }else{
