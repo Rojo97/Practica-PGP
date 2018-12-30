@@ -9,14 +9,11 @@ function init(app, dbPool, db) {
 
         function onResults(error, results, response) {
             if (!error) {
-                console.log("Consulta 2: " + query2);
-                console.log(db.querys.participacion.insertParticipacionJefe);
-                db.execQuery(dbPool, db.querys.participacion.insertParticipacionJefe, args2, onResults2, res);
+                db.execQuery(dbPool, query2, args2, onResults2, res);
             }
         };
 
         function onResults2(error, results, response) {
-            console.log("Segunda consulta")
             if (!error) {
                 response.status(201).json({});
             }
