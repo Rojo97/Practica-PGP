@@ -40,9 +40,9 @@ export default class SelectProject extends Component {
                                         <p>{proyecto.resumen}</p>
                                     </div>
                                     <div className="icon">
-                                        <i className="fa fa-ge"></i>
+                                        <i className="fa fa-gear"></i>
                                     </div>
-                                    <Link to="#" className="small-box-footer">Seleccionar <i className="fa fa-arrow-circle-right"></i></Link>
+                                    <Link to={`/proyecto/${proyecto.nombreProyecto}`} className="small-box-footer">Seleccionar <i className="fa fa-arrow-circle-right"></i></Link>
                                 </div>
                                 ))}
                                 </div>
