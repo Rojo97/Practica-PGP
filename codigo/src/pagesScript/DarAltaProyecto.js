@@ -10,6 +10,8 @@ export default class DarAltaProyecto extends Component {
             idJefeProyecto: '',
             descripccion: '',
             listaJefes: [],
+
+            //Formato del JSon que contendrá los datos de cada jefe de proyecto
             jefe: {
                 nickUsuario: ''
             }
@@ -20,23 +22,74 @@ export default class DarAltaProyecto extends Component {
 
     }
 
+    //Acciones que se realizan antes de montar el componente
     componentDidMount() {
         this.getJefesProyecto();
     }
 
+    //Actualiza el valor de this.state con cada cambio en el formulario
     handleInputChange(event) {
         let target = event.target;
         let name = target.name;
         let value = target.value;
-        console.log(value);
+        //console.log(value);
         this.setState(prevState => {
             return {
                 ...prevState, [name]: value
             }
-        }, () => console.log(this.state)
+        }
+        //, () => console.log(this.state)
         )
     }
 
+    validaFormulario() {
+        //Se comprueba el nombre
+        var x = document.forms["formularioProyecto"]["nombre"].value;
+        if (x == '') {
+            alert("Introduzca un nombre de proyecto");
+            return false;
+        }
+
+        //Se comprueba la fecha de comienzo
+        //Si se introduce una fecha que no existe el formulario devuelve '' también
+        x = document.forms["formularioProyecto"]["fechaComienzo"].value;
+        if (x == '') {
+            alert("Introduzca una fecha válida");
+            return false;
+        }
+
+        //Se comprueba el presupuesto
+        x = document.forms["formularioProyecto"]["presupuesto"].value;
+        //console.log("Ahi va: " + Number(x));
+        if (x == '') {
+            alert("Introduzca un presupuesto");
+            return false;
+        } else if (isNaN(Number(x))) {
+            alert("Introduzca un presupuesto válido");
+            return false;
+        } else if (x < 1) {
+            alert("Introduzca un presupuesto mayor que 0");
+            return false;
+        }
+
+        //Se comprueba el jefe de proyecto
+        x = document.forms["formularioProyecto"]["idJefeProyecto"].value;
+        if (x == '') {
+            alert("Seleccione un jefe de proyecto");
+            return false;
+        }
+
+        //Se comprueba la descripcción
+        x = document.forms["formularioProyecto"]["descripccion"].value;
+        if (x == '') {
+            alert("Introduzca una descripcción");
+            return false;
+        }
+
+        return true;
+    }
+
+    //Se extraen del backend los jefes de proyecto que no tienen ningún proyecto activo asociado
     getJefesProyecto() {
         fetch('http://virtual.lab.inf.uva.es:27014/api/usuario?selectableAsJefe=1')
             .then((response) => {
@@ -61,44 +114,60 @@ export default class DarAltaProyecto extends Component {
             });
     }
 
+    //Render para añadir los jefes como opcion del desplegable
     renderJefe = ({ nickUsuario }) => <option value={nickUsuario}>{nickUsuario}</option>
 
+    //Manda el proyecto con todos sus datos validados al backend
     addProject(event) {
         event.preventDefault();
-        fetch(`http://virtual.lab.inf.uva.es:27014/api/proyecto`, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                nombreProyecto: this.state.nombre,
-                resumen: this.state.descripccion,
-                nickUsuario: this.state.idJefeProyecto,
-            })
-        }).then((response) => {
-            switch (response.status) {
-                case 201:
-                    alert("Proyecto creado");
-                    console.log(response);
-                    this.setState({ nombre: '' });
-                    this.setState({ fechaComienzo: '' });
-                    this.setState({ presupuesto: '' });
-                    this.setState({ idJefeProyecto: '' });
-                    this.setState({ descripccion: '' });
-                    this.getJefesProyecto();
-                    break;
-                default:
-                    throw new Error("Bad response from server");
-            }
-            return response.json();
-        }).then(function (responseJson) {
-            console.log(responseJson)
-        }).catch(function (res) { console.log(res) });
+
+        //Se comprueba primero que todos los campos del formulario sean validos
+        if (this.validaFormulario()) {
+            fetch(`http://virtual.lab.inf.uva.es:27014/api/proyecto`, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    nombreProyecto: this.state.nombre,
+                    resumen: this.state.descripccion,
+                    nickUsuario: this.state.idJefeProyecto,
+                    presupuesto: this.state.presupuesto,
+                    fechaInicial: this.state.fechaComienzo,
+                })
+            }).then((response) => {
+                //console.log("Codigo de estado: " + response.status);
+                switch (response.status) {
+                    case 201:
+                        alert("Proyecto creado");
+
+                        //Una vez creado el proyecto se resetean los campos del formulario
+                        this.setState({ nombre: '' });
+                        this.setState({ fechaComienzo: '' });
+                        this.setState({ presupuesto: '' });
+                        this.setState({ idJefeProyecto: '' });
+                        this.setState({ descripccion: '' });
+
+                        //Se actualizan los jefes de proyecto restantes 
+                        //y se cambia la opcion seleccionada en el desplegable
+                        this.getJefesProyecto();
+                        document.forms["formularioProyecto"]["idJefeProyecto"].value = "";
+                        break;
+                    
+                    //TODO Falta ver que codigo de error es
+                    case 5000:
+                        alert("Existe un proyecto con ese nombre");
+                    default:
+                        throw new Error("Bad response from server");
+                }
+                return response.json();
+            }).catch(function (res) { console.log(res) });
+        }
+
     }
 
     render() {
-        console.log("Renderiza");
         return (
             <div className="content-wrapper">
                 <section class="content-header">
@@ -108,7 +177,7 @@ export default class DarAltaProyecto extends Component {
                 </section>
                 <section class="content">
                     <div class="row box-body">
-                        <form role="form" id="formularioProyecto">
+                        <form role="form" name="formularioProyecto">
                             <div class="col-md-12">
                                 <div class="box box-primary">
                                     <div class="box-header with-border">
