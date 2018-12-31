@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Log in</title>
+  <title>GeaPros</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -64,11 +64,11 @@
   <!-- Sparkline -->
   <script src="bower_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
   <!-- Select2 -->
-  <script src="../../bower_components/select2/dist/js/select2.full.min.js"></script>
+  <script src="bower_components/select2/dist/js/select2.full.min.js"></script>
   <!-- InputMask -->
-  <script src="../../plugins/input-mask/jquery.inputmask.js"></script>
-  <script src="../../plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
-  <script src="../../plugins/input-mask/jquery.inputmask.extensions.js"></script>
+  <script src="plugins/input-mask/jquery.inputmask.js"></script>
+  <script src="plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+  <script src="plugins/input-mask/jquery.inputmask.extensions.js"></script>
   <!-- jvectormap -->
   <script src="plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
   <script src="plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
@@ -108,7 +108,7 @@
       $('.select2').select2()
 
       //Datemask dd/mm/yyyy
-      $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+      $('#datemask').inputmask('yyyy-mm-dd', { 'placeholder': 'yyyy-mm-dd' })
       //Datemask2 mm/dd/yyyy
       $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
       //Money Euro
