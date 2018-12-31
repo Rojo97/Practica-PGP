@@ -3,11 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-<<<<<<< HEAD
     "axios": "^0.18.0",
-=======
     "moment": "^2.23.0",
->>>>>>> feature-showActivities
     "react": "^16.6.3",
     "react-alert": "^4.0.4",
     "react-alert-template-basic": "^1.0.0",
