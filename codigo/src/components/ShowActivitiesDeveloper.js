@@ -29,7 +29,7 @@ export default class ShowActivitiesDeveloper extends Component {
             <div className="content-wrapper">
                 <div className="content-header">
                     <h1>
-                        Seleccionar proyecto
+                        Actividades
                     </h1>
                 </div>
                 <section className="content">
