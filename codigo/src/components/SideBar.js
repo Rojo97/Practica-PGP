@@ -19,8 +19,8 @@ export default class SideBar extends Component {
                 </span>
               </a>
               <ul className="treeview-menu">
-                <li className="active"><Link to="/createUser"><i className="fa fa-circle-o"></i>Crear Usuario</Link></li>
-                <li className="active"><Link to="/createProject"><i className="fa fa-circle-o"></i>Crear Proyecto</Link></li>
+                <li className="active"><Link to="/admin/createUser"><i className="fa fa-circle-o"></i>Crear Usuario</Link></li>
+                <li className="active"><Link to="/admin/createProject"><i className="fa fa-circle-o"></i>Crear Proyecto</Link></li>
               </ul>
             </li>
             <li className="active treeview">
@@ -31,7 +31,19 @@ export default class SideBar extends Component {
                 </span>
               </a>
               <ul className="treeview-menu">
-                <li className="active"><Link to="/selectProject"><i className="fa fa-circle-o"></i>Seleccionar proyecto</Link></li>
+                <li className="active"><Link to="/developer/selectProject"><i className="fa fa-circle-o"></i>Seleccionar proyecto</Link></li>
+                <li className="active"><Link to="/developer/project/ProyectoA/activities"><i className="fa fa-circle-o"></i>Ver actividades</Link></li>
+              </ul>
+            </li>
+            <li className="active treeview">
+              <a href="#">
+                <i className="fa fa-dashboard"></i> <span>Jefe de proyecto</span>
+                <span className="pull-right-container">
+                  <i className="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul className="treeview-menu">
+                <li className="active"><Link to="/projectManager/project/ProyectoA/activities"><i className="fa fa-circle-o"></i>Ver actividades</Link></li>
               </ul>
             </li>
             <li><a href="https://adminlte.io/docs"><i className="fa fa-book"></i> <span>Documentation</span></a></li>

@@ -1,21 +1,24 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+import Moment from 'moment'; //TODO npm install moment --save
 
-export default class SelectProject extends Component {
+export default class ShowActivitiesDeveloper extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            proyectos: [],
+            actividades: [],
         }
     }
 
     componentDidMount() {
-        fetch(`http://virtual.lab.inf.uva.es:27014/api/usuario/ivan/proyectos?actual=1`)
+        const nombre = this.props.match.params.nombre
+
+        fetch(`http://virtual.lab.inf.uva.es:27014/api/actividad/ivan/${nombre}`)
             .then(function (response) { 
                 console.log(response);
                 return response.json()
              })
-            .then(responseJson => this.setState({ proyectos: responseJson.data }))
+            .then(responseJson => this.setState({ actividades: responseJson.data }))
             .catch(function (data) { console.log(data) });
     }
 
@@ -33,16 +36,18 @@ export default class SelectProject extends Component {
                     <div className="row">
                         <div className="col-md-12">
                             <div>
-                                {this.state.proyectos.map(proyecto => (
+                                {this.state.actividades.map(actividad => (
                                     <div className="small-box bg-purple">
                                     <div className="inner">
-                                        <h3>{proyecto.nombreProyecto}</h3>
-                                        <p>{proyecto.resumen}</p>
+                                        <h3>{actividad.numeroActividad}</h3>
+                                        <p>{actividad.descripcion}</p>
+                                        <p style={{float: 'left'}} align="left">Inicio: {Moment(actividad.fechaInicio).format('DD/MM/YYYY')}</p>
+                                        <p style={{clear: 'right'}} align="right">Estado: {actividad.estado}</p>
                                     </div>
                                     <div className="icon">
                                         <i className="fa fa-gear"></i>
                                     </div>
-                                    <Link to={`/developer/project/${ proyecto.nombreProyecto }/activities`} className="small-box-footer">Seleccionar <i className="fa fa-arrow-circle-right"></i></Link>
+                                    <Link to='' className="small-box-footer">Seleccionar <i className="fa fa-arrow-circle-right"></i></Link>
                                 </div>
                                 ))}
                                 </div>
