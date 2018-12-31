@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+import Moment from 'moment'; //TODO npm install moment --save
 
-export default class ShowActivity extends Component {
+export default class ShowActivitiesDeveloper extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -40,6 +41,8 @@ export default class ShowActivity extends Component {
                                     <div className="inner">
                                         <h3>{actividad.numeroActividad}</h3>
                                         <p>{actividad.descripcion}</p>
+                                        <p style={{float: 'left'}} align="left">Inicio: {Moment(actividad.fechaInicio).format('DD/MM/YYYY')}</p>
+                                        <p style={{clear: 'right'}} align="right">Estado: {actividad.estado}</p>
                                     </div>
                                     <div className="icon">
                                         <i className="fa fa-gear"></i>
