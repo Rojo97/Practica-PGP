@@ -7,6 +7,7 @@ export default class ShowActivitiesDeveloper extends Component {
         super(props);
         this.state = {
             actividades: [],
+            estados: ["En curso", "Finalizada", "Cerrada", "Aprobada"]
         }
     }
 
@@ -42,7 +43,7 @@ export default class ShowActivitiesDeveloper extends Component {
                                         <h3>{actividad.numeroActividad}</h3>
                                         <p>{actividad.descripcion}</p>
                                         <p style={{float: 'left'}} align="left">Inicio: {Moment(actividad.fechaInicio).format('DD/MM/YYYY')}</p>
-                                        <p style={{clear: 'right'}} align="right">Estado: {actividad.estado}</p>
+                                        <p style={{clear: 'right'}} align="right">Estado: {this.state.estados[actividad.estado]}</p>
                                     </div>
                                     <div className="icon">
                                         <i className="fa fa-gear"></i>

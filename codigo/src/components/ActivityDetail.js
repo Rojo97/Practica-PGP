@@ -6,6 +6,7 @@ export default class ActivityDetail extends Component {
         super(props);
         this.state = {
             actividad: [],
+            estados: ["En curso", "Finalizada", "Cerrada", "Aprobada"]
         }
     }
 
@@ -42,7 +43,7 @@ export default class ActivityDetail extends Component {
                                     <div className="col-md-6">
                                         <h4>-Fecha de inicio: {Moment(this.state.actividad.fechaInicio).format('DD/MM/YYYY')}</h4>
                                         <h4>-Fecha de fin estimada: {Moment(this.state.actividad.fechaFinEstimada).format('DD/MM/YYYY')}</h4>
-                                        <h4>-Estado actual: {this.state.actividad.estado}</h4>
+                                        <h4>-Estado actual: {this.state.estados[this.state.actividad.estado]}</h4>
                                     </div>
                                     <div className="box-body">
                                         <h3>Descripción:</h3>
