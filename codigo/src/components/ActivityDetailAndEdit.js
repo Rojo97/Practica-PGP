@@ -59,20 +59,24 @@ export default class ActivityDetailAndEdit extends Component {
                                         <input type="date" className="form-control pull-right" name="fechafin" />
                                     </div>
                                 </div>
-                            </div>
-                            <div className="form-group">
-                                <label>Estado</label>
-                                <select className="form-control" name="tipo" >
-                                    <option disabled value=''> -- Seleccione estado -- </option>
-                                    <option value="0">En curso</option>
-                                    <option value="1">Finalizada</option>
-                                    <option value="2">Cerrada</option>
-                                    <option value="3">Aprobada</option>
-                                </select>
+                                <div className="form-group">
+                                    <label>Estado</label>
+                                    <select className="form-control" name="tipo" >
+                                        <option disabled value=''> -- Seleccione estado -- </option>
+                                        <option value="0">En curso</option>
+                                        <option value="1">Finalizada</option>
+                                        <option value="2">Cerrada</option>
+                                        <option value="3">Aprobada</option>
+                                    </select>
+                                </div>
                             </div>
                             <div className="col-md-6">
-
-                            </div>
+                                    <h1>Tema usuarios</h1>{/*TODO Aun por ver como se implementa */}
+                                    <h3>Aqui saldran los usuarios y existirá la posibilidad de añadir y eliminar</h3>
+                                </div>
+                        </div>
+                        <div className="box-footer">
+                            <button type="submit" className="btn btn-info pull-right" onClick={this.activeEdit}>Editar</button>
                         </div>
                     </div>
                 </form>
