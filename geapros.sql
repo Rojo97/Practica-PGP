@@ -14,7 +14,7 @@ CREATE TABLE Estado
     UNIQUE (valorEstado),
     CONSTRAINT pk_estado PRIMARY KEY(estado)
 );
-
+pene
 CREATE TABLE Proyecto
 (
     nombreProyecto CHAR(50) NOT NULL,
