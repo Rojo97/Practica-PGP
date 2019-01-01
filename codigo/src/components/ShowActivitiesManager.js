@@ -47,7 +47,7 @@ export default class ShowActivitiesManager extends Component {
                                     <div className="icon">
                                         <i className="fa fa-gear"></i>
                                     </div>
-                                    <Link to='' className="small-box-footer">Seleccionar <i className="fa fa-arrow-circle-right"></i></Link>
+                                    <Link to={"/projectManager/activity/"+actividad.numeroActividad} className="small-box-footer">Ver y editar <i className="fa fa-arrow-circle-right"></i></Link>
                                 </div>
                                 ))}
                                 </div>

@@ -47,7 +47,7 @@ export default class ShowActivitiesDeveloper extends Component {
                                     <div className="icon">
                                         <i className="fa fa-gear"></i>
                                     </div>
-                                    <Link to='' className="small-box-footer">Seleccionar <i className="fa fa-arrow-circle-right"></i></Link>
+                                    <Link to={"/developer/activity/"+actividad.numeroActividad} className="small-box-footer">Ver mas <i className="fa fa-arrow-circle-right"></i></Link>
                                 </div>
                                 ))}
                                 </div>

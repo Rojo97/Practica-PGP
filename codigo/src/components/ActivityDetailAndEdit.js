@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import Moment from 'moment';
 
-export default class ActivityDetail extends Component {
+export default class ActivityDetailAndEdit extends Component {
     constructor(props) {
         super(props);
         this.state = {
             actividad: [],
+            edit: 0
         }
     }
 
@@ -51,7 +52,8 @@ export default class ActivityDetail extends Component {
 
                                 </div>
                                 <div className="box-footer">
-                                    <button type="submit" className="btn btn-info pull-right">Informe de desarrollador</button>
+                                    <button type="submit" className="btn btn-info pull-right">Editar</button>
+
                                 </div>
                             </div>
                         </div>
