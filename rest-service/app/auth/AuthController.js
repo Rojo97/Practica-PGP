@@ -2,7 +2,7 @@ var jwt = require('jsonwebtoken');
 var config = require('../../config');
 
 function init(app, dbPool, db) {
-    app.get('/api/login', function (req, res) {
+    app.post('/api/login', function (req, res) {
 
         const nickUsuario = req.body.nickUsuario;
         const password = req.body.password;
