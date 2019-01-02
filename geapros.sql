@@ -89,6 +89,9 @@ CREATE TABLE InformeSemanal
     FOREIGN KEY (nickUsuario) REFERENCES Usuario (nickUsuario)
         ON DELETE CASCADE
         ON UPDATE NO ACTION,
+    FOREIGN KEY (estadoInforme) REFERENCES EstadoInforme (estado)
+        ON DELETE CASCADE
+        ON UPDATE NO ACTION,    
     CONSTRAINT pk_informeSemanal PRIMARY KEY (fechaInicio,numeroActividad,nombreProyecto,nickUsuario)
 );
 
