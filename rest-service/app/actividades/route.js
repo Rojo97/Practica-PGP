@@ -41,10 +41,10 @@ function init(app, dbPool, db) {
     app.put('/api/actividad', (req, res) => {
         var query = db.querys.actividades.updateActividad;
 
-        const fechaFin = req.params.fechaFin;
-        const estado = req.params.estado;
-        const nombreActividad = req.params.nombreActividad;
-        const nombreProyecto = req.params.nombreProyecto;
+        const fechaFin = req.body.fechaFin;
+        const estado = req.body.estado;
+        const nombreActividad = req.body.nombreActividad;
+        const nombreProyecto = req.body.nombreProyecto;
         var args = [fechaFin, estado, nombreActividad, nombreProyecto];
 
         function onResults(error, results, response) {
