@@ -4,7 +4,7 @@ function init(app, dbPool, db) {
 
         const nickUsuario = req.params.nickUsuario;
         const nombreProyecto = req.params.nombreProyecto;
-        var args = [nombreProyecto,nickUsuario];
+        var args = [nombreProyecto, nickUsuario];
 
         function onResults(error, results, response) {
             if (!error) {
@@ -16,7 +16,7 @@ function init(app, dbPool, db) {
                         data: results
                     })
                 }
-            }
+            } else { res.status(500).send('Error on the server.'); }
         }
 
         db.execQuery(dbPool, query, args, onResults, res);
@@ -38,7 +38,7 @@ function init(app, dbPool, db) {
                         data: results
                     })
                 }
-            }
+            } else { res.status(500).send('Error on the server.'); }
         }
 
         db.execQuery(dbPool, query, args, onResults, res);

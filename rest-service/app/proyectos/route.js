@@ -10,13 +10,13 @@ function init(app, dbPool, db) {
         function onResults(error, results, response) {
             if (!error) {
                 db.execQuery(dbPool, query2, args2, onResults2, res);
-            }
+            } else { res.status(500).send('Error on the server.'); }
         };
 
         function onResults2(error, results, response) {
             if (!error) {
                 response.status(201).json({});
-            }
+            } else { res.status(500).send('Error on the server.'); }
         };
 
 
@@ -40,7 +40,7 @@ function init(app, dbPool, db) {
                         data: results
                     })
                 }
-            }
+            } else { res.status(500).send('Error on the server.'); }
         }
 
         db.execQuery(dbPool, query, args, onResults, res);

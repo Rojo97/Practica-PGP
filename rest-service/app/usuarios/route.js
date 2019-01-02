@@ -17,7 +17,7 @@ function init(app, dbPool, db) {
                         data: results
                     })
                 }
-            }
+            } else { res.status(500).send('Error on the server.'); }
         }
 
         db.execQuery(dbPool, query, args, onResults, res);
@@ -38,7 +38,7 @@ function init(app, dbPool, db) {
                         data: results
                     })
                 }
-            }
+            } else { res.status(500).send('Error on the server.'); }
         }
 
         db.execQuery(dbPool, query, args, onResults, res);
@@ -62,7 +62,7 @@ function init(app, dbPool, db) {
                         data: results
                     })
                 }
-            }
+            } else { res.status(500).send('Error on the server.'); }
         }
 
         db.execQuery(dbPool, query, args, onResults, res);
@@ -76,7 +76,7 @@ function init(app, dbPool, db) {
         function onResults(error, results, response) {
             if (!error) {
                 response.status(201).json({});
-            }
+            } else { res.status(500).send('Error on the server.'); }
         };
 
         db.execQuery(dbPool, query, args, onResults, res);
