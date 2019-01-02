@@ -8,6 +8,7 @@ function init(app, dbPool, db) {
         const password = req.body.password;
         const payload = req.body;
         const query = db.querys.usuarios.getUsuariosByNick;
+        console.log(req.body);
 
         var args = [nickUsuario];
 
