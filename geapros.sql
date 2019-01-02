@@ -49,7 +49,7 @@ CREATE TABLE Usuario
 
 CREATE TABLE Actividad
 (
-    numeroActividad INTEGER,
+    nombreActividad CHAR(50),
     nombreProyecto CHAR(50),
     descripcion CHAR(50),
     duracionEstimada REAL,
@@ -64,7 +64,7 @@ CREATE TABLE Actividad
     FOREIGN KEY (estado) REFERENCES Estado(estado)
         ON DELETE NO ACTION
         ON UPDATE NO ACTION,
-    CONSTRAINT pk_actividad PRIMARY KEY (numeroActividad,nombreProyecto)
+    CONSTRAINT pk_actividad PRIMARY KEY (nombreActividad,nombreProyecto)
 );
 
 CREATE TABLE EstadoInforme
@@ -78,12 +78,12 @@ CREATE TABLE EstadoInforme
 CREATE TABLE InformeSemanal
 (
     fechaInicio DATE,
-    numeroActividad INTEGER,
+    nombreActividad INTEGER,
     nombreProyecto CHAR(50),
     nickUsuario CHAR(50),
     informeTareasPersonales CHAR (200),
     estadoInforme INTEGER,
-    FOREIGN KEY (numeroActividad, nombreProyecto) REFERENCES Actividad (numeroActividad,nombreProyecto)
+    FOREIGN KEY (nombreActividad, nombreProyecto) REFERENCES Actividad (nombreActividad,nombreProyecto)
         ON DELETE CASCADE
         ON UPDATE NO ACTION,
     FOREIGN KEY (nickUsuario) REFERENCES Usuario (nickUsuario)
@@ -92,7 +92,7 @@ CREATE TABLE InformeSemanal
     FOREIGN KEY (estadoInforme) REFERENCES EstadoInforme (estado)
         ON DELETE CASCADE
         ON UPDATE NO ACTION,    
-    CONSTRAINT pk_informeSemanal PRIMARY KEY (fechaInicio,numeroActividad,nombreProyecto,nickUsuario)
+    CONSTRAINT pk_informeSemanal PRIMARY KEY (fechaInicio,nombreActividad,nombreProyecto,nickUsuario)
 );
 
 CREATE TABLE Predecesora
@@ -100,10 +100,10 @@ CREATE TABLE Predecesora
     precedida INTEGER,
     predecesora INTEGER,
     nombreProyecto CHAR(50),
-    FOREIGN KEY (precedida) REFERENCES Actividad(numeroActividad)
+    FOREIGN KEY (precedida) REFERENCES Actividad(nombreActividad)
         ON DELETE CASCADE
         ON UPDATE NO ACTION,
-    FOREIGN KEY (predecesora) REFERENCES Actividad(numeroActividad)
+    FOREIGN KEY (predecesora) REFERENCES Actividad(nombreActividad)
         ON DELETE CASCADE
         ON UPDATE NO ACTION,
     FOREIGN KEY (nombreProyecto) REFERENCES Actividad(nombreProyecto)
@@ -157,10 +157,10 @@ VALUES
     ('El jefe', 'pepe', '33456799B', 'pepe', 'el', 'tramas', '90-10-16', 1);
 
 INSERT INTO Actividad
-    (numeroActividad,nombreProyecto,descripcion,duracionEstimada,duracionReal,fechaInicio,fechaFin,estado,categoriaUsuario)
+    (nombreActividad,nombreProyecto,descripcion,duracionEstimada,duracionReal,fechaInicio,fechaFin,estado,categoriaUsuario)
 VALUES
-    (1, 'ProyectoA', 'Descripcion', 25, 50, '18-12-01', '18-12-07', 2, 1),
-    (2, 'ProyectoA', 'Descripcion', 25 , 50, '18-12-07', '14-12-18', 2, 1);
+    ('A', 'ProyectoA', 'Descripcion', 25, 50, '18-12-01', '18-12-07', 2, 1),
+    ('B','ProyectoA', 'Descripcion', 25 , 50, '18-12-07', '14-12-18', 2, 1);
 
 INSERT INTO Predecesora
     (precedida,predecesora,nombreProyecto)
@@ -182,7 +182,7 @@ VALUES
     (2, 'PendienteAceptacion'),
     (3, 'PendienteEnvio');
 INSERT INTO InformeSemanal
-    (fechaInicio, numeroActividad,nombreProyecto,nickUsuario,informeTareasPersonales,estadoInforme)
+    (fechaInicio, nombreActividad,nombreProyecto,nickUsuario,informeTareasPersonales,estadoInforme)
 VALUES
     ('18-02-02', 1, 'ProyectoA', 'ivan', 'informe', 0);
 
