@@ -1,3 +1,4 @@
+DROP TABLE  IF EXISTS Rol;
 DROP TABLE  IF EXISTS Estado;
 DROP TABLE  IF EXISTS Participacion;
 DROP TABLE  IF EXISTS Predecesora;
@@ -6,6 +7,13 @@ DROP TABLE  IF EXISTS EstadoInforme;
 DROP TABLE  IF EXISTS InformeSemanal;
 DROP TABLE  IF EXISTS Usuario;
 DROP TABLE  IF EXISTS Proyecto;
+
+CREATE TABLE Rol(
+    rol INTEGER,
+    valorRol CHAR(50),
+    UNIQUE (valorRol),
+    CONSTRAINT pk_rol PRIMARY KEY (rol)
+);
 
 CREATE TABLE Estado
 (
@@ -57,11 +65,14 @@ CREATE TABLE Actividad
     fechaInicio DATE,
     fechaFin DATE,
     estado INTEGER,
-    categoriaUsuario INTEGER,
+    rol INTEGER,
     FOREIGN KEY (nombreProyecto) REFERENCES Proyecto(nombreProyecto)
         ON DELETE CASCADE
         ON UPDATE NO ACTION,
     FOREIGN KEY (estado) REFERENCES Estado(estado)
+        ON DELETE NO ACTION
+        ON UPDATE NO ACTION,
+    FOREIGN KEY (rol) REFERENCES Rol(rol)
         ON DELETE NO ACTION
         ON UPDATE NO ACTION,
     CONSTRAINT pk_actividad PRIMARY KEY (nombreActividad,nombreProyecto)
@@ -119,7 +130,7 @@ CREATE TABLE Participacion
     nombreProyecto CHAR(50),
     nickUsuario CHAR(50),
     estado INTEGER,
-    categoriaUsuario INTEGER,
+    rol INTEGER,
     FOREIGN KEY (nombreProyecto) REFERENCES Proyecto(nombreProyecto)
         ON DELETE CASCADE
         ON UPDATE NO ACTION,
@@ -129,8 +140,19 @@ CREATE TABLE Participacion
     FOREIGN KEY (nickUsuario)  REFERENCES Usuario(nickUsuario)
         ON DELETE NO ACTION
         ON UPDATE NO ACTION,
+    FOREIGN KEY (rol)  REFERENCES Rol(rol)
+        ON DELETE NO ACTION
+        ON UPDATE NO ACTION,
     CONSTRAINT pk_participacion PRIMARY KEY (nombreProyecto,nickUsuario,fechaParticipacion)
 );
+
+INSERT INTO Rol (rol,valorRol) VALUES (1, 'Jefe de proyecto'),
+                                      (2,'Analista'),
+                                      (3,'Diseñador'),
+                                      (4,'Analista-Programador'),
+                                      (5,'Responsable del equipo de pruebas'),
+                                      (6,'Programador'),
+                                      (7,'Probador');
 
 INSERT INTO Estado
     (estado,valorEstado)
@@ -157,7 +179,7 @@ VALUES
     ('El jefe', 'pepe', '33456799B', 'pepe', 'el', 'tramas', '90-10-16', 1);
 
 INSERT INTO Actividad
-    (nombreActividad,nombreProyecto,descripcion,duracionEstimada,duracionReal,fechaInicio,fechaFin,estado,categoriaUsuario)
+    (nombreActividad,nombreProyecto,descripcion,duracionEstimada,duracionReal,fechaInicio,fechaFin,estado,rol)
 VALUES
     ('A', 'ProyectoA', 'Descripcion', 25, 50, '18-12-01', '18-12-07', 2, 1),
     ('B','ProyectoA', 'Descripcion', 25 , 50, '18-12-07', '14-12-18', 2, 1);
@@ -168,7 +190,7 @@ VALUES
     (2, 1, 'ProyectoA');
 
 INSERT INTO Participacion
-    (fechaParticipacion,porcentajeParticipacion,nombreProyecto,nickUsuario,estado,categoriaUsuario)
+    (fechaParticipacion,porcentajeParticipacion,nombreProyecto,nickUsuario,estado,rol)
 VALUES
     ('18-12-01', '0.25', 'ProyectoA', 'ivan', 0, 2),
     ('18-12-01', '0.25', 'ProyectoA', 'pepe', 0, 2),
