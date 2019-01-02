@@ -21,6 +21,28 @@ function init(app, dbPool, db) {
 
         db.execQuery(dbPool, query, args, onResults, res);
     })
+
+    app.get('/api/actividad/:numeroActividad', (req, res) => {
+        var query = db.querys.actividades.getActividadesById;
+
+        const numeroActividad = req.params.numeroActividad;
+        var args = [numeroActividad];
+
+        function onResults(error, results, response) {
+            if (!error) {
+                if (results.length == 0) {
+                    response.sendStatus(404);
+                } else {
+                    console.log("Peticion recibida");
+                    return res.status(200).json({
+                        data: results
+                    })
+                }
+            }
+        }
+
+        db.execQuery(dbPool, query, args, onResults, res);
+    })
 }
 
 module.exports = init;

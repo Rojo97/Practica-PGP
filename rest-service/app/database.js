@@ -26,7 +26,8 @@ const db = {
             insertParticipacionJefe : 'INSERT INTO Participacion VALUES (NOW(),1,?,?,0)'
         },
         actividades : {
-            getActividadesUsuario : 'SELECT * FROM Actividad A WHERE A.nombreProyecto = ? AND A.nickUsuario = ?'
+            getActividadesUsuario : 'SELECT * FROM Actividad A WHERE A.nombreProyecto = ? AND A.nickUsuario = ?',
+            getActividadesById : 'SELECT * FROM Actividad A WHERE A.numeroActividad = ?'
         }
     },
     execQuery: function (dbPool, query, args, cb, res) {
