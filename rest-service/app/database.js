@@ -27,7 +27,7 @@ const db = {
         },
         actividades : {
             getActividadesUsuario : 'SELECT * FROM Actividad A WHERE A.nombreProyecto = ? AND A.nickUsuario = ?',
-            getActividadesById : 'SELECT * FROM Actividad A WHERE A.numeroActividad = ?'
+            getActividadesById : 'SELECT * FROM Actividad A WHERE A.nombreActividad = ?'
         }
     },
     execQuery: function (dbPool, query, args, cb, res) {

@@ -22,11 +22,11 @@ function init(app, dbPool, db) {
         db.execQuery(dbPool, query, args, onResults, res);
     })
 
-    app.get('/api/actividad/:numeroActividad', (req, res) => {
+    app.get('/api/actividad/:nombreActividad', (req, res) => {
         var query = db.querys.actividades.getActividadesById;
 
-        const numeroActividad = req.params.numeroActividad;
-        var args = [numeroActividad];
+        const nombreActividad = req.params.nombreActividad;
+        var args = [nombreActividad];
 
         function onResults(error, results, response) {
             if (!error) {
