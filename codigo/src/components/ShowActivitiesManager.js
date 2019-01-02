@@ -7,6 +7,7 @@ export default class ShowActivitiesManager extends Component {
         super(props);
         this.state = {
             actividades: [],
+            estados: ["En curso", "Finalizada", "Cerrada", "Aprobada"]
         }
     }
 
@@ -22,14 +23,12 @@ export default class ShowActivitiesManager extends Component {
             .catch(function (data) { console.log(data) });
     }
 
-
-
     render() {
         return (
             <div className="content-wrapper">
                 <div className="content-header">
                     <h1>
-                        Seleccionar proyecto
+                        Actividades 
                     </h1>
                 </div>
                 <section className="content">
@@ -42,12 +41,12 @@ export default class ShowActivitiesManager extends Component {
                                         <h3>{actividad.numeroActividad}</h3>
                                         <p>{actividad.descripcion}</p>
                                         <p style={{float: 'left'}} align="left">Inicio: {Moment(actividad.fechaInicio).format('DD/MM/YYYY')}</p>
-                                        <p style={{clear: 'right'}} align="right">Estado: {actividad.estado}</p>
+                                        <p style={{clear: 'right'}} align="right">Estado: {this.state.estados[actividad.estado]}</p>
                                     </div>
                                     <div className="icon">
                                         <i className="fa fa-gear"></i>
                                     </div>
-                                    <Link to='' className="small-box-footer">Seleccionar <i className="fa fa-arrow-circle-right"></i></Link>
+                                    <Link to={"/projectManager/activity/"+actividad.numeroActividad} className="small-box-footer">Ver y editar <i className="fa fa-arrow-circle-right"></i></Link>
                                 </div>
                                 ))}
                                 </div>
