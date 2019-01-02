@@ -88,28 +88,28 @@ CREATE TABLE EstadoInforme
 
 CREATE TABLE InformeSemanal
 (
-    fechaInicio DATE,
-    nombreActividad INTEGER,
+    numeroInforme INTEGER AUTO_INCREMENT,
+    nombreActividad CHAR(50),
     nombreProyecto CHAR(50),
     nickUsuario CHAR(50),
     informeTareasPersonales CHAR (200),
-    estadoInforme INTEGER,
-    FOREIGN KEY (nombreActividad, nombreProyecto) REFERENCES Actividad (nombreActividad,nombreProyecto)
+    estado INTEGER,
+     FOREIGN KEY (nombreActividad, nombreProyecto) REFERENCES Actividad (nombreActividad,nombreProyecto)
         ON DELETE CASCADE
         ON UPDATE NO ACTION,
     FOREIGN KEY (nickUsuario) REFERENCES Usuario (nickUsuario)
         ON DELETE CASCADE
         ON UPDATE NO ACTION,
-    FOREIGN KEY (estadoInforme) REFERENCES EstadoInforme (estado)
+    FOREIGN KEY (estado) REFERENCES EstadoInforme (estado)
         ON DELETE CASCADE
-        ON UPDATE NO ACTION,    
-    CONSTRAINT pk_informeSemanal PRIMARY KEY (fechaInicio,nombreActividad,nombreProyecto,nickUsuario)
+        ON UPDATE NO ACTION,   
+    CONSTRAINT pk_informeSemanal PRIMARY KEY (numeroInforme)
 );
 
 CREATE TABLE Predecesora
 (
-    precedida INTEGER,
-    predecesora INTEGER,
+    precedida CHAR(50),
+    predecesora CHAR(50),
     nombreProyecto CHAR(50),
     FOREIGN KEY (precedida) REFERENCES Actividad(nombreActividad)
         ON DELETE CASCADE
@@ -120,6 +120,7 @@ CREATE TABLE Predecesora
     FOREIGN KEY (nombreProyecto) REFERENCES Actividad(nombreProyecto)
         ON DELETE CASCADE
         ON UPDATE NO ACTION,
+    CONSTRAINT par_actividades UNIQUE (precedida,predecesora),
     CONSTRAINT pk_predecesora PRIMARY KEY (precedida,predecesora,nombreProyecto)
 );
 
@@ -187,7 +188,7 @@ VALUES
 INSERT INTO Predecesora
     (precedida,predecesora,nombreProyecto)
 VALUES
-    (2, 1, 'ProyectoA');
+    ('B', 'A', 'ProyectoA');
 
 INSERT INTO Participacion
     (fechaParticipacion,porcentajeParticipacion,nombreProyecto,nickUsuario,estado,rol)
@@ -204,7 +205,6 @@ VALUES
     (2, 'PendienteAceptacion'),
     (3, 'PendienteEnvio');
 INSERT INTO InformeSemanal
-    (fechaInicio, nombreActividad,nombreProyecto,nickUsuario,informeTareasPersonales,estadoInforme)
+    ( nombreActividad,nombreProyecto,nickUsuario,informeTareasPersonales,estado)
 VALUES
-    ('18-02-02', 1, 'ProyectoA', 'ivan', 'informe', 0);
-
+    ( 'A', 'ProyectoA', 'ivan', 'informe', 0);
