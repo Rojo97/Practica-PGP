@@ -8,6 +8,22 @@ function init(app, dbPool, db) {
 
         function onResults(error, results, response) {
             if (!error) {
+                response.status(201).json({});
+            } else { res.status(500).send('Error on the server.'); }
+        };
+
+        db.execQuery(dbPool, query, args, onResults, res);
+    })
+
+    app.get('/api/actividad/:nombreActividad/proyecto/:nombreProyecto', (req, res) => {
+        var query = db.querys.actividades.getActividadesById;
+
+        const nombreActividad = req.params.nombreActividad;
+        const nombreProyecto = req.params.nombreProyecto;
+        var args = [nombreActividad,nombreProyecto];
+
+        function onResults(error, results, response) {
+            if (!error) {
                 if (results.length == 0) {
                     response.sendStatus(404);
                 } else {
@@ -22,12 +38,12 @@ function init(app, dbPool, db) {
         db.execQuery(dbPool, query, args, onResults, res);
     })
 
-    app.get('/api/actividad/:nombreActividad/proyecto/:nombreProyecto', (req, res) => {
-        var query = db.querys.actividades.getActividadesById;
+    app.put('/api/actividad', (req, res) => {
+        var query = db.querys.actividades.updateActividad;
 
-        const nombreActividad = req.params.nombreActividad;
-        const nombreProyecto = req.params.nombreProyecto;
-        var args = [nombreActividad,nombreProyecto];
+        const fechaFin = req.params.fechaFin;
+        const estado = req.params.estado;
+        var args = [fechaFin,estado];
 
         function onResults(error, results, response) {
             if (!error) {
