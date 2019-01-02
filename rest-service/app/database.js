@@ -27,7 +27,8 @@ const db = {
         },
         actividades : {
             getActividadesUsuario : 'SELECT * FROM Actividad A WHERE A.nombreProyecto = ? AND A.nickUsuario = ?',
-            getActividadesById : 'SELECT * FROM Actividad A WHERE A.nombreActividad = ? AND A.nombreProyecto = ?'
+            getActividadesById : 'SELECT * FROM Actividad A WHERE A.nombreActividad = ? AND A.nombreProyecto = ?',
+            updateActividad : 'UPDATE Actividad SET fechaFin = ?, estado = ? WHERE nombreActividad = ? AND nombreProyecto=?'
         }
     },
     execQuery: function (dbPool, query, args, cb, res) {
