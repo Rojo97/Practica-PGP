@@ -51,7 +51,7 @@ function init(app, dbPool, db) {
 
         if (req.query.rol != null) {
             var query = db.querys.proyectos.getParticipantesProyectoConRol;
-            var args = [nombreProyecto, rol];
+            var args = [nombreProyecto, req.query.rol];
         } else {
             var query = db.querys.proyectos.getParticipantesProyecto;
             var args = [nombreProyecto];
