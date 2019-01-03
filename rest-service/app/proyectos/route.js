@@ -48,13 +48,15 @@ function init(app, dbPool, db) {
 
     app.get('/api/proyecto/:nombreProyecto/participantes', (req, res) => {
         const nombreProyecto = req.params.nombreProyecto;
-        console.log(req.query.rol);
+        
         if (req.query.rol != "undefined") {
             var query = db.querys.proyectos.getParticipantesProyectoConRol;
             var args = [nombreProyecto, req.query.rol];
+            console.log("Rol");
         } else {
             var query = db.querys.proyectos.getParticipantesProyecto;
             var args = [nombreProyecto];
+            console.log("No rol");
         }
 
 
