@@ -22,8 +22,8 @@ const db = {
             countProyectosByNombre: 'SELECT COUNT(*) AS numeroProyectos FROM Proyecto Pr WHERE Pr.nombreProyecto = ?',
             getActividadesProyecto:'SELECT * FROM Actividad A WHERE A.nombreProyecto = ?',
             getParticipantesProyecto : 'SELECT U.nickUsuario,U.dni,U.nombre,U.apellido1,U.apellido2,P.porcentajeParticipacion FROM Usuario U, Participacion P, Proyecto Pr WHERE U.nickUsuario = P.nickUsuario AND Pr.nombreProyecto = P.nombreProyecto AND P.nombreProyecto = ?',
-            getParticipantesProyectoConRol : 'SELECT U.nickUsuario,U.dni,U.nombre,U.apellido1,U.apellido2,P.porcentajeParticipacion FROM Usuario U, Participacion P, Proyecto Pr WHERE U.nickUsuario = P.nickUsuario AND Pr.nombreProyecto = P.nombreProyecto AND P.nombreProyecto = ? AND P.rol=?'
-
+            getParticipantesProyectoConRol : 'SELECT U.nickUsuario,U.dni,U.nombre,U.apellido1,U.apellido2,P.porcentajeParticipacion FROM Usuario U, Participacion P, Proyecto Pr WHERE U.nickUsuario = P.nickUsuario AND Pr.nombreProyecto = P.nombreProyecto AND P.nombreProyecto = ? AND P.rol=?',
+            getCandidatos : 'SELECT * FROM ( SELECT U.nickUsuario, sum(P.porcentajeParticipacion) as \'participacion\' FROM Participacion P, Usuario U, (SELECT U.nickUsuario as nick, COUNT(*) as \'nProyectos\' FROM Participacion P, Usuario U WHERE P.estado = 0 and U.nickUsuario = P.nickUsuario GROUP BY P.nickUsuario) t1 WHERE P.estado=0 and P.nickUsuario = U.nickUsuario  and P.nickUsuario = t1.nick and t1.nProyectos<2 and NOT EXISTS (select * where P.nombreProyecto = ? and P.estado = 0 and P.nickUsuario = U.nickUsuario) GROUP BY P.nickUsuario) t2  WHERE t2.participacion<100'
         },
         participacion: {
             insertParticipacionJefe : 'INSERT INTO Participacion VALUES (NOW(),1,?,?,0)'
