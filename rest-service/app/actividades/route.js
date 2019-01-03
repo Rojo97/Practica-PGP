@@ -9,7 +9,14 @@ function init(app, dbPool, db) {
 
         function onResults(error, results, response) {
             if (!error) {
-                response.status(201).json({});
+                if (results.length == 0) {
+                    response.sendStatus(404);
+                } else {
+                    console.log("Peticion recibida");
+                    return res.status(200).json({
+                        data: results
+                    })
+                }
             } else { res.status(500).send('Error on the server.'); }
         };
 
@@ -50,14 +57,7 @@ function init(app, dbPool, db) {
 
         function onResults(error, results, response) {
             if (!error) {
-                if (results.length == 0) {
-                    response.sendStatus(404);
-                } else {
-                    console.log("Peticion recibida");
-                    return res.status(200).json({
-                        data: results
-                    })
-                }
+                response.status(201).json({});
             } else { res.status(500).send('Error on the server.'); }
         }
 
