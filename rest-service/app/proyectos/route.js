@@ -45,6 +45,34 @@ function init(app, dbPool, db) {
 
         db.execQuery(dbPool, query, args, onResults, res);
     })
+
+    app.get('/api/proyecto/:nombreProyecto/participantes', (req, res) => {
+        const nombreProyecto = req.params.nombreProyecto;
+
+        if (req.query.rol != null) {
+            var query = db.querys.proyectos.getParticipantesProyectoConRol;
+            var args = [nombreProyecto, rol];
+        } else {
+            var query = db.querys.proyectos.getParticipantesProyecto;
+            var args = [nombreProyecto];
+        }
+
+
+        function onResults(error, results, response) {
+            if (!error) {
+                if (results.length == 0) {
+                    response.sendStatus(404);
+                } else {
+                    console.log("Peticion recibida");
+                    return res.status(200).json({
+                        data: results
+                    })
+                }
+            } else { res.status(500).send('Error on the server.'); }
+        }
+
+        db.execQuery(dbPool, query, args, onResults, res);
+    })
 }
 
 module.exports = init;
