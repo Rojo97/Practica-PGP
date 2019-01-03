@@ -38,10 +38,12 @@ function init(app, dbPool, db) {
                 
         actividades.forEach(actividad => {
             args = [actividad.nombre, nombreProyecto, actividad.descripcion, actividad.duracion, actividad.rol];
+            console.log(args);
             db.execQuery(dbPool, query1, args, onResults, res);
         
             actividad.actividadesPredecesoras.forEach(predecesora => {
                 args2 = [actividad.nombre, predecesora.nombre, nombreProyecto];
+                console.log(args2);
                 db.execQuery(dbPool, query2, args2, onResults, res);
             });
         });
