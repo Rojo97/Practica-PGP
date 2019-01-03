@@ -39,7 +39,7 @@ export default class SelectProject extends Component {
                     <div className="row">
                         <div className="col-md-12">
                             <div>
-                                {/* {this.state.proyectos.map(proyecto => (
+                                {this.state.proyectos.map(proyecto => (
                                     <div className="small-box bg-purple">
                                     <div className="inner">
                                         <h3>{proyecto.nombreProyecto}</h3>
@@ -50,9 +50,7 @@ export default class SelectProject extends Component {
                                     </div>
                                     <Link to={`/developer/project/${ proyecto.nombreProyecto }/activities`} className="small-box-footer">Seleccionar <i className="fa fa-arrow-circle-right"></i></Link>
                                 </div>
-                                ))} */}
-
-                                <h1>{this.state.proyectos.nombreProyecto}</h1>
+                                ))}
                                 </div>
                         </div>
                     </div>
