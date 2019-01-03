@@ -53,7 +53,8 @@ function init(app, dbPool, db) {
         const estado = req.body.estado;
         const nombreActividad = req.body.nombreActividad;
         const nombreProyecto = req.body.nombreProyecto;
-        var args = [fechaFin, estado, nombreActividad, nombreProyecto];
+        const duracionReal = req.body.duracionReal;
+        var args = [fechaFin, estado, duracionReal, nombreActividad, nombreProyecto];
 
         function onResults(error, results, response) {
             if (!error) {
