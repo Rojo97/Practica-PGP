@@ -65,7 +65,7 @@ CREATE TABLE Actividad
     fechaInicio DATE,
     fechaFin DATE,
     estado INTEGER,
-    rol INTEGER,
+    rol INTEGER NULL,
     FOREIGN KEY (nombreProyecto) REFERENCES Proyecto(nombreProyecto)
         ON DELETE CASCADE
         ON UPDATE NO ACTION,
@@ -94,7 +94,7 @@ CREATE TABLE InformeSemanal
     nickUsuario CHAR(50),
     informeTareasPersonales CHAR (200),
     estado INTEGER,
-     FOREIGN KEY (nombreActividad, nombreProyecto) REFERENCES Actividad (nombreActividad,nombreProyecto)
+    FOREIGN KEY (nombreActividad, nombreProyecto) REFERENCES Actividad (nombreActividad,nombreProyecto)
         ON DELETE CASCADE
         ON UPDATE NO ACTION,
     FOREIGN KEY (nickUsuario) REFERENCES Usuario (nickUsuario)
