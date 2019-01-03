@@ -16,7 +16,14 @@ export default class ActivityDetailAndEdit extends Component {
     componentDidMount() {
         const nombre = this.props.match.params.nombre
 
-        fetch(`http://virtual.lab.inf.uva.es:27014/api/actividad/${nombre}`)
+        fetch(`http://virtual.lab.inf.uva.es:27014/api/actividad/${nombre}/proyecto/ProyectoA`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'x-access-token': window.sessionStorage.getItem('token')
+            }
+        })
             .then(function (response) {
                 console.log(response);
                 return response.json()
@@ -71,9 +78,9 @@ export default class ActivityDetailAndEdit extends Component {
                                 </div>
                             </div>
                             <div className="col-md-6">
-                                    <h1>Tema usuarios</h1>{/*TODO Aun por ver como se implementa */}
-                                    <h3>Aqui saldran los usuarios y existirá la posibilidad de añadir y eliminar</h3>
-                                </div>
+                                <h1>Tema usuarios</h1>{/*TODO Aun por ver como se implementa */}
+                                <h3>Aqui saldran los usuarios y existirá la posibilidad de añadir y eliminar</h3>
+                            </div>
                         </div>
                         <div className="box-footer">
                             <button type="submit" className="btn btn-info pull-right" onClick={this.activeEdit}>Editar</button>

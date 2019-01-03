@@ -31,7 +31,7 @@ export default class Header extends Component {
                                     {/* <!-- User image --> */}
                                     <li className="user-header">
                                         <img src="oneUser.png" className="img-circle" alt="User Image" />
-                                        <p>User on Develop<small>Here goes the rol</small></p>
+                                        <p>{window.sessionStorage.getItem('user')}<small>Here goes the rol</small></p>
                                     </li>
                                     {/* <!-- Menu Footer--> */}
                                     <li className="user-footer">

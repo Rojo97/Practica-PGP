@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from "react-router-dom";
-import { ContextConsumer, ContextProvider } from '../App';
+import { Link, Redirect } from "react-router-dom";
+import App from '../App';
 
 class Login extends Component {
     constructor(props){
@@ -8,13 +8,14 @@ class Login extends Component {
         this.state={
             user:'',
             password:'',
-            xaccesstoken:''
+            xaccesstoken:'',
+            logged: 0
         }
     }
 
-    handleFormSubmit = async event =>{
+    handleFormSubmit = async event => {
         event.preventDefault();
-        fetch(`http://virtual.lab.inf.uva.es:27014/api/login`,{
+        fetch(`http://virtual.lab.inf.uva.es:27014/api/login`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -24,9 +25,14 @@ class Login extends Component {
                 nickUsuario: this.state.user,
                 password: this.state.password,
             })
-        }).then(function (res) { console.log(res); return res.json();})
-        .then(responseJson => {this.setState({xaccesstoken: responseJson.token})})
-        .catch(function (res) { console.log(res) });
+        }).then(function (res) { console.log(res); return res.json(); })
+            .then(responseJson => { this.setState({ xaccesstoken: responseJson.token }) })
+            .then(() => {
+                window.sessionStorage.setItem('token', this.state.xaccesstoken);
+                window.sessionStorage.setItem('user', this.state.user);
+                this.setState({logged : 1});
+            })
+            .catch(function (res) { console.log(res) });
     }
 
     handleChange = event =>{
@@ -38,9 +44,14 @@ class Login extends Component {
     }
 
     render() {
+        let redirection;
+        if (this.state.logged == 0) {
+            redirection = '';
+        } else {
+            redirection = <Redirect to="/inicio"></Redirect>;
+        }
+
         return (
-            <ContextConsumer>
-            {({user, xaccesstoken, setToken})=>(
             <div className="login-box">
                 <div className="login-logo">
                     <a><b>Gea</b>Pros</a>
@@ -48,7 +59,7 @@ class Login extends Component {
                 <div className="login-box-body">
                     <p className="login-box-msg">Inicie sesión</p>
                     {/* <form method="post"> */}
-                    <form onSubmit={() => {this.handleFormSubmit(); setToken(this.state.xaccesstoken)}}>
+                    <form>
                         <div className="form-group has-feedback">
                             <input type="text" className="form-control" placeholder="nick" name="user" value={this.state.user} onChange={this.handleChange}/>
                             <span className="glyphicon glyphicon-envelope form-control-feedback"></span>
@@ -58,16 +69,15 @@ class Login extends Component {
                             <span className="glyphicon glyphicon-lock form-control-feedback"></span>
                         </div>
                         <div className="col-xs-14">
-                        <button type="submit" class="btn btn-primary btn-block btn-flat">Iniciar sesión</button>
+                        <Link to="/palntilla"><button type="submit" class="btn btn-primary btn-block btn-flat" onClick={this.handleFormSubmit}>Iniciar sesión</button></Link>
+                        {redirection}
                         </div>
                     </form>
                 </div>
-            </div>)}
-            </ContextConsumer>
+            </div>
         )
     }
 }
-
 
 export default Login;
 

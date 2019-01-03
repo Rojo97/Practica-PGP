@@ -14,7 +14,13 @@ export default class ShowActivitiesManager extends Component {
     componentDidMount() {
         const nombre = this.props.match.params.nombre
 
-        fetch(`http://virtual.lab.inf.uva.es:27014/api/proyecto/${nombre}/actividades`)
+        fetch(`http://virtual.lab.inf.uva.es:27014/api/proyecto/${nombre}/actividades`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'x-access-token': window.sessionStorage.getItem('token')
+            }})
             .then(function (response) { 
                 console.log(response);
                 return response.json()
