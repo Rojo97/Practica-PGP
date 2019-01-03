@@ -29,7 +29,7 @@ const db = {
             insertParticipacionJefe : 'INSERT INTO Participacion VALUES (NOW(),1,?,?,0)'
         },
         actividades : {
-            getActividadesUsuario : 'SELECT * FROM Actividad A WHERE A.nombreProyecto = ? AND A.nickUsuario = ?',
+            getActividadesUsuario : 'SELECT A.nombreActividad, A.nombreProyecto, A.descripcion, A.duracionEstimada, A.duracionReal, A.fechaInicio, A.fechaFin, A.estado, A.rol FROM Actividad A, InformeSemanal I WHERE A.nombreActividad = I.nombreActividad AND A.nombreProyecto = I.nombreProyecto AND A.nombreProyecto = ? AND I.nickUsuario = ?',
             getActividadesById : 'SELECT * FROM Actividad A WHERE A.nombreActividad = ? AND A.nombreProyecto = ?',
             updateActividad : 'UPDATE Actividad SET fechaFin = ?, estado = ? WHERE nombreActividad = ? AND nombreProyecto=?'
         }
