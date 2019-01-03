@@ -47,7 +47,7 @@ function init(app, dbPool, db) {
         db.execQuery(dbPool, query, args, onResults, res);
     })
 
-    app.get('/api/proyecto/:nombreProyecto/participantes', (req, res) => {
+    app.get('/api/proyecto/:nombreProyecto/participantes', VerifyToken, (req, res) => {
         const nombreProyecto = req.params.nombreProyecto;
         
         if (req.query.rol) {

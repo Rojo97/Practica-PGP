@@ -16,7 +16,7 @@ function init(app, dbPool, db) {
         db.execQuery(dbPool, query, args, onResults, res);
     })
 
-    app.get('/api/actividad/:nombreActividad/proyecto/:nombreProyecto', (req, res) => {
+    app.get('/api/actividad/:nombreActividad/proyecto/:nombreProyecto', VerifyToken, (req, res) => {
         var query = db.querys.actividades.getActividadesById;
 
         const nombreActividad = req.params.nombreActividad;
@@ -39,7 +39,7 @@ function init(app, dbPool, db) {
         db.execQuery(dbPool, query, args, onResults, res);
     })
 
-    app.put('/api/actividad', (req, res) => {
+    app.put('/api/actividad', VerifyToken, (req, res) => {
         var query = db.querys.actividades.updateActividad;
 
         const fechaFin = req.body.fechaFin;
