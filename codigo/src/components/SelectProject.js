@@ -5,12 +5,18 @@ export default class SelectProject extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            proyectos: [],
+            proyectos: []
         }
     }
 
     componentDidMount() {
-        fetch(`http://virtual.lab.inf.uva.es:27014/api/usuario/ivan/proyectos?actual=1`)
+        fetch(`http://virtual.lab.inf.uva.es:27014/api/usuario/${window.sessionStorage.getItem('user')}/proyectos?actual=1`,{
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'x-access-token': window.sessionStorage.getItem('token')
+                }})
             .then(function (response) { 
                 console.log(response);
                 return response.json()

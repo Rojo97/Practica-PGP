@@ -38,7 +38,7 @@ export default class DarAltaProyecto extends Component {
                 ...prevState, [name]: value
             }
         }
-        //, () => console.log(this.state)
+            //, () => console.log(this.state)
         )
     }
 
@@ -91,7 +91,14 @@ export default class DarAltaProyecto extends Component {
 
     //Se extraen del backend los jefes de proyecto que no tienen ningún proyecto activo asociado
     getJefesProyecto() {
-        fetch('http://virtual.lab.inf.uva.es:27014/api/usuario?selectableAsJefe=1')
+        fetch('http://virtual.lab.inf.uva.es:27014/api/usuario?selectableAsJefe=1', {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'x-access-token': window.sessionStorage.getItem('token')
+            }
+        })
             .then((response) => {
                 switch (response.status) {
                     case 200:
@@ -128,6 +135,7 @@ export default class DarAltaProyecto extends Component {
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
+                    'x-access-token': window.sessionStorage.getItem('token')
                 },
                 body: JSON.stringify({
                     nombreProyecto: this.state.nombre,
@@ -154,7 +162,7 @@ export default class DarAltaProyecto extends Component {
                         this.getJefesProyecto();
                         document.forms["formularioProyecto"]["idJefeProyecto"].value = "";
                         break;
-                    
+
                     //TODO Falta ver que codigo de error es
                     case 5000:
                         alert("Existe un proyecto con ese nombre");

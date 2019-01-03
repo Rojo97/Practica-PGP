@@ -40,6 +40,7 @@ export default class CrearUsuario extends Component {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
+                'x-access-token': window.sessionStorage.getItem('token')
             },
             body: JSON.stringify({
                 nickUsuario: this.state.login,
@@ -54,7 +55,7 @@ export default class CrearUsuario extends Component {
             })
         }).then(function (res) { console.log(res) })
             .catch(function (res) { console.log(res) });
-            //TODO 
+        //TODO 
         alert("Usuario enviado a la DB");
     }
 
