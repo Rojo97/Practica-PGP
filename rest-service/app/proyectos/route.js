@@ -48,7 +48,7 @@ function init(app, dbPool, db) {
 
     app.get('/api/proyecto/:nombreProyecto/participantes', (req, res) => {
         const nombreProyecto = req.params.nombreProyecto;
-
+        console.log(req.query.rol);
         if (req.query.rol != null) {
             var query = db.querys.proyectos.getParticipantesProyectoConRol;
             var args = [nombreProyecto, req.query.rol];
