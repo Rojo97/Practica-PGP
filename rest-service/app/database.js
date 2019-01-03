@@ -28,7 +28,7 @@ const db = {
             insertParticipacionJefe : 'INSERT INTO Participacion VALUES (NOW(),1,?,?,0)'
         },
         actividades : {
-            getActividadesUsuario : 'SELECT * FROM Actividad A WHERE A.nombreProyecto = ? AND A.nickUsuario = ?',
+            getActividadesUsuario : 'SELECT * FROM Actividad A NATURAL JOIN InformeSemanal I WHERE A.nombreProyecto = ? AND I.nickUsuario = ?',
             getActividadesById : 'SELECT * FROM Actividad A WHERE A.nombreActividad = ? AND A.nombreProyecto = ?',
             updateActividad : 'UPDATE Actividad SET fechaFin = ?, estado = ? WHERE nombreActividad = ? AND nombreProyecto=?'
         }
