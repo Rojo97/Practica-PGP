@@ -2,7 +2,6 @@ var VerifyToken = require('../auth/VerifyToken');
 function init(app, dbPool, db) {
 
     app.post('/api/proyecto', VerifyToken, (req, res) => {
-        console.log(req.body);
         var args = [req.body.nombreProyecto, req.body.resumen];
         var args2 = [req.body.nombreProyecto, req.body.nickUsuario];
         const query = db.querys.proyectos.insert;
@@ -23,6 +22,30 @@ function init(app, dbPool, db) {
 
         db.execQuery(dbPool, query, args, onResults, res);
 
+    })
+
+    app.post('/api/proyecto/:nombreProyecto/cargaPlan', (req, res) => {
+
+        var nombreProyecto = req.params.nombreProyecto;
+        var actividades = req.body.actividades;
+
+        query1 = db.querys.actividades.insert;
+        query2 = db.querys.actividades.insertPredecesora;
+
+        function onResults(error, results, response) {
+            if (error) res.status(500).send('Error on the server.'); 
+        };
+                
+        actividades.forEach(actividad => {
+            args = [actividad.nombre, nombreProyecto, actividad.descripcion, actividad.duracion, actividad.rol];
+            db.execQuery(dbPool, query1, args, onResults, res);
+        
+            actividad.actividadesPredecesoras.forEach(predecesora => {
+                args2 = [actividad.nombre, predecesora.nombre, nombreProyecto];
+                db.execQuery(dbPool, query2, args2, onResults, res);
+            });
+        });
+        res.status(201).json({});
     })
 
     app.get('/api/proyecto/:nombreProyecto/actividades', VerifyToken, (req, res) => {
