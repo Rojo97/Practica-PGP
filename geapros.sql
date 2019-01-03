@@ -1,3 +1,4 @@
+DROP TABLE  IF EXISTS Rol;
 DROP TABLE  IF EXISTS Estado;
 DROP TABLE  IF EXISTS Participacion;
 DROP TABLE  IF EXISTS Predecesora;
@@ -6,6 +7,13 @@ DROP TABLE  IF EXISTS EstadoInforme;
 DROP TABLE  IF EXISTS InformeSemanal;
 DROP TABLE  IF EXISTS Usuario;
 DROP TABLE  IF EXISTS Proyecto;
+
+CREATE TABLE Rol(
+    rol INTEGER,
+    valorRol CHAR(50),
+    UNIQUE (valorRol),
+    CONSTRAINT pk_rol PRIMARY KEY (rol)
+);
 
 CREATE TABLE Estado
 (
@@ -49,7 +57,7 @@ CREATE TABLE Usuario
 
 CREATE TABLE Actividad
 (
-    numeroActividad INTEGER,
+    nombreActividad CHAR(50),
     nombreProyecto CHAR(50),
     descripcion CHAR(50),
     duracionEstimada REAL,
@@ -57,14 +65,17 @@ CREATE TABLE Actividad
     fechaInicio DATE,
     fechaFin DATE,
     estado INTEGER,
-    categoriaUsuario INTEGER,
+    rol INTEGER,
     FOREIGN KEY (nombreProyecto) REFERENCES Proyecto(nombreProyecto)
         ON DELETE CASCADE
         ON UPDATE NO ACTION,
     FOREIGN KEY (estado) REFERENCES Estado(estado)
         ON DELETE NO ACTION
         ON UPDATE NO ACTION,
-    CONSTRAINT pk_actividad PRIMARY KEY (numeroActividad,nombreProyecto)
+    FOREIGN KEY (rol) REFERENCES Rol(rol)
+        ON DELETE NO ACTION
+        ON UPDATE NO ACTION,
+    CONSTRAINT pk_actividad PRIMARY KEY (nombreActividad,nombreProyecto)
 );
 
 CREATE TABLE EstadoInforme
@@ -77,35 +88,39 @@ CREATE TABLE EstadoInforme
 
 CREATE TABLE InformeSemanal
 (
-    fechaInicio DATE,
-    numeroActividad INTEGER,
+    numeroInforme INTEGER AUTO_INCREMENT,
+    nombreActividad CHAR(50),
     nombreProyecto CHAR(50),
     nickUsuario CHAR(50),
     informeTareasPersonales CHAR (200),
-    estadoInforme INTEGER,
-    FOREIGN KEY (numeroActividad, nombreProyecto) REFERENCES Actividad (numeroActividad,nombreProyecto)
+    estado INTEGER,
+     FOREIGN KEY (nombreActividad, nombreProyecto) REFERENCES Actividad (nombreActividad,nombreProyecto)
         ON DELETE CASCADE
         ON UPDATE NO ACTION,
     FOREIGN KEY (nickUsuario) REFERENCES Usuario (nickUsuario)
         ON DELETE CASCADE
         ON UPDATE NO ACTION,
-    CONSTRAINT pk_informeSemanal PRIMARY KEY (fechaInicio,numeroActividad,nombreProyecto,nickUsuario)
+    FOREIGN KEY (estado) REFERENCES EstadoInforme (estado)
+        ON DELETE CASCADE
+        ON UPDATE NO ACTION,   
+    CONSTRAINT pk_informeSemanal PRIMARY KEY (numeroInforme)
 );
 
 CREATE TABLE Predecesora
 (
-    precedida INTEGER,
-    predecesora INTEGER,
+    precedida CHAR(50),
+    predecesora CHAR(50),
     nombreProyecto CHAR(50),
-    FOREIGN KEY (precedida) REFERENCES Actividad(numeroActividad)
+    FOREIGN KEY (precedida) REFERENCES Actividad(nombreActividad)
         ON DELETE CASCADE
         ON UPDATE NO ACTION,
-    FOREIGN KEY (predecesora) REFERENCES Actividad(numeroActividad)
+    FOREIGN KEY (predecesora) REFERENCES Actividad(nombreActividad)
         ON DELETE CASCADE
         ON UPDATE NO ACTION,
     FOREIGN KEY (nombreProyecto) REFERENCES Actividad(nombreProyecto)
         ON DELETE CASCADE
         ON UPDATE NO ACTION,
+    CONSTRAINT par_actividades UNIQUE (precedida,predecesora),
     CONSTRAINT pk_predecesora PRIMARY KEY (precedida,predecesora,nombreProyecto)
 );
 
@@ -116,7 +131,7 @@ CREATE TABLE Participacion
     nombreProyecto CHAR(50),
     nickUsuario CHAR(50),
     estado INTEGER,
-    categoriaUsuario INTEGER,
+    rol INTEGER,
     FOREIGN KEY (nombreProyecto) REFERENCES Proyecto(nombreProyecto)
         ON DELETE CASCADE
         ON UPDATE NO ACTION,
@@ -126,8 +141,19 @@ CREATE TABLE Participacion
     FOREIGN KEY (nickUsuario)  REFERENCES Usuario(nickUsuario)
         ON DELETE NO ACTION
         ON UPDATE NO ACTION,
+    FOREIGN KEY (rol)  REFERENCES Rol(rol)
+        ON DELETE NO ACTION
+        ON UPDATE NO ACTION,
     CONSTRAINT pk_participacion PRIMARY KEY (nombreProyecto,nickUsuario,fechaParticipacion)
 );
+
+INSERT INTO Rol (rol,valorRol) VALUES (1, 'Jefe de proyecto'),
+                                      (2,'Analista'),
+                                      (3,'Diseñador'),
+                                      (4,'Analista-Programador'),
+                                      (5,'Responsable del equipo de pruebas'),
+                                      (6,'Programador'),
+                                      (7,'Probador');
 
 INSERT INTO Estado
     (estado,valorEstado)
@@ -154,18 +180,18 @@ VALUES
     ('El jefe', 'pepe', '33456799B', 'pepe', 'el', 'tramas', '90-10-16', 1);
 
 INSERT INTO Actividad
-    (numeroActividad,nombreProyecto,descripcion,duracionEstimada,duracionReal,fechaInicio,fechaFin,estado,categoriaUsuario)
+    (nombreActividad,nombreProyecto,descripcion,duracionEstimada,duracionReal,fechaInicio,fechaFin,estado,rol)
 VALUES
-    (1, 'ProyectoA', 'Descripcion', 25, 50, '18-12-01', '18-12-07', 2, 1),
-    (2, 'ProyectoA', 'Descripcion', 25 , 50, '18-12-07', '14-12-18', 2, 1);
+    ('A', 'ProyectoA', 'Descripcion', 25, 50, '18-12-01', '18-12-07', 2, 1),
+    ('B','ProyectoA', 'Descripcion', 25 , 50, '18-12-07', '14-12-18', 2, 1);
 
 INSERT INTO Predecesora
     (precedida,predecesora,nombreProyecto)
 VALUES
-    (2, 1, 'ProyectoA');
+    ('B', 'A', 'ProyectoA');
 
 INSERT INTO Participacion
-    (fechaParticipacion,porcentajeParticipacion,nombreProyecto,nickUsuario,estado,categoriaUsuario)
+    (fechaParticipacion,porcentajeParticipacion,nombreProyecto,nickUsuario,estado,rol)
 VALUES
     ('18-12-01', '0.25', 'ProyectoA', 'ivan', 0, 2),
     ('18-12-01', '0.25', 'ProyectoA', 'pepe', 0, 2),
@@ -179,7 +205,6 @@ VALUES
     (2, 'PendienteAceptacion'),
     (3, 'PendienteEnvio');
 INSERT INTO InformeSemanal
-    (fechaInicio, numeroActividad,nombreProyecto,nickUsuario,informeTareasPersonales,estadoInforme)
+    ( nombreActividad,nombreProyecto,nickUsuario,informeTareasPersonales,estado)
 VALUES
-    ('18-02-02', 1, 'ProyectoA', 'ivan', 'informe', 0);
-
+    ( 'A', 'ProyectoA', 'ivan', 'informe', 0);
