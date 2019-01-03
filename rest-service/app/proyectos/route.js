@@ -33,13 +33,16 @@ function init(app, dbPool, db) {
         query2 = db.querys.actividades.insertPredecesora;
 
         function onResults(error, results, response) {
-            if (error) res.status(500).send('Error on the server.'); 
+            if (error) console.log(error);
         };
                 
         actividades.forEach(actividad => {
             args = [actividad.nombre, nombreProyecto, actividad.descripcion, actividad.duracion, actividad.rol];
             db.execQuery(dbPool, query1, args, onResults, res);
         
+        });
+
+        actividades.forEach(actividad => {
             actividad.actividadesPredecesoras.forEach(predecesora => {
                 args2 = [actividad.nombre, predecesora.nombre, nombreProyecto];
                 db.execQuery(dbPool, query2, args2, onResults, res);
