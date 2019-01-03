@@ -33,7 +33,7 @@ const db = {
             getActividadesById : 'SELECT * FROM Actividad A WHERE A.nombreActividad = ? AND A.nombreProyecto = ?',
             updateActividad : 'UPDATE Actividad SET fechaFin = ?, estado = ?, duracionReal = ? WHERE nombreActividad = ? AND nombreProyecto=?',
             insert : 'INSERT INTO Actividad (nombreActividad,nombreProyecto,descripcion,duracionEstimada,estado, rol) VALUES (?,?,?,?,0,?)',
-            inserPredecesora : 'INSERT INTO Predecesora (precedida,predecesora,nombreProyecto) VALUES (?,?,?)'
+            insertPredecesora : 'INSERT INTO Predecesora (precedida,predecesora,nombreProyecto) VALUES (?,?,?)'
         }
     },
     execQuery: function (dbPool, query, args, cb, res) {
