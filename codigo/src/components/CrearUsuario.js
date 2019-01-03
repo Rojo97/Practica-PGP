@@ -6,13 +6,11 @@ export default class CrearUsuario extends Component {
         this.state = {
             login: '',
             password: '',
-            password2: '',
             dni: '',
             nombre: '',
             apellido1: '',
             apellido2: '',
             fechanacimiento: '',
-            tipo: '',
             categoria: '',
         }
 
@@ -50,13 +48,12 @@ export default class CrearUsuario extends Component {
                 apellido1: this.state.apellido1,
                 apellido2: this.state.apellido2,
                 fechaNacimiento: this.state.fechanacimiento,
-                tipoUsuario: this.state.tipo,
                 categoriaUsuario: this.state.categoria,
             })
         }).then(function (res) { console.log(res) })
+            .then(() => { alert("Usuario enviado a la DB") })
             .catch(function (res) { console.log(res) });
-        //TODO 
-        alert("Usuario enviado a la DB");
+
     }
 
     render() {
@@ -98,12 +95,12 @@ export default class CrearUsuario extends Component {
                                                     <input type="date" className="form-control pull-right" name="fechanacimiento" value={this.state.fechanacimiento} onChange={this.handleInputChange} />
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div className="col-md-6">
                                             <div className="form-group">
                                                 <label htmlFor="dni">DNI</label>
                                                 <input type="text" className="form-control" name="dni" placeholder="DNI" value={this.state.dni} onChange={this.handleInputChange} />
                                             </div>
-                                        </div>
-                                        <div className="col-md-6">
                                             <div className="form-group">
                                                 <label htmlFor="inputLogin">Nombre de usuario</label>
                                                 <input type="text" className="form-control" name="login" placeholder="Intorduzca el nombre de usuario" value={this.state.login} onChange={this.handleInputChange} />
@@ -113,22 +110,10 @@ export default class CrearUsuario extends Component {
                                                 <input type="password" className="form-control" name="password" placeholder="Contraseña" value={this.state.password} onChange={this.handleInputChange} />
                                             </div>
                                             <div className="form-group">
-                                                <label htmlFor="inputPassword2">Repetir contraseña</label>
-                                                <input type="password" className="form-control" name="password2" placeholder="Repetir contraseña" value={this.state.password2} onChange={this.handleInputChange} />
-                                            </div>
-                                            <div className="form-group">
-                                                <label>Tipo de usuario</label>
-                                                <select className="form-control" name="tipo" value={this.state.tipo} onChange={this.handleInputChange} >
-                                                    <option disabled value=''> -- Seleccione un tipo de usuario -- </option>
-                                                    <option value="0">Administrador</option>
-                                                    <option value="1">Jefe de proyecto</option>
-                                                    <option value="2">Desarrollador</option>
-                                                </select>
-                                            </div>
-                                            <div className="form-group">
                                                 <label>Categoria</label>
                                                 <select className="form-control" name="categoria" value={this.state.categoria} onChange={this.handleInputChange}>
                                                     <option disabled value=''> -- Seleccione una categoría -- </option>
+                                                    <option value="0">0</option>
                                                     <option value="1">1</option>
                                                     <option value="2">2</option>
                                                     <option value="3">3</option>

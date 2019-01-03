@@ -6,7 +6,9 @@ export default class ActivityDetail extends Component {
         super(props);
         this.state = {
             actividad: [],
-            estados: ["En curso", "Finalizada", "Cerrada", "Aprobada"]
+            informe: 0,
+            estados: ["En curso", "Finalizada", "Cerrada", "Aprobada"],
+            roles: ["Administrador", "Jefe de proyecto", "Analista", "Diseñador, Analista-Programador o Responsable del equipo de pruebas", "Programador o probador"],
         }
     }
 
@@ -33,7 +35,7 @@ export default class ActivityDetail extends Component {
         return (
             <div className="content-wrapper">
                 <section className="content-header">
-                    <h1>Actividad numero {this.state.actividad.numeroActividad}</h1> {/*TODO nombre dinamico*/}
+                    <h1>Actividad {this.state.actividad.nombreActividad}</h1>
                 </section>
                 <section className="content">
                     <div className="row">
@@ -46,11 +48,15 @@ export default class ActivityDetail extends Component {
                                     <div className="col-md-6">
                                         <h4>-Proyecto : {this.state.actividad.nombreProyecto}</h4>
                                         <h4>-Participantes: {this.state.actividad.nickUsuario}</h4>
+                                        <h4>-Duración estimada: {this.state.actividad.duracionEstimada}</h4>
+                                        <h4>-Duración real: {this.state.actividad.duracionReal}</h4>
                                     </div>
                                     <div className="col-md-6">
                                         <h4>-Fecha de inicio: {Moment(this.state.actividad.fechaInicio).format('DD/MM/YYYY')}</h4>
                                         <h4>-Fecha de fin estimada: {Moment(this.state.actividad.fechaFinEstimada).format('DD/MM/YYYY')}</h4>
+                                        <h4>-Fecha de fin Real: {Moment(this.state.actividad.fechaFin).format('DD/MM/YYYY')}</h4>
                                         <h4>-Estado actual: {this.state.estados[this.state.actividad.estado]}</h4>
+                                        <h4>-Rol: {this.state.roles[this.state.actividad.rol]}</h4>
                                     </div>
                                     <div className="box-body">
                                         <h3>Descripción:</h3>
