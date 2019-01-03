@@ -33,7 +33,7 @@ function init(app, dbPool, db) {
         query2 = db.querys.actividades.insertPredecesora;
 
         function onResults(error, results, response) {
-            if (error) res.status(500).send('Error on the server.'); 
+            if (error) console.log("LOL");//res.status(500).send('Error on the server.'); 
         };
                 
         actividades.forEach(actividad => {
