@@ -5,7 +5,7 @@ export default class SelectProject extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            proyectos: {nombreProyecto:"hola", resumen:"resumen"}
+            proyectos: []
         }
     }
 
