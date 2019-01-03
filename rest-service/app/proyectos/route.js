@@ -41,6 +41,9 @@ function init(app, dbPool, db) {
             console.log(args);
             db.execQuery(dbPool, query1, args, onResults, res);
         
+        });
+
+        actividades.forEach(actividad => {
             actividad.actividadesPredecesoras.forEach(predecesora => {
                 args2 = [actividad.nombre, predecesora.nombre, nombreProyecto];
                 console.log(args2);
