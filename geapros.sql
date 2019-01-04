@@ -94,6 +94,7 @@ CREATE TABLE InformeSemanal
     nickUsuario CHAR(50),
     informeTareasPersonales CHAR (200),
     estado INTEGER,
+    horas REAL,
     FOREIGN KEY (nombreActividad, nombreProyecto) REFERENCES Actividad (nombreActividad,nombreProyecto)
         ON DELETE CASCADE
         ON UPDATE NO ACTION,
@@ -205,6 +206,6 @@ VALUES
     (2, 'PendienteAceptacion'),
     (3, 'PendienteEnvio');
 INSERT INTO InformeSemanal
-    ( nombreActividad,nombreProyecto,nickUsuario,informeTareasPersonales,estado)
+    ( nombreActividad,nombreProyecto,nickUsuario,informeTareasPersonales,estado,horas)
 VALUES
-    ( 'A', 'ProyectoA', 'ivan', 'informe', 0);
+    ( 'A', 'ProyectoA', 'ivan', 'informe', 0, 10);
