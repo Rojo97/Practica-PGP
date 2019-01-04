@@ -81,7 +81,7 @@ function init(app, dbPool, db) {
         });
 
         args3 = [fechaComienzo, presupuesto, nombreProyecto];
-        db.execQuery(dbPool, query3, args3, onResults, res);
+        db.execQuery(dbPool, query3, args3, onResults2, res);
     })
 
     app.get('/api/proyecto/:nombreProyecto/actividades', VerifyToken, (req, res) => {
