@@ -42,7 +42,7 @@ function init(app, dbPool, db) {
         };
 
 
-        db.execQuery(dbPool, query, args, onResults2, res);
+        db.execQuery(dbPool, query, args, onResults, res);
 
     })
 
@@ -82,6 +82,7 @@ function init(app, dbPool, db) {
 
         args3 = [fechaComienzo, presupuesto, nombreProyecto];
         db.execQuery(dbPool, query3, args3, onResults2, res);
+        console.log("Peticion recibida");
     })
 
     app.get('/api/proyecto/:nombreProyecto/actividades', VerifyToken, (req, res) => {
