@@ -31,7 +31,7 @@ export default class ShowActivitiesManager extends Component {
 
     color = estado =>{
         if(estado == 0){
-            return "small-box bg-yelow";
+            return "small-box bg-yellow";
         }else if(estado == 1){
             return "small-box bg-green";
         }else if(estado == 2){
