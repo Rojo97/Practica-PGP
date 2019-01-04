@@ -9,6 +9,7 @@ import ShowActivitiesManager from '../components/ShowActivitiesManager';
 import DarAltaProyecto from '../components/DarAltaProyecto';
 import ActivityDetail from '../components/ActivityDetail';
 import ActivityDetailAndEdit from '../components/ActivityDetailAndEdit';
+import ProjectDetailsManager from '../components/ProjectDetailsManager';
 
 class Plantilla extends Component {
   render() {
@@ -24,6 +25,7 @@ class Plantilla extends Component {
           <Route exact path="/developer/project/:proyecto/activities/:actividad" component={ActivityDetail}/>
           <Route exact path="/projectManager/project/:proyecto/activities" component={ShowActivitiesManager}/>
           <Route exact path="/projectManager/project/:proyecto/activities/:actividad" component={ActivityDetailAndEdit}/>
+          <Route exact path="/projectManager/project/:proyecto" component={ProjectDetailsManager}/>
         </Switch>
       </div>
     );
