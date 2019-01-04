@@ -30,16 +30,13 @@ function init(app, dbPool, db) {
         const query2 = db.querys.participacion.insertParticipacionJefe;
 
         function onResults(error, results, response) {
-            console.log("Primero");
             if (!error) {
-                console.log("Consulta 1");
                 db.execQuery(dbPool, query2, args2, onResults2, res);
             } else { res.status(500).send('Error on the server.'); }
         };
 
         function onResults2(error, results, response) {
             if (!error) {
-                console.log("Consulta 2");
                 response.status(201).json({});
             } else { res.status(500).send('Error on the server.'); }
         };
@@ -53,12 +50,21 @@ function init(app, dbPool, db) {
 
         var nombreProyecto = req.params.nombreProyecto;
         var actividades = req.body.actividades;
+        var presupuesto = req.body.presupuesto;
+        var fechaComienzo = req.body.fechaComienzo;
 
         query1 = db.querys.actividades.insert;
         query2 = db.querys.actividades.insertPredecesora;
+        query3 = db.querys.proyectos.updateCargaProyecto;
 
         function onResults(error, results, response) {
             if (error) console.log(error);
+        };
+
+        function onResults2(error, results, response) {
+            if (!error) {
+                response.status(201).json({});
+            } else { res.status(500).send('Error on the server.'); }
         };
 
         actividades.forEach(actividad => {
@@ -73,7 +79,9 @@ function init(app, dbPool, db) {
                 db.execQuery(dbPool, query2, args2, onResults, res);
             });
         });
-        res.status(201).json({});
+
+        args3 = [fechaComienzo, presupuesto, nombreProyecto];
+        db.execQuery(dbPool, query3, args3, onResults, res);
     })
 
     app.get('/api/proyecto/:nombreProyecto/actividades', VerifyToken, (req, res) => {
