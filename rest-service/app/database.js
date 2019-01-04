@@ -61,7 +61,7 @@ const db = {
                 ' and P.nickUsuario = t1.nick and t1.nProyectos<2 '+
                 ' and NOT EXISTS ( '+
                     ' select * '+
-                    ' where P.nombreProyecto = ? '+
+                    ' where P.nombreProyecto = \'ProyectoA\' '+
                     ' and P.estado = 0 '+
                     ' and P.nickUsuario = U.nickUsuario '+
                 ' ) '+
