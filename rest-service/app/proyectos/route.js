@@ -169,7 +169,7 @@ function init(app, dbPool, db) {
         query3 = db.querys.proyectos.updateCargaProyecto;
 
         function onResults(error, results, response) {
-            if (error) res.status(500).send('Estas como un tuppy');
+            if (error) res.status(500).send('Error on the server.');
         };
 
         function onResults2(error, results, response) {
@@ -193,6 +193,7 @@ function init(app, dbPool, db) {
 
         args3 = [fechaComienzo, presupuesto, nombreProyecto];
         db.execQuery(dbPool, query3, args3, onResults, res);
+        console.log("Peticion recibida");
     })
 
     app.get('/api/proyecto/:nombreProyecto/actividades', VerifyToken, (req, res) => {
