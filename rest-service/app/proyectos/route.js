@@ -1,6 +1,28 @@
 var VerifyToken = require('../auth/VerifyToken');
 function init(app, dbPool, db) {
 
+    app.get('/api/proyecto/:nombreProyecto', VerifyToken, (req, res) => {
+        var query = db.querys.proyectos.getProyectoByNombre;
+
+        const nombreProyecto = req.params.nombreProyecto;
+        var args = [nombreProyecto];
+
+        function onResults(error, results, response) {
+            if (!error) {
+                if (results.length == 0) {
+                    response.sendStatus(404);
+                } else {
+                    console.log("Peticion recibida");
+                    return res.status(200).json({
+                        data: results
+                    })
+                }
+            } else { res.status(500).send('Error on the server.'); }
+        }
+
+        db.execQuery(dbPool, query, args, onResults, res);
+    })
+
     app.post('/api/proyecto', VerifyToken, (req, res) => {
         var args = [req.body.nombreProyecto, req.body.resumen];
         var args2 = [req.body.nombreProyecto, req.body.nickUsuario];

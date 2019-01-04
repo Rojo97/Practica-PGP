@@ -18,6 +18,7 @@ const db = {
             insert: 'INSERT INTO Usuario(nickUsuario,contrasenia,dni,nombre,apellido1,apellido2,fechaNacimiento,categoriaUsuario) VALUES (?,?,?,?,?,?,?,?)'
         },
         proyectos: {
+            getProyectoByNombre: 'SELECT * FROM Proyecto P WHERE P.nombreProyecto = ?',
             insert: 'INSERT INTO Proyecto(nombreProyecto,fechaInicial,estado,resumen) VALUES (?,NOW(),0,?)',
             countProyectosByNombre: 'SELECT COUNT(*) AS numeroProyectos FROM Proyecto Pr WHERE Pr.nombreProyecto = ?',
             getActividadesProyecto:'SELECT * FROM Actividad A WHERE A.nombreProyecto = ?',
