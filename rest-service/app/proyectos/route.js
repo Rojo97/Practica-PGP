@@ -31,12 +31,14 @@ function init(app, dbPool, db) {
 
         function onResults(error, results, response) {
             if (!error) {
+                console.log("Consulta 1");
                 db.execQuery(dbPool, query2, args2, onResults2, res);
             } else { res.status(500).send('Error on the server.'); }
         };
 
         function onResults2(error, results, response) {
             if (!error) {
+                console.log("Consulta 2");
                 response.status(201).json({});
             } else { res.status(500).send('Error on the server.'); }
         };
