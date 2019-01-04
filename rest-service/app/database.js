@@ -26,7 +26,7 @@ const db = {
             getParticipantesProyectoConRol : 'SELECT U.nickUsuario,U.dni,U.nombre,U.apellido1,U.apellido2,P.porcentajeParticipacion FROM Usuario U, Participacion P, Proyecto Pr WHERE U.nickUsuario = P.nickUsuario AND Pr.nombreProyecto = P.nombreProyecto AND P.nombreProyecto = ? AND P.rol=?',
             getCantidatos :'SELECT *'+
             ' FROM ( '+
-                ' SELECT U.*, sum(P.porcentajeParticipacion) as participacion '+
+                ' SELECT U.*, sum(P.porcentajeParticipacion) as \'participacion\' '+
                 ' FROM Participacion P, ( '+
                     ' SELECT * '+
                     ' FROM Usuario U '+
@@ -43,7 +43,7 @@ const db = {
                     ' FROM Usuario U '+
                     ' WHERE U.categoriaUsuario>1 '+
                 ' ) U, ( '+
-                    ' SELECT U.nickUsuario as nick, COUNT(*) as nProyectos '+
+                    ' SELECT U.nickUsuario as nick, COUNT(*) as \'nProyectos\' '+
                     ' FROM Participacion P, Usuario U '+
                     ' WHERE P.estado = 0 '+
                     ' AND P.rol > 1 '+
