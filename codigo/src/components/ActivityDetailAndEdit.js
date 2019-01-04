@@ -19,9 +19,10 @@ export default class ActivityDetailAndEdit extends Component {
     }
 
     componentDidMount() {
-        const nombre = this.props.match.params.nombre
+        const proyecto = this.props.match.params.proyecto;
+        const actividad = this.props.match.params.actividad;
 
-        fetch(`http://virtual.lab.inf.uva.es:27014/api/actividad/${nombre}/proyecto/ProyectoA`, {
+        fetch(`http://virtual.lab.inf.uva.es:27014/api/actividad/${actividad}/proyecto/${proyecto}`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -64,7 +65,7 @@ export default class ActivityDetailAndEdit extends Component {
         let target = event.target;
         let name = target.name;
         let value = target.value;
-        if (isNaN(value) == false) {
+        if (isNaN(value) === false) {
             console.log(value);
             this.setState(prevState => {
                 return {
@@ -105,7 +106,7 @@ export default class ActivityDetailAndEdit extends Component {
         let edit;
         let editmenu;
 
-        if (this.state.edit == 0) {
+        if (this.state.edit === 0) {
             edit =
                 <div className="box-footer">
                     <button type="submit" className="btn btn-info pull-right" onClick={this.activeEdit}>Editar</button>

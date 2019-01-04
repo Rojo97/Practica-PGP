@@ -20,10 +20,10 @@ class Plantilla extends Component {
           <Route exact path="/admin/createUser" component={CrearUsuario} />
           <Route exact path="/admin/createProject" component={DarAltaProyecto} />
           <Route exact path="/developer/selectProject" component={SelectProject}/>
-          <Route exact path="/developer/project/:nombre/activities" component={ShowActivitiesDeveloper}/>
-          <Route exact path="/developer/activity/:nombre" component={ActivityDetail}/>
-          <Route exact path="/projectManager/project/:nombre/activities" component={ShowActivitiesManager}/>
-          <Route exact path="/projectManager/activity/:nombre" component={ActivityDetailAndEdit}/>
+          <Route exact path="/developer/project/:proyecto/activities" component={ShowActivitiesDeveloper}/>
+          <Route exact path="/developer/project/:proyecto/activities/:actividad" component={ActivityDetail}/>
+          <Route exact path="/projectManager/project/:proyecto/activities" component={ShowActivitiesManager}/>
+          <Route exact path="/projectManager/project/:proyecto/activities/:actividad" component={ActivityDetailAndEdit}/>
         </Switch>
       </div>
     );

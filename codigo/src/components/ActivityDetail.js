@@ -7,15 +7,19 @@ export default class ActivityDetail extends Component {
         this.state = {
             actividad: [],
             informe: 0,
+            fecha: '',
+            texto: '',
+            horas: '',
             estados: ["En curso", "Finalizada", "Cerrada", "Aprobada"],
             roles: ["Administrador", "Jefe de proyecto", "Analista", "Diseñador, Analista-Programador o Responsable del equipo de pruebas", "Programador o probador"],
         }
     }
 
     componentDidMount() {
-        const nombre = this.props.match.params.nombre
+        const proyecto = this.props.match.params.proyecto;
+        const actividad = this.props.match.params.actividad;
 
-        fetch(`http://virtual.lab.inf.uva.es:27014/api/actividad/${nombre}/proyecto/ProyectoA`, {
+        fetch(`http://virtual.lab.inf.uva.es:27014/api/actividad/${actividad}/proyecto/${proyecto}`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -31,7 +35,83 @@ export default class ActivityDetail extends Component {
             .catch(function (data) { console.log(data) });
     }
 
+    activeInforme = event => {
+        this.setState({ informe: 1 });
+        console.log(this.state);
+    }
+
+    handleInputChange = event => {
+        let target = event.target;
+        let name = target.name;
+        let value = target.value;
+        console.log(value);
+        this.setState(prevState => {
+            return {
+                ...prevState, [name]: value
+            }
+        }, () => console.log(this.state)
+        )
+    }
+
+    handleInputChangeNumber = event => {
+        let target = event.target;
+        let name = target.name;
+        let value = target.value;
+        if (isNaN(value) === false) {
+            console.log(value);
+            this.setState(prevState => {
+                return {
+                    ...prevState, [name]: value
+                }
+            }, () => console.log(this.state)
+            )
+        }
+    }
+
     render() {
+        let nuevoInforme;
+        let botonInforme;
+
+        if (this.state.informe === 0) {
+            nuevoInforme = '';
+            botonInforme =
+                <div className="box-footer">
+                    <button type="submit" className="btn btn-info pull-right" onClick={this.activeInforme}>Informe de desarrollador</button>
+                </div>;
+        } else {
+            botonInforme = '';
+            nuevoInforme =
+                <form>
+                    <div className="box ">
+                        <div className="box-header with-border">
+                            <h3 className="box-title">Crear informe semanal</h3>
+                        </div>
+                        <div className="box-body">
+                            <div className="form-group">
+                                <label>Fecha:</label>
+                                <div className="input-group date">
+                                    <div className="input-group-addon">
+                                        <i className="fa fa-calendar"></i>
+                                    </div>
+                                    <input type="date" className="form-control pull-right" name="fecha" value={this.state.fecha} onChange={this.handleInputChange} />
+                                </div>
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="inputDuracion">Horas trabajadas</label>
+                                <input type="input" className="form-control" name="horas" placeholder="Horas trabajadas" value={this.state.horas} onChange={this.handleInputChangeNumber} />
+                            </div>
+                            <div className="form-group">
+                                <label>Comentarios</label>
+                                <textarea className="form-control" rows="3" placeholder="Texto del informe" name="texto" value={this.state.texto} onChange={this.handleInputChange}></textarea>
+                            </div>
+                        </div>
+                        <div className="box-footer">
+                            <button type="submit" className="btn btn-info pull-right">Enviar informe</button>
+                        </div>
+                    </div>
+                </form>;
+        }
+
         return (
             <div className="content-wrapper">
                 <section className="content-header">
@@ -62,12 +142,10 @@ export default class ActivityDetail extends Component {
                                         <h3>Descripción:</h3>
                                         <h4>{this.state.actividad.descripcion}</h4>
                                     </div>
-
                                 </div>
-                                <div className="box-footer">
-                                    <button type="submit" className="btn btn-info pull-right">Informe de desarrollador</button>
-                                </div>
+                                {botonInforme}
                             </div>
+                            {nuevoInforme}
                         </div>
                     </div>
                 </section>
