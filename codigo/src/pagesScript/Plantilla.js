@@ -7,6 +7,7 @@ import SelectProject from '../components/SelectProject';
 import ShowActivitiesDeveloper from '../components/ShowActivitiesDeveloper';
 import ShowActivitiesManager from '../components/ShowActivitiesManager';
 import DarAltaProyecto from '../components/DarAltaProyecto';
+import AnadirPlanProyecto from '../components/AnadirPlanProyecto';
 
 class Plantilla extends Component {
   render() {
@@ -20,6 +21,7 @@ class Plantilla extends Component {
           <Route exact path="/developer/selectProject" component={SelectProject}/>
           <Route exact path="/developer/project/:nombre/activities" component={ShowActivitiesDeveloper}/>
           <Route exact path="/projectManager/project/:nombre/activities" component={ShowActivitiesManager}/>
+          <Route exact path="/projectManager/project/:nombre/loadProyectPlan" component={AnadirPlanProyecto}/>
         </Switch>
       </div>
     );
