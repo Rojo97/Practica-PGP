@@ -169,7 +169,7 @@ function init(app, dbPool, db) {
         query3 = db.querys.proyectos.updateCargaProyecto;
 
         function onResults(error, results, response) {
-            if (error) console.log(error);
+            if (error) res.status(500).send('Estas como un tuppy');
         };
 
         function onResults2(error, results, response) {
