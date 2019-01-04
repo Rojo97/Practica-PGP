@@ -24,7 +24,7 @@ const db = {
             getActividadesProyecto:'SELECT * FROM Actividad A WHERE A.nombreProyecto = ?',
             getParticipantesProyecto : 'SELECT U.nickUsuario,U.dni,U.nombre,U.apellido1,U.apellido2,P.porcentajeParticipacion FROM Usuario U, Participacion P, Proyecto Pr WHERE U.nickUsuario = P.nickUsuario AND Pr.nombreProyecto = P.nombreProyecto AND P.nombreProyecto = ?',
             getParticipantesProyectoConRol : 'SELECT U.nickUsuario,U.dni,U.nombre,U.apellido1,U.apellido2,P.porcentajeParticipacion FROM Usuario U, Participacion P, Proyecto Pr WHERE U.nickUsuario = P.nickUsuario AND Pr.nombreProyecto = P.nombreProyecto AND P.nombreProyecto = ? AND P.rol=?',
-            getCantidatos :'SELECT *'+
+            getCandidatos :'SELECT *'+
             'FROM ('+
                 'SELECT U.*, sum(P.porcentajeParticipacion) as \'participacion\''+
                 'FROM Participacion P, ('+
