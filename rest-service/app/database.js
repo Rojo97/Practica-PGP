@@ -24,9 +24,9 @@ const db = {
             getActividadesProyecto:'SELECT * FROM Actividad A WHERE A.nombreProyecto = ?',
             getParticipantesProyecto : 'SELECT U.nickUsuario,U.dni,U.nombre,U.apellido1,U.apellido2,P.porcentajeParticipacion FROM Usuario U, Participacion P, Proyecto Pr WHERE U.nickUsuario = P.nickUsuario AND Pr.nombreProyecto = P.nombreProyecto AND P.nombreProyecto = ?',
             getParticipantesProyectoConRol : 'SELECT U.nickUsuario,U.dni,U.nombre,U.apellido1,U.apellido2,P.porcentajeParticipacion FROM Usuario U, Participacion P, Proyecto Pr WHERE U.nickUsuario = P.nickUsuario AND Pr.nombreProyecto = P.nombreProyecto AND P.nombreProyecto = ? AND P.rol=?',
-            getCandidatos :'SELECT *'+
+            getCantidatos :'SELECT *'+
             'FROM ('+
-                'SELECT U.*, sum(P.porcentajeParticipacion) as \'participacion\''+
+                'SELECT U.*, sum(P.porcentajeParticipacion) as participacion'+
                 'FROM Participacion P, ('+
                     'SELECT *'+
                     'FROM Usuario U'+
@@ -43,7 +43,7 @@ const db = {
                     'FROM Usuario U'+
                     'WHERE U.categoriaUsuario>1'+
                 ') U, ('+
-                    'SELECT U.nickUsuario as nick, COUNT(*) as \'nProyectos\''+
+                    'SELECT U.nickUsuario as nick, COUNT(*) as nProyectos'+
                     'FROM Participacion P, Usuario U'+
                     'WHERE P.estado = 0'+
                     'AND P.rol > 1'+
@@ -68,7 +68,7 @@ const db = {
                 'GROUP BY P.nickUsuario) t2'+
             'WHERE t2.participacion<1'+
             'UNION'+
-            'SELECT U.*, 0 as \'participacion\''+
+            'SELECT U.*, 0 as participacion'+
             'FROM Usuario U'+
             'WHERE U.categoriaUsuario>0'+
             'AND NOT EXISTS ('+
