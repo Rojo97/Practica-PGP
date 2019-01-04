@@ -25,58 +25,58 @@ const db = {
             getParticipantesProyecto : 'SELECT U.nickUsuario,U.dni,U.nombre,U.apellido1,U.apellido2,P.porcentajeParticipacion FROM Usuario U, Participacion P, Proyecto Pr WHERE U.nickUsuario = P.nickUsuario AND Pr.nombreProyecto = P.nombreProyecto AND P.nombreProyecto = ?',
             getParticipantesProyectoConRol : 'SELECT U.nickUsuario,U.dni,U.nombre,U.apellido1,U.apellido2,P.porcentajeParticipacion FROM Usuario U, Participacion P, Proyecto Pr WHERE U.nickUsuario = P.nickUsuario AND Pr.nombreProyecto = P.nombreProyecto AND P.nombreProyecto = ? AND P.rol=?',
             getCantidatos :'SELECT *'+
-            'FROM ('+
-                'SELECT U.*, sum(P.porcentajeParticipacion) as participacion'+
-                'FROM Participacion P, ('+
-                    'SELECT *'+
-                    'FROM Usuario U'+
-                    'WHERE U.categoriaUsuario = 1'+
-                    'AND NOT EXISTS ('+
-                        'SELECT *'+
-                        'FROM Participacion P'+ 
-                        'WHERE P.estado = 0'+
-                        'AND P.nickUsuario = U.nickUsuario'+
-                        'AND P.rol = 1'+
-                    ')'+
-                    'UNION'+
-                    'SELECT *'+
-                    'FROM Usuario U'+
-                    'WHERE U.categoriaUsuario>1'+
-                ') U, ('+
-                    'SELECT U.nickUsuario as nick, COUNT(*) as nProyectos'+
-                    'FROM Participacion P, Usuario U'+
-                    'WHERE P.estado = 0'+
-                    'AND P.rol > 1'+
-                    'AND U.nickUsuario = P.nickUsuario'+
-                    'AND NOT EXISTS ('+
-                       'SELECT *'+
-                       'FROM Participacion P'+
-                       'WHERE P.estado = 0'+
-                       'AND P.nickUsuario = U.nickUsuario'+
-                       'AND P.rol = 1'+
-                    ')'+
-                    'GROUP BY P.nickUsuario'+
-                ') t1'+
-                'WHERE P.estado=0 and P.nickUsuario = U.nickUsuario'+
-                'and P.nickUsuario = t1.nick and t1.nProyectos<2'+
-                'and NOT EXISTS ('+
-                    'select *'+
-                    'where P.nombreProyecto = ?'+
-                    'and P.estado = 0'+
-                    'and P.nickUsuario = U.nickUsuario'+
-                ')'+
-                'GROUP BY P.nickUsuario) t2'+
-            'WHERE t2.participacion<1'+
-            'UNION'+
-            'SELECT U.*, 0 as participacion'+
-            'FROM Usuario U'+
-            'WHERE U.categoriaUsuario>0'+
-            'AND NOT EXISTS ('+
-                'SELECT *'+
-                'FROM Participacion P'+
-                'WHERE P.nickUsuario=U.nickUsuario'+
-                'AND P.estado = 0'+
-            ')'
+            ' FROM ( '+
+                ' SELECT U.*, sum(P.porcentajeParticipacion) as participacion '+
+                ' FROM Participacion P, ( '+
+                    ' SELECT * '+
+                    ' FROM Usuario U '+
+                    ' WHERE U.categoriaUsuario = 1 '+
+                    ' AND NOT EXISTS ( '+
+                        ' SELECT * '+
+                        ' FROM Participacion P '+ 
+                        ' WHERE P.estado = 0 '+
+                        ' AND P.nickUsuario = U.nickUsuario '+
+                        ' AND P.rol = 1 '+
+                    ' ) '+
+                    ' UNION '+
+                    ' SELECT * '+
+                    ' FROM Usuario U '+
+                    ' WHERE U.categoriaUsuario>1 '+
+                ' ) U, ( '+
+                    ' SELECT U.nickUsuario as nick, COUNT(*) as nProyectos '+
+                    ' FROM Participacion P, Usuario U '+
+                    ' WHERE P.estado = 0 '+
+                    ' AND P.rol > 1 '+
+                    ' AND U.nickUsuario = P.nickUsuario '+
+                    ' AND NOT EXISTS ( '+
+                       ' SELECT * '+
+                       ' FROM Participacion P' +
+                       ' WHERE P.estado = 0 '+
+                       ' AND P.nickUsuario = U.nickUsuario '+
+                       ' AND P.rol = 1 '+
+                    ' ) '+
+                    ' GROUP BY P.nickUsuario '+
+                ' ) t1 '+
+                ' WHERE P.estado=0 and P.nickUsuario = U.nickUsuario '+
+                ' and P.nickUsuario = t1.nick and t1.nProyectos<2 '+
+                ' and NOT EXISTS ( '+
+                    ' select * '+
+                    ' where P.nombreProyecto = ? '+
+                    ' and P.estado = 0 '+
+                    ' and P.nickUsuario = U.nickUsuario '+
+                ' ) '+
+                ' GROUP BY P.nickUsuario) t2 '+
+            ' WHERE t2.participacion<1 '+
+            ' UNION '+
+            ' SELECT U.*, 0 as participacion '+
+            ' FROM Usuario U '+
+            ' WHERE U.categoriaUsuario>0 '+
+            ' AND NOT EXISTS ( '+
+                ' SELECT * '+
+                ' FROM Participacion P '+
+                ' WHERE P.nickUsuario=U.nickUsuario '+
+                ' AND P.estado = 0 '+
+            ' ) '
         },
         participacion: {
             insertParticipacionJefe : 'INSERT INTO Participacion VALUES (NOW(),1,?,?,0)'
