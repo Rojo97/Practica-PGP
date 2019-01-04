@@ -5,6 +5,7 @@ const db = {
         user: 'PGP_grupo01',
         password: 'NU57B0S2',
         database: 'PGP_grupo01'
+
     },
     querys: {
         usuarios: {
@@ -17,15 +18,28 @@ const db = {
             insert: 'INSERT INTO Usuario(nickUsuario,contrasenia,dni,nombre,apellido1,apellido2,fechaNacimiento,categoriaUsuario) VALUES (?,?,?,?,?,?,?,?)'
         },
         proyectos: {
+            getProyectoByNombre: 'SELECT * FROM Proyecto P WHERE P.nombreProyecto = ?',
             insert: 'INSERT INTO Proyecto(nombreProyecto,fechaInicial,estado,resumen) VALUES (?,NOW(),0,?)',
-            countProyectosByNombre: 'SELECT COUNT(*) AS numeroProyectos FROM Proyecto Pr WHERE Pr.nombreProyecto = ?'
-
+            countProyectosByNombre: 'SELECT COUNT(*) AS numeroProyectos FROM Proyecto Pr WHERE Pr.nombreProyecto = ?',
+            getActividadesProyecto:'SELECT * FROM Actividad A WHERE A.nombreProyecto = ?',
+            getParticipantesProyecto : 'SELECT U.nickUsuario,U.dni,U.nombre,U.apellido1,U.apellido2,P.porcentajeParticipacion FROM Usuario U, Participacion P, Proyecto Pr WHERE U.nickUsuario = P.nickUsuario AND Pr.nombreProyecto = P.nombreProyecto AND P.nombreProyecto = ?',
+            getParticipantesProyectoConRol : 'SELECT U.nickUsuario,U.dni,U.nombre,U.apellido1,U.apellido2,P.porcentajeParticipacion FROM Usuario U, Participacion P, Proyecto Pr WHERE U.nickUsuario = P.nickUsuario AND Pr.nombreProyecto = P.nombreProyecto AND P.nombreProyecto = ? AND P.rol=?',
+            getCandidatos :'SELECT * FROM (SELECT U.*, sum(P.porcentajeParticipacion) as participacion FROM Participacion P, (SELECT * FROM Usuario U WHERE U.categoriaUsuario = 1 AND NOT EXISTS (SELECT * FROM Participacion P WHERE P.estado = 0 AND P.nickUsuario = U.nickUsuario AND P.rol = 1) UNION SELECT * FROM Usuario U WHERE U.categoriaUsuario>1) U, (SELECT U.nickUsuario as nick, COUNT(*) as nProyectos FROM Participacion P, Usuario U WHERE P.estado = 0 AND P.rol > 1 AND U.nickUsuario = P.nickUsuario AND NOT EXISTS (SELECT * FROM Participacion P WHERE P.estado = 0 AND P.nickUsuario = U.nickUsuario AND P.rol = 1)GROUP BY P.nickUsuario) t1 WHERE P.estado=0 and P.nickUsuario = U.nickUsuario and P.nickUsuario = t1.nick and t1.nProyectos<2 and NOT EXISTS (select * where P.nombreProyecto = ? and P.estado = 0 and P.nickUsuario = U.nickUsuario) GROUP BY P.nickUsuario) t2 WHERE t2.participacion<1 UNION SELECT U.*, 0 as participacion FROM Usuario U WHERE U.categoriaUsuario>0 AND NOT EXISTS (SELECT * FROM Participacion P WHERE P.nickUsuario=U.nickUsuario AND P.estado = 0)',
+            updateProyecto : 'UPDATE Proyecto SET fechaFin = ?, estado = ?, informeDeSeguimientoTemporal = ?, resumen = ? WHERE nombreProyecto = ?',
+            updateCargaProyecto : 'UPDATE Proyecto SET fechaInicial = ?, presupuesto = ? WHERE nombreProyecto = ?'
         },
         participacion: {
-            insertParticipacionJefe : 'INSERT INTO Participacion VALUES (NOW(),1,?,?,0)'
+            insertParticipacionJefe : 'INSERT INTO Participacion VALUES (NOW(),1,?,?,0,1)'
         },
         actividades : {
-            getActividadesUsuario : 'SELECT * FROM Actividad A WHERE A.nombreProyecto = ? AND A.nickUsuario = ?'
+            getActividadesUsuario : 'SELECT A.nombreActividad, A.nombreProyecto, A.descripcion, A.duracionEstimada, A.duracionReal, A.fechaInicio, A.fechaFin, A.estado, A.rol FROM Actividad A, InformeSemanal I WHERE A.nombreActividad = I.nombreActividad AND A.nombreProyecto = I.nombreProyecto AND A.nombreProyecto = ? AND I.nickUsuario = ?',
+            getActividadesById : 'SELECT * FROM Actividad A WHERE A.nombreActividad = ? AND A.nombreProyecto = ?',
+            updateActividad : 'UPDATE Actividad SET fechaFin = ?, estado = ?, duracionReal = ? WHERE nombreActividad = ? AND nombreProyecto=?',
+            insert : 'INSERT INTO Actividad (nombreActividad,nombreProyecto,descripcion,duracionEstimada,estado, rol) VALUES (?,?,?,?,0,?)',
+            insertPredecesora : 'INSERT INTO Predecesora (precedida,predecesora,nombreProyecto) VALUES (?,?,?)'
+        },
+        informeSemanal :{
+            insert: 'INSERT INTO InformeSemanal (nombreActividad,nombreProyecto,nickUsuario,informeTareasPersonales,estado,horas) VALUES (?,?,?,?,2,?)'
         }
     },
     execQuery: function (dbPool, query, args, cb, res) {

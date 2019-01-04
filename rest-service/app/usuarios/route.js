@@ -1,5 +1,7 @@
+var VerifyToken = require('../auth/VerifyToken');
+
 function init(app, dbPool, db) {
-    app.get('/api/usuario', (req, res) => {
+    app.get('/api/usuario', VerifyToken, (req, res) => {
         if(req.query.selectableAsJefe == 1){
             var query = db.querys.usuarios.getJefesSinProyecto;
         }else{
@@ -17,13 +19,13 @@ function init(app, dbPool, db) {
                         data: results
                     })
                 }
-            }
+            } else { res.status(500).send('Error on the server.'); }
         }
 
         db.execQuery(dbPool, query, args, onResults, res);
     })
 
-    app.get('/api/usuario/:nickUsuario', (req, res) => {
+    app.get('/api/usuario/:nickUsuario', VerifyToken,(req, res) => {
         const nickUsuario = req.params.nickUsuario;
         var query = db.querys.usuarios.getUsuariosByNick;
         console.log(nickUsuario);
@@ -38,13 +40,13 @@ function init(app, dbPool, db) {
                         data: results
                     })
                 }
-            }
+            } else { res.status(500).send('Error on the server.'); }
         }
 
         db.execQuery(dbPool, query, args, onResults, res);
     })
 
-    app.get('/api/usuario/:nickUsuario/proyectos', (req, res) => {
+    app.get('/api/usuario/:nickUsuario/proyectos', VerifyToken,(req, res) => {
         const nickUsuario = req.params.nickUsuario;
         if(req.query.actual == 1){
             var query = db.querys.usuarios.getProyectosActualesUsuario;
@@ -62,13 +64,13 @@ function init(app, dbPool, db) {
                         data: results
                     })
                 }
-            }
+            } else { res.status(409).send('Error on the server.'); }
         }
 
         db.execQuery(dbPool, query, args, onResults, res);
     })
 
-    app.post('/api/usuario', (req, res) => {
+    app.post('/api/usuario', VerifyToken, (req, res) => {
         console.log(req.body);
         var args = [req.body.nickUsuario, req.body.contrasenia, req.body.dni, req.body.nombre, req.body.apellido1, req.body.apellido2, req.body.fechaNacimiento, req.body.categoriaUsuario];
         const query = db.querys.usuarios.insert;
@@ -76,7 +78,7 @@ function init(app, dbPool, db) {
         function onResults(error, results, response) {
             if (!error) {
                 response.status(201).json({});
-            }
+            } else { res.status(500).send('Error on the server.'); }
         };
 
         db.execQuery(dbPool, query, args, onResults, res);
