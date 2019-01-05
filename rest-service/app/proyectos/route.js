@@ -71,6 +71,7 @@ function init(app, dbPool, db) {
     app.put('/api/proyecto/:nombreProyecto', VerifyToken, (req, res) => {
         const query = db.querys.proyectos.updateProyecto;
         const query2 = db.querys.participacion.updateEstadoParticipacion;
+        console.log(req.body);
 
         const nombreProyecto = req.params.nombreProyecto;
         var args = [req.body.fechaFin, req.body.estado, req.body.informeDeSeguimientoTemporal, req.body.resumen, nombreProyecto];
