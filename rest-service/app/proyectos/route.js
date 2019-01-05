@@ -182,7 +182,7 @@ function init(app, dbPool, db) {
     })
 
     app.get('/api/proyecto/:nombreProyecto/informesSemanales', VerifyToken, (req, res) => {
-        var query = db.querys.proyectos.getInformeByEstado;
+        var query = db.querys.informeSemanal.getInformeByEstado;
 
         const nombreProyecto = req.params.nombreProyecto;
         var args = [req.query.estado, nombreProyecto];
@@ -192,7 +192,7 @@ function init(app, dbPool, db) {
                 if (results.length == 0) {
                     response.sendStatus(404);
                 } else {
-                    console.log("Actividades enviadas");
+                    console.log("Informes semanales enviados");
                     return res.status(200).json({
                         data: results
                     })
