@@ -2,9 +2,9 @@ var VerifyToken = require('../auth/VerifyToken');
 
 function init(app, dbPool, db) {
     app.get('/api/usuario', VerifyToken, (req, res) => {
-        if(req.query.selectableAsJefe == 1){
+        if (req.query.selectableAsJefe == 1) {
             var query = db.querys.usuarios.getJefesSinProyecto;
-        }else{
+        } else {
             var query = db.querys.usuarios.getUsuarios;
         }
         var args = [];
@@ -25,7 +25,7 @@ function init(app, dbPool, db) {
         db.execQuery(dbPool, query, args, onResults, res);
     })
 
-    app.get('/api/usuario/:nickUsuario', VerifyToken,(req, res) => {
+    app.get('/api/usuario/:nickUsuario', VerifyToken, (req, res) => {
         const nickUsuario = req.params.nickUsuario;
         var query = db.querys.usuarios.getUsuariosByNick;
         var args = [nickUsuario];
@@ -46,12 +46,12 @@ function init(app, dbPool, db) {
         db.execQuery(dbPool, query, args, onResults, res);
     })
 
-    app.get('/api/usuario/:nickUsuario/proyectos', VerifyToken,(req, res) => {
+    app.get('/api/usuario/:nickUsuario/proyectos', VerifyToken, (req, res) => {
         const nickUsuario = req.params.nickUsuario;
-        if(req.query.actual == 1){
+        if (req.query.actual == 1) {
             var query = db.querys.usuarios.getProyectosActualesUsuario;
-        }else{
-            var query =  db.querys.usuarios.getProyectosUsuario;
+        } else {
+            var query = db.querys.usuarios.getProyectosUsuario;
         }
         var args = [nickUsuario];
 
@@ -71,7 +71,31 @@ function init(app, dbPool, db) {
         db.execQuery(dbPool, query, args, onResults, res);
     })
 
-    app.get('/api/usuario/:nickUsuario/proyecto/:nombreProyecto/actividad/:nombreActividad/informeSemanal', VerifyToken,(req, res) => {
+    app.get('/api/usuario/:nickUsuario/informes/:fechaInicio/:fechaFin', VerifyToken, (req, res) => {
+        const nickUsuario = req.params.nickUsuario;
+        const fechaInicio = req.params.fechaInicio;
+        const fechaFin = req.params.fechaFin;
+
+        var query = db.querys.informeSemanal.getInformeIntervalo;
+        var args = [nickUsuario, fechaInicio, fechaFin];
+
+        function onResults(error, results, response) {
+            if (!error) {
+                if (results.length == 0) {
+                    response.sendStatus(404);
+                } else {
+                    console.log("Informes enviados");
+                    return res.status(200).json({
+                        data: results
+                    })
+                }
+            } else { res.status(409).send('Error on the server.'); }
+        }
+
+        db.execQuery(dbPool, query, args, onResults, res);
+    })
+
+    app.get('/api/usuario/:nickUsuario/proyecto/:nombreProyecto/actividad/:nombreActividad/informeSemanal', VerifyToken, (req, res) => {
         var query = db.querys.informeSemanal.getInformeDesarrollador;
         var args = [req.params.nombreProyecto, req.params.nombreActividad, req.params.nickUsuario];
 
