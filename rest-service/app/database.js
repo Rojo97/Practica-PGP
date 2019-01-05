@@ -19,6 +19,7 @@ const db = {
         },
         proyectos: {
             getProyectoByNombre: 'SELECT * FROM Proyecto P WHERE P.nombreProyecto = ?',
+            getProyectosFinalizados: 'SELECT * FROM Proyecto P WHERE P.estado = 2',
             insert: 'INSERT INTO Proyecto(nombreProyecto,fechaInicial,estado,resumen) VALUES (?,NOW(),0,?)',
             countProyectosByNombre: 'SELECT COUNT(*) AS numeroProyectos FROM Proyecto Pr WHERE Pr.nombreProyecto = ?',
             getActividadesProyecto:'SELECT * FROM Actividad A WHERE A.nombreProyecto = ?',

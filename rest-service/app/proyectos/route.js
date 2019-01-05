@@ -23,6 +23,27 @@ function init(app, dbPool, db) {
         db.execQuery(dbPool, query, args, onResults, res);
     })
 
+    app.get('/api/proyecto/finalizados', VerifyToken, (req, res) => {
+        var query = db.querys.proyectos.getProyectosFinalizados;
+
+        var args = [];
+
+        function onResults(error, results, response) {
+            if (!error) {
+                if (results.length == 0) {
+                    response.sendStatus(404);
+                } else {
+                    console.log("Devueltos proyectos finalizados");
+                    return res.status(200).json({
+                        data: results
+                    })
+                }
+            } else { res.status(500).send('Error on the server.'); }
+        }
+
+        db.execQuery(dbPool, query, args, onResults, res);
+    })
+
     app.post('/api/proyecto', VerifyToken, (req, res) => {
         var args = [req.body.nombreProyecto, req.body.resumen];
         var args2 = [req.body.nombreProyecto, req.body.nickUsuario];
@@ -46,6 +67,8 @@ function init(app, dbPool, db) {
         db.execQuery(dbPool, query, args, onResults, res);
 
     })
+
+    
 
     app.post('/api/proyecto/:nombreProyecto/cargaPlan', VerifyToken, (req, res) => {
 
