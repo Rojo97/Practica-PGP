@@ -28,7 +28,6 @@ function init(app, dbPool, db) {
     app.get('/api/usuario/:nickUsuario', VerifyToken,(req, res) => {
         const nickUsuario = req.params.nickUsuario;
         var query = db.querys.usuarios.getUsuariosByNick;
-        console.log(nickUsuario);
         var args = [nickUsuario];
 
         function onResults(error, results, response) {
