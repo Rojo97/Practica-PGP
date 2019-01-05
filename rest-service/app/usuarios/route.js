@@ -71,6 +71,26 @@ function init(app, dbPool, db) {
         db.execQuery(dbPool, query, args, onResults, res);
     })
 
+    app.get('/api/usuario/:nickUsuario/proyecto/:nombreProyecto/actividad/:nombreActividad/informeSemanal', VerifyToken,(req, res) => {
+        var query = db.querys.informeSemanal.getInformeDesarrollador;
+        var args = [req.params.nombreProyecto, req.params.nombreActividad, req.params.nickUsuario];
+
+        function onResults(error, results, response) {
+            if (!error) {
+                if (results.length == 0) {
+                    response.sendStatus(404);
+                } else {
+                    console.log("Informe enviado");
+                    return res.status(200).json({
+                        data: results
+                    })
+                }
+            } else { res.status(500).send('Error on the server.'); }
+        }
+
+        db.execQuery(dbPool, query, args, onResults, res);
+    })
+
     app.post('/api/usuario', VerifyToken, (req, res) => {
         console.log(req.body);
         var args = [req.body.nickUsuario, req.body.contrasenia, req.body.dni, req.body.nombre, req.body.apellido1, req.body.apellido2, req.body.fechaNacimiento, req.body.categoriaUsuario];
