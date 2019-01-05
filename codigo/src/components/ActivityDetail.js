@@ -7,7 +7,6 @@ export default class ActivityDetail extends Component {
         this.state = {
             actividad: [],
             informe: 0,
-            fecha: '',
             texto: '',
             horas: '',
             estados: ["En curso", "Finalizada", "Cerrada", "Aprobada"],
@@ -33,6 +32,27 @@ export default class ActivityDetail extends Component {
             })
             .then(responseJson => this.setState({ actividad: responseJson.data[0] }))
             .catch(function (data) { console.log(data) });
+    }
+
+    postInforme = event => {
+        event.preventDefault();
+        fetch(`http://virtual.lab.inf.uva.es:27014/api/informeSemanal`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'x-access-token': window.sessionStorage.getItem('token')
+            },
+            body: JSON.stringify({
+                nombreActividad: this.state.actividad.nombreActividad,
+                nombreProyecto: this.state.actividad.nombreProyecto,
+                nickUsuario: window.sessionStorage.getItem('user'),
+                informeTareasPersonales: this.state.texto,
+                horas: this.state.horas,
+            })
+        }).then(function (res) { console.log(res) })
+            .then(() => { alert("Informe creado") })
+            .catch(function (res) { console.log(res) });
     }
 
     activeInforme = event => {
@@ -88,15 +108,6 @@ export default class ActivityDetail extends Component {
                         </div>
                         <div className="box-body">
                             <div className="form-group">
-                                <label>Fecha:</label>
-                                <div className="input-group date">
-                                    <div className="input-group-addon">
-                                        <i className="fa fa-calendar"></i>
-                                    </div>
-                                    <input type="date" className="form-control pull-right" name="fecha" value={this.state.fecha} onChange={this.handleInputChange} />
-                                </div>
-                            </div>
-                            <div className="form-group">
                                 <label htmlFor="inputDuracion">Horas trabajadas</label>
                                 <input type="input" className="form-control" name="horas" placeholder="Horas trabajadas" value={this.state.horas} onChange={this.handleInputChangeNumber} />
                             </div>
@@ -106,7 +117,7 @@ export default class ActivityDetail extends Component {
                             </div>
                         </div>
                         <div className="box-footer">
-                            <button type="submit" className="btn btn-info pull-right">Enviar informe</button>
+                            <button type="submit" className="btn btn-info pull-right" onClick={this.postInforme}>Enviar informe</button>
                         </div>
                     </div>
                 </form>;
