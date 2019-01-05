@@ -49,6 +49,8 @@ export default class SideBar extends Component {
                 <li className="active"><Link to="/projectManager/project/ProyectoA/activities/A"><i className="fa fa-circle-o"></i>Ver y editar actividad</Link></li>
               </ul>
             </li>
+            <li><Link to="/projectsFinalized"><i className="fa fa-gear"></i> <span>Proyectos finalizados</span></Link></li>
+            <li><Link to="/projectsFinalized/ProyectoA"><i className="fa fa-gear"></i> <span>Un proyecto finalizado</span></Link></li>
             <li><a href="https://adminlte.io/docs"><i className="fa fa-book"></i> <span>Documentation</span></a></li>
           </ul>
         </section>
