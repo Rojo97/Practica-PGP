@@ -193,7 +193,7 @@ function init(app, dbPool, db) {
                 if (results.length == 0) {
                     response.sendStatus(404);
                 } else {
-                    console.log("Actividades enviadas");
+                    console.log("Candidatos enviados");
                     return res.status(200).json({
                         data: results
                     })
