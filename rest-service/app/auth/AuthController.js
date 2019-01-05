@@ -20,7 +20,7 @@ function init(app, dbPool, db) {
                 } else {
                     console.log("Peticion recibida");
                     if (password != results[0].contrasenia){
-                        res.status(401).send("Error autenticando el usuario");
+                        res.status(404).send("Error autenticando el usuario");
                     }else {
                         // crear token de autenticacion
                         var token = jwt.sign(payload, config.secret, {
