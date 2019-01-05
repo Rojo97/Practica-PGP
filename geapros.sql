@@ -30,9 +30,9 @@ CREATE TABLE Proyecto
     fechaFin DATE,
     estado INTEGER,
     presupuesto REAL,
-    informeDeSeguimientoTemporal VARCHAR(50),
-    resumen VARCHAR(50),
-    descripcion VARCHAR(50)
+    informeDeSeguimientoTemporal CHAR(50),
+    resumen CHAR(50),
+    descripcion CHAR(50)
     CONSTRAINT fk_proyecto FOREIGN KEY (estado) REFERENCES Estado(estado)
         ON DELETE CASCADE
         ON UPDATE NO ACTION,
