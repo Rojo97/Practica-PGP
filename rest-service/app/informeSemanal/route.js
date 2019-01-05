@@ -3,7 +3,6 @@ var VerifyToken = require('../auth/VerifyToken');
 function init(app, dbPool, db) {
 
     app.get('/api/informeSemanal', VerifyToken,(req, res) => {
-        const numeroInforme = req.params.numeroInforme;
         var query = db.querys.informeSemanal.getInformeDesarrollador;
         var args = [req.body.nombreProyecto, req.body.nombreActividad, req.body.nickUsuario];
 
