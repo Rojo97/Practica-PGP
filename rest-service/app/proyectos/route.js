@@ -69,7 +69,7 @@ function init(app, dbPool, db) {
     })
 
     app.post('/api/proyecto', VerifyToken, (req, res) => {
-        var args = [req.body.nombreProyecto, req.body.resumen];
+        var args = [req.body.nombreProyecto, req.body.descripcion];
         var args2 = [req.body.nombreProyecto, req.body.nickUsuario];
         const query = db.querys.proyectos.insert;
         const query2 = db.querys.participacion.insertParticipacionJefe;
