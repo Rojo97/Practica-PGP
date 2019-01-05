@@ -17,14 +17,13 @@ function init(app, dbPool, db) {
     })
 
     app.put('/api/informeSemanal', VerifyToken, (req, res) => {
-        console.log(req.body);
 
         var args = [req.body.estado, req.body.nombreActividad, req.body.nickUsuario, req.body.nombreProyecto];
         const query = db.querys.informeSemanal.updateEstado;
 
         function onResults(error, results, response) {
             if (!error) {
-                console.log("Informe creado");
+                console.log("Informe actualizado");
                 response.status(201).json({});
             } else { res.status(500).send('Error on the server.'); }
         };
