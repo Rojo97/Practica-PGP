@@ -12,7 +12,7 @@ function init(app, dbPool, db) {
                 if (results.length == 0) {
                     response.sendStatus(404);
                 } else {
-                    console.log("Peticion recibida");
+                    console.log("Devuelto proyecto");
                     return res.status(200).json({
                         data: results
                     })
@@ -37,6 +37,7 @@ function init(app, dbPool, db) {
 
         function onResults2(error, results, response) {
             if (!error) {
+                console.log("Proyecto creado");
                 response.status(201).json({});
             } else { res.status(500).send('Error on the server.'); }
         };
@@ -82,7 +83,7 @@ function init(app, dbPool, db) {
 
         args3 = [fechaComienzo, presupuesto, nombreProyecto];
         db.execQuery(dbPool, query3, args3, onResults2, res);
-        console.log("Peticion recibida");
+        console.log("Plan cargado");
     })
 
     app.get('/api/proyecto/:nombreProyecto/actividades', VerifyToken, (req, res) => {
@@ -96,7 +97,7 @@ function init(app, dbPool, db) {
                 if (results.length == 0) {
                     response.sendStatus(404);
                 } else {
-                    console.log("Peticion recibida");
+                    console.log("Actividades enviadas");
                     return res.status(200).json({
                         data: results
                     })
@@ -124,7 +125,7 @@ function init(app, dbPool, db) {
                 if (results.length == 0) {
                     response.sendStatus(404);
                 } else {
-                    console.log("Peticion recibida");
+                    console.log("Participantes del proyecto enviados");
                     return res.status(200).json({
                         data: results
                     })
@@ -147,80 +148,7 @@ function init(app, dbPool, db) {
                 if (results.length == 0) {
                     response.sendStatus(404);
                 } else {
-                    console.log("Peticion recibida");
-                    return res.status(200).json({
-                        data: results
-                    })
-                }
-            } else { res.status(500).send('Error on the server.'); }
-        }
-
-        db.execQuery(dbPool, query, args, onResults, res);
-    })
-
-    app.get('/api/proyecto/:nombreProyecto/actividades', VerifyToken, (req, res) => {
-        var query = db.querys.proyectos.getActividadesProyecto;
-
-        const nombreProyecto = req.params.nombreProyecto;
-        var args = [nombreProyecto];
-
-        function onResults(error, results, response) {
-            if (!error) {
-                if (results.length == 0) {
-                    response.sendStatus(404);
-                } else {
-                    console.log("Peticion recibida");
-                    return res.status(200).json({
-                        data: results
-                    })
-                }
-            } else { res.status(500).send('Error on the server.'); }
-        }
-
-        db.execQuery(dbPool, query, args, onResults, res);
-    })
-
-    app.get('/api/proyecto/:nombreProyecto/participantes', VerifyToken, (req, res) => {
-        const nombreProyecto = req.params.nombreProyecto;
-
-        if (req.query.rol) {
-            var query = db.querys.proyectos.getParticipantesProyectoConRol;
-            var args = [nombreProyecto, req.query.rol];
-        } else {
-            var query = db.querys.proyectos.getParticipantesProyecto;
-            var args = [nombreProyecto];
-        }
-
-
-        function onResults(error, results, response) {
-            if (!error) {
-                if (results.length == 0) {
-                    response.sendStatus(404);
-                } else {
-                    console.log("Peticion recibida");
-                    return res.status(200).json({
-                        data: results
-                    })
-                }
-            } else { res.status(500).send('Error on the server.'); }
-        }
-
-        db.execQuery(dbPool, query, args, onResults, res);
-    })
-
-    app.get('/api/proyecto/:nombreProyecto/candidatos', VerifyToken, (req, res) => {
-        const nombreProyecto = req.params.nombreProyecto;
-
-        var query = db.querys.proyectos.getCandidatos;
-        var args = [nombreProyecto];
-
-
-        function onResults(error, results, response) {
-            if (!error) {
-                if (results.length == 0) {
-                    response.sendStatus(404);
-                } else {
-                    console.log("Peticion recibida");
+                    console.log("Candidatos enviados");
                     return res.status(200).json({
                         data: results
                     })

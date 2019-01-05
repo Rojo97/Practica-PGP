@@ -12,7 +12,7 @@ function init(app, dbPool, db) {
                 if (results.length == 0) {
                     response.sendStatus(404);
                 } else {
-                    console.log("Peticion recibida");
+                    console.log("Actividades del usuario enviadas");
                     return res.status(200).json({
                         data: results
                     })
@@ -35,7 +35,7 @@ function init(app, dbPool, db) {
                 if (results.length == 0) {
                     response.sendStatus(404);
                 } else {
-                    console.log("Peticion recibida");
+                    console.log("Actividad enviada");
                     return res.status(200).json({
                         data: results
                     })
@@ -58,6 +58,7 @@ function init(app, dbPool, db) {
 
         function onResults(error, results, response) {
             if (!error) {
+                console.log("Actividad creada");
                 response.status(201).json({});
             } else { res.status(500).send('Error on the server.'); }
         }

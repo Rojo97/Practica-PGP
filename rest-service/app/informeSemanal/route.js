@@ -9,6 +9,7 @@ function init(app, dbPool, db) {
 
         function onResults(error, results, response) {
             if (!error) {
+                console.log("Informe creado");
                 response.status(201).json({});
             } else { res.status(500).send('Error on the server.'); }
         };
