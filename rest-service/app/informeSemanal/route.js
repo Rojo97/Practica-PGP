@@ -2,17 +2,17 @@ var VerifyToken = require('../auth/VerifyToken');
 
 function init(app, dbPool, db) {
 
-    app.get('/api/informeSemanal/:numeroInforme', VerifyToken,(req, res) => {
+    app.get('/api/informeSemanal', VerifyToken,(req, res) => {
         const numeroInforme = req.params.numeroInforme;
         var query = db.querys.informeSemanal.getInformeDesarrollador;
-        var args = [numeroInforme];
+        var args = [req.body.nombreProyecto, req.body.nombreActividad, req.body.nickUsuario];
 
         function onResults(error, results, response) {
             if (!error) {
                 if (results.length == 0) {
                     response.sendStatus(404);
                 } else {
-                    console.log("Usuario enviado");
+                    console.log("Informe enviado");
                     return res.status(200).json({
                         data: results
                     })
