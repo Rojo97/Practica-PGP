@@ -30,7 +30,8 @@ const db = {
             updateCargaProyecto : 'UPDATE Proyecto SET fechaInicial = ?, presupuesto = ? WHERE nombreProyecto = ?'
         },
         participacion: {
-            insertParticipacionJefe : 'INSERT INTO Participacion VALUES (NOW(),1,?,?,0,1)'
+            insertParticipacionJefe : 'INSERT INTO Participacion VALUES (NOW(),1,?,?,0,1)',
+            updateEstadoParticipacion : 'UPDATE Participacion SET estado = ? WHERE nombreProyecto = ?'
         },
         actividades : {
             getActividadesUsuario : 'SELECT A.nombreActividad, A.nombreProyecto, A.descripcion, A.duracionEstimada, A.duracionReal, A.fechaInicio, A.fechaFin, A.estado, A.rol FROM Actividad A, InformeSemanal I WHERE A.nombreActividad = I.nombreActividad AND A.nombreProyecto = I.nombreProyecto AND A.nombreProyecto = ? AND I.nickUsuario = ?',
