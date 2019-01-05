@@ -54,7 +54,7 @@ function init(app, dbPool, db) {
                 console.log("Participacion creada");
                 response.status(201).json({});
             } else {
-                res.status(500).send('Error on the server.');
+                res.status(409).send('Ya existe una participacion con ese nombre');
             }
         };
 
