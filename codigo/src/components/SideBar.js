@@ -34,6 +34,7 @@ export default class SideBar extends Component {
                 <li className="active"><Link to="/developer/selectProject"><i className="fa fa-circle-o"></i>Seleccionar proyecto</Link></li>
                 <li className="active"><Link to="/developer/project/ProyectoA/activities"><i className="fa fa-circle-o"></i>Ver actividades</Link></li>
                 <li className="active"><Link to="/developer/project/ProyectoA/activities/A"><i className="fa fa-circle-o"></i>Actividad</Link></li>
+                <li className="active"><Link to="/developer/timeDedicated"><i className="fa fa-circle-o"></i>Ver informes</Link></li>
               </ul>
             </li>
             <li className="active treeview">

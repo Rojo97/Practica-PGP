@@ -65,7 +65,7 @@ export default class InformesSemanales extends Component {
                                 {this.state.informes.map(informe => (
                                     <div className="box ">
                                         <div className="box-header with-border">
-                                            <h3 className="box-title">Inorme numero: {informe.numeroInforme}</h3>
+                                            <h3 className="box-title">Informe numero: {informe.numeroInforme}</h3>
                                         </div>
                                         <div className="box-body">
                                             <div className="col-md-6">
