@@ -7,11 +7,13 @@ import SelectProject from '../components/SelectProject';
 import ShowActivitiesDeveloper from '../components/ShowActivitiesDeveloper';
 import ShowActivitiesManager from '../components/ShowActivitiesManager';
 import DarAltaProyecto from '../components/DarAltaProyecto';
+import AnadirPlanProyecto from '../components/AnadirPlanProyecto';
 import ActivityDetail from '../components/ActivityDetail';
 import ActivityDetailAndEdit from '../components/ActivityDetailAndEdit';
 import ProjectDetailsManager from '../components/ProjectDetailsManager';
 import ProjectsFinalized from '../components/ProjectsFinalized';
 import ProjectDetailsAll from '../components/ProjectDetailsAll';
+import AnadirParticipantes from '../components/AnadirParticipantes';
 
 class Plantilla extends Component {
   render() {
@@ -30,6 +32,8 @@ class Plantilla extends Component {
           <Route exact path="/projectManager/project/:proyecto" component={ProjectDetailsManager}/>
           <Route exact path="/projectsFinalized" component={ProjectsFinalized}/>
           <Route exact path="/projectsFinalized/:proyecto" component={ProjectDetailsAll}/>
+          <Route exact path="/projectManager/project/:proyecto/loadProyectPlan" component={AnadirPlanProyecto}/>
+          <Route exact path="/projectManager/project/:proyecto/loadParticipants" component={AnadirParticipantes}/>
         </Switch>
       </div>
     );
