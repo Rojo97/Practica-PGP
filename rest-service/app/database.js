@@ -44,7 +44,8 @@ const db = {
         },
         informeSemanal :{
             insert: 'INSERT INTO InformeSemanal (nombreActividad,nombreProyecto,nickUsuario,informeTareasPersonales,estado,horas) VALUES (?,?,?,?,2,?)',
-            getInformeByEstado : 'SELECT * FROM InformeSemanal Inf WHERE Inf.estado = ? AND Inf.nombreProyecto = ?'
+            getInformeByEstado : 'SELECT * FROM InformeSemanal Inf WHERE Inf.estado = ? AND Inf.nombreProyecto = ?',
+            updateEstado : 'UPDATE InformeSemanal SET estado = ? WHERE nombreActividad = ? AND nickUsuario = ? AND nombreProyecto = ?'
         }
     },
     execQuery: function (dbPool, query, args, cb, res) {
