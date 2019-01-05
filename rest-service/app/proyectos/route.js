@@ -45,7 +45,7 @@ function init(app, dbPool, db) {
     })
 
     app.post('/api/proyecto/:nombreProyecto/participacion', VerifyToken, (req, res) => {
-        const query = db.querys.proyectos.insertParticipacionUsuario;
+        const query = db.querys.participacion.insertParticipacionUsuario;
         var nombreProyecto = req.params.nombreProyecto;
         var args = [req.body.porcentajeParticipacion, nombreProyecto, req.body.nickUsuario, req.body.rol];
 
@@ -54,7 +54,6 @@ function init(app, dbPool, db) {
                 console.log("Participacion creada");
                 response.status(201).json({});
             } else {
-                console.log(error);
                 res.status(500).send('Error on the server.');
             }
         };
