@@ -19,7 +19,7 @@ function init(app, dbPool, db) {
     app.put('/api/informeSemanal', VerifyToken, (req, res) => {
         console.log(req.body);
 
-        var args = [re.body.estado, req.body.nombreActividad, req.body.nickUsuario, req.body.nombreProyecto];
+        var args = [req.body.estado, req.body.nombreActividad, req.body.nickUsuario, req.body.nombreProyecto];
         const query = db.querys.informeSemanal.updateEstado;
 
         function onResults(error, results, response) {
