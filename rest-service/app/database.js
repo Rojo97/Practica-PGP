@@ -43,7 +43,8 @@ const db = {
             insertPredecesora : 'INSERT INTO Predecesora (precedida,predecesora,nombreProyecto) VALUES (?,?,?)'
         },
         informeSemanal :{
-            insert: 'INSERT INTO InformeSemanal (nombreActividad,nombreProyecto,nickUsuario,informeTareasPersonales,estado,horas) VALUES (?,?,?,?,2,?)'
+            insert: 'INSERT INTO InformeSemanal (nombreActividad,nombreProyecto,nickUsuario,informeTareasPersonales,estado,horas) VALUES (?,?,?,?,2,?)',
+            getInformeByEstado : 'SELECT * FROM InformeSemanal Inf WHERE Inf.estado = ? AND Inf.nombreProyecto = ?'
         }
     },
     execQuery: function (dbPool, query, args, cb, res) {
