@@ -12,9 +12,9 @@ export default class ShowActivitiesDeveloper extends Component {
     }
 
     componentDidMount() {
-        const nombre = this.props.match.params.nombre
+        const proyecto = this.props.match.params.proyecto
 
-        fetch(`http://virtual.lab.inf.uva.es:27014/api/actividad/${window.sessionStorage.getItem('user')}/${nombre}`, {
+        fetch(`http://virtual.lab.inf.uva.es:27014/api/actividad/${window.sessionStorage.getItem('user')}/${proyecto}`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -30,13 +30,13 @@ export default class ShowActivitiesDeveloper extends Component {
     }
 
     color = estado =>{
-        if(estado == 0){
-            return "small-box bg-yelow";
-        }else if(estado == 1){
+        if(estado === 0){
+            return "small-box bg-yellow";
+        }else if(estado === 1){
             return "small-box bg-green";
-        }else if(estado == 2){
+        }else if(estado === 2){
             return "small-box bg-purple";
-        }else if(estado == 3){
+        }else if(estado === 3){
             return "small-box bg-red";
         }
     }
@@ -46,7 +46,7 @@ export default class ShowActivitiesDeveloper extends Component {
             <div className="content-wrapper">
                 <div className="content-header">
                     <h1>
-                        Actividades
+                        Actividades 
                     </h1>
                 </div>
                 <section className="content">
@@ -64,7 +64,7 @@ export default class ShowActivitiesDeveloper extends Component {
                                     <div className="icon">
                                         <i className="fa fa-gear"></i>
                                     </div>
-                                    <Link to={"/developer/activity/"+actividad.nombreActividad} className="small-box-footer">Ver mas y acceso informes<i className="fa fa-arrow-circle-right"></i></Link>
+                                    <Link to={"/developer/project/"+this.props.match.params.proyecto+"/activities/"+actividad.nombreActividad} className="small-box-footer">Ver mas y acceso informes<i className="fa fa-arrow-circle-right"></i></Link>
                                 </div>
                                 ))}
                                 </div>

@@ -12,9 +12,9 @@ export default class ShowActivitiesManager extends Component {
     }
 
     componentDidMount() {
-        const nombre = this.props.match.params.nombre
+        const proyecto = this.props.match.params.proyecto
 
-        fetch(`http://virtual.lab.inf.uva.es:27014/api/proyecto/${nombre}/actividades`, {
+        fetch(`http://virtual.lab.inf.uva.es:27014/api/proyecto/${proyecto}/actividades`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -30,13 +30,13 @@ export default class ShowActivitiesManager extends Component {
     }
 
     color = estado =>{
-        if(estado == 0){
-            return "small-box bg-yelow";
-        }else if(estado == 1){
+        if(estado === 0){
+            return "small-box bg-yellow";
+        }else if(estado === 1){
             return "small-box bg-green";
-        }else if(estado == 2){
+        }else if(estado === 2){
             return "small-box bg-purple";
-        }else if(estado == 3){
+        }else if(estado === 3){
             return "small-box bg-red";
         }
     }
@@ -64,7 +64,7 @@ export default class ShowActivitiesManager extends Component {
                                     <div className="icon">
                                         <i className="fa fa-gear"></i>
                                     </div>
-                                    <Link to={"/projectManager/activity/"+actividad.nombreActividad} className="small-box-footer">Ver y editar <i className="fa fa-arrow-circle-right"></i></Link>
+                                    <Link to={"/projectManager/project/"+this.props.match.params.proyecto+"/activities/"+actividad.nombreActividad} className="small-box-footer">Ver y editar <i className="fa fa-arrow-circle-right"></i></Link>
                                 </div>
                                 ))}
                                 </div>

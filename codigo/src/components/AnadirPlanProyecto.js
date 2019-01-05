@@ -142,7 +142,7 @@ export default class DarAltaProyecto extends Component {
 
         //Se comprueba primero que todos los campos del formulario sean validos
         if (this.validaFormulario()) {
-            const nombre = this.props.match.params.nombre
+            const nombre = this.props.match.params.proyecto
 
             fetch(`http://virtual.lab.inf.uva.es:27014/api/proyecto/${nombre}/cargaPlan`, {
                 method: 'POST',

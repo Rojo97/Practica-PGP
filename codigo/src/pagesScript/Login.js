@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from "react-router-dom";
-import App from '../App';
 
 class Login extends Component {
     constructor(props){
@@ -45,7 +44,7 @@ class Login extends Component {
 
     render() {
         let redirection;
-        if (this.state.logged == 0) {
+        if (this.state.logged === 0) {
             redirection = '';
         } else {
             redirection = <Redirect to="/inicio"></Redirect>;
