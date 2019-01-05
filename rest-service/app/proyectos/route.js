@@ -181,6 +181,28 @@ function init(app, dbPool, db) {
         db.execQuery(dbPool, query, args, onResults, res);
     })
 
+    app.get('/api/proyecto/:nombreProyecto/informesSemanales', VerifyToken, (req, res) => {
+        var query = db.querys.proyectos.getInformeByEstado;
+
+        const nombreProyecto = req.params.nombreProyecto;
+        var args = [req.query.estado, nombreProyecto];
+
+        function onResults(error, results, response) {
+            if (!error) {
+                if (results.length == 0) {
+                    response.sendStatus(404);
+                } else {
+                    console.log("Actividades enviadas");
+                    return res.status(200).json({
+                        data: results
+                    })
+                }
+            } else { res.status(500).send('Error on the server.'); }
+        }
+
+        db.execQuery(dbPool, query, args, onResults, res);
+    })
+
     app.get('/api/proyecto/:nombreProyecto/participantes', VerifyToken, (req, res) => {
         const nombreProyecto = req.params.nombreProyecto;
 
