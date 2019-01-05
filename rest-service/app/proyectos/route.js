@@ -45,9 +45,8 @@ function init(app, dbPool, db) {
     })
 
     app.post('/api/proyecto/:nombreProyecto/participacion', VerifyToken, (req, res) => {
-        const query = db.querys.proyectos.insert;
+        const query = db.querys.proyectos.insertParticipacionUsuario;
         var nombreProyecto = req.params.nombreProyecto;
-        console.log(req.body);
         var args = [req.body.porcentajeParticipacion, nombreProyecto, req.body.nickUsuario, req.body.rol];
 
         function onResults(error, results, response) {
