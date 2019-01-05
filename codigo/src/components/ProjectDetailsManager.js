@@ -36,6 +36,8 @@ export default class ProjectDetailsManager extends Component {
             .then(() => {
                 this.setState({ informeTemporal: this.state.proyecto.informeDeSeguimientoTemporal });
                 this.setState({ estadoProyecto: this.state.proyecto.estado });
+                this.setState({ resumen: this.state.proyecto.resumen });
+                this.setState({ fechaFin: Moment(this.state.proyecto.fechaFin).format('YYYY-MM-DD') });
             })
             .catch(function (data) { console.log(data) });
     }

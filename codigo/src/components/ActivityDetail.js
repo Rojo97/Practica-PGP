@@ -7,7 +7,6 @@ export default class ActivityDetail extends Component {
         this.state = {
             actividad: [],
             informe: 0,
-            fecha: '',
             texto: '',
             horas: '',
             estados: ["En curso", "Finalizada", "Cerrada", "Aprobada"],
@@ -87,15 +86,6 @@ export default class ActivityDetail extends Component {
                             <h3 className="box-title">Crear informe semanal</h3>
                         </div>
                         <div className="box-body">
-                            <div className="form-group">
-                                <label>Fecha:</label>
-                                <div className="input-group date">
-                                    <div className="input-group-addon">
-                                        <i className="fa fa-calendar"></i>
-                                    </div>
-                                    <input type="date" className="form-control pull-right" name="fecha" value={this.state.fecha} onChange={this.handleInputChange} />
-                                </div>
-                            </div>
                             <div className="form-group">
                                 <label htmlFor="inputDuracion">Horas trabajadas</label>
                                 <input type="input" className="form-control" name="horas" placeholder="Horas trabajadas" value={this.state.horas} onChange={this.handleInputChangeNumber} />

@@ -12,7 +12,7 @@ export default class ProjectsFinalized extends Component {
 
     componentDidMount() {
 
-        fetch(`http://virtual.lab.inf.uva.es:27014/api/proyecto/ProyectoA`, {
+        fetch(`http://virtual.lab.inf.uva.es:27014/api/proyecto?estado=1`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -43,6 +43,7 @@ export default class ProjectsFinalized extends Component {
                                     <div className="small-box bg-green">
                                     <div className="inner">
                                         <h3>{proyecto.nombreProyecto}</h3>
+                                        <p>{proyecto.descripcion}</p>
                                         <p style={{float: 'left'}} align="left">Inicio: {Moment(proyecto.fechaInicio).format('DD/MM/YYYY')}</p>
                                         <p style={{clear: 'right'}} align="right">Fin: {Moment(proyecto.fin).format('DD/MM/YYYY')}</p>
                                     </div>

@@ -6,7 +6,7 @@ export default class ProjectDetailsAll extends Component {
         super(props);
         this.state = {
             proyecto: [],
-            estados: ["En curso", "Finalizada", "Cerrada", "Aprobada"],
+            estados: ["En curso", "Finalizado", "Cerrado", "Aprobado"],
         }
     }
 
@@ -42,7 +42,8 @@ export default class ProjectDetailsAll extends Component {
                                     <h3 className="box-title">Detalles del proyecto</h3>
                                 </div>
                                 <div className="box-body">
-                                <div className="col-md-6">
+                                    <div className="col-md-6">
+                                        <h4>-Jefe de proyecto: {this.state.proyecto.jefeProyecto}</h4>
                                         <h4>-Fecha de inicio: {Moment(this.state.proyecto.fechaInicial).format('DD/MM/YYYY')}</h4>
                                         <h4>-Fecha de fin Real: {Moment(this.state.proyecto.fechaFin).format('DD/MM/YYYY')}</h4>
                                     </div>
@@ -50,10 +51,10 @@ export default class ProjectDetailsAll extends Component {
                                         <h4>-Estado actual: {this.state.estados[this.state.proyecto.estado]}</h4>
                                         <h4>-Presupuesto: {this.state.proyecto.presupuesto}</h4>
                                     </div>
-                                    <div className="box-body">
-                                        <h3>Resumen:</h3>
-                                        <h4>{this.state.proyecto.resumen}</h4>
-                                    </div>
+                                </div>
+                                <div className="box-body">
+                                    <h3>Resumen:</h3>
+                                    <h4>{this.state.proyecto.resumen}</h4>
                                 </div>
                             </div>
                         </div>
