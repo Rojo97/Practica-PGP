@@ -25,13 +25,13 @@ export default class Header extends Component {
                             <li className="dropdown user user-menu">
                                 <a href="#" className="dropdown-toggle" data-toggle="dropdown">
                                     <img src="./oneUser.png" className="user-image" alt="User Image" />
-                                    <span className="hidden-xs">User on Develop</span>
+                                    <span className="hidden-xs">{window.sessionStorage.getItem('user')}</span>
                                 </a>
                                 <ul className="dropdown-menu">
                                     {/* <!-- User image --> */}
                                     <li className="user-header">
                                         <img src="oneUser.png" className="img-circle" alt="User Image" />
-                                        <p>User on Develop<small>Here goes the rol</small></p>
+                                        <p>{window.sessionStorage.getItem('user')}<small>Here goes the rol</small></p>
                                     </li>
                                     {/* <!-- Menu Footer--> */}
                                     <li className="user-footer">
