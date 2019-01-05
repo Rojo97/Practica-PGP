@@ -18,8 +18,8 @@ const db = {
             insert: 'INSERT INTO Usuario(nickUsuario,contrasenia,dni,nombre,apellido1,apellido2,fechaNacimiento,categoriaUsuario) VALUES (?,?,?,?,?,?,?,?)'
         },
         proyectos: {
-            getProyectoByNombre: 'SELECT * FROM Proyecto P WHERE P.nombreProyecto = ?',
             getProyectosFinalizados: 'SELECT * FROM Proyecto P WHERE P.estado = 1',
+            getProyectoByNombre: 'SELECT P.nickUsuario as jefeProyecto, Pr.* FROM Proyecto Pr,Participacion P WHERE Pr.nombreProyecto = P.nombreProyecto AND P.rol = 1 AND Pr.nombreProyecto = ?',
             insert: 'INSERT INTO Proyecto(nombreProyecto,fechaInicial,estado,resumen) VALUES (?,NOW(),0,?)',
             countProyectosByNombre: 'SELECT COUNT(*) AS numeroProyectos FROM Proyecto Pr WHERE Pr.nombreProyecto = ?',
             getActividadesProyecto:'SELECT * FROM Actividad A WHERE A.nombreProyecto = ?',
@@ -31,7 +31,7 @@ const db = {
         },
         participacion: {
             insertParticipacionJefe : 'INSERT INTO Participacion VALUES (NOW(),1,?,?,0,1)',
-            insertParticipacionUsuario :'INSERT INTO Participacion VALUES (NOW(),?,?,?,0,1)' ,
+            insertParticipacionUsuario :'INSERT INTO Participacion VALUES (NOW(),?,?,?,0,?)' ,
             updateEstadoParticipacion : 'UPDATE Participacion SET estado = ? WHERE nombreProyecto = ?'
         },
         actividades : {
