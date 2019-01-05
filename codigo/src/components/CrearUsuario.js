@@ -53,7 +53,6 @@ export default class CrearUsuario extends Component {
         }).then(function (res) { console.log(res) })
             .then(() => { alert("Usuario enviado a la DB") })
             .catch(function (res) { console.log(res) });
-
     }
 
     render() {

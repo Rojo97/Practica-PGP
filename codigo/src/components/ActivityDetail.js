@@ -34,6 +34,27 @@ export default class ActivityDetail extends Component {
             .catch(function (data) { console.log(data) });
     }
 
+    postInforme = event => {
+        event.preventDefault();
+        fetch(`http://virtual.lab.inf.uva.es:27014/api/informeSemanal`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'x-access-token': window.sessionStorage.getItem('token')
+            },
+            body: JSON.stringify({
+                nombreActividad: this.state.actividad.nombreActividad,
+                nombreProyecto: this.state.actividad.nombreProyecto,
+                nickUsuario: window.sessionStorage.getItem('user'),
+                informeTareasPersonales: this.state.texto,
+                horas: this.state.horas,
+            })
+        }).then(function (res) { console.log(res) })
+            .then(() => { alert("Informe creado") })
+            .catch(function (res) { console.log(res) });
+    }
+
     activeInforme = event => {
         this.setState({ informe: 1 });
         console.log(this.state);
@@ -96,7 +117,7 @@ export default class ActivityDetail extends Component {
                             </div>
                         </div>
                         <div className="box-footer">
-                            <button type="submit" className="btn btn-info pull-right">Enviar informe</button>
+                            <button type="submit" className="btn btn-info pull-right" onClick={this.postInforme}>Enviar informe</button>
                         </div>
                     </div>
                 </form>;
