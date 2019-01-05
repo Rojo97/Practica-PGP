@@ -30,8 +30,9 @@ CREATE TABLE Proyecto
     fechaFin DATE,
     estado INTEGER,
     presupuesto REAL,
-    informeDeSeguimientoTemporal CHAR(50),
-    resumen CHAR(50),
+    informeDeSeguimientoTemporal VARCHAR(50),
+    resumen VARCHAR(50),
+    descripcion VARCHAR(50)
     CONSTRAINT fk_proyecto FOREIGN KEY (estado) REFERENCES Estado(estado)
         ON DELETE CASCADE
         ON UPDATE NO ACTION,
@@ -165,11 +166,11 @@ VALUES
     (3, 'Pendiente');
 
 INSERT INTO Proyecto
-    (nombreProyecto,fechaInicial,fechaFin,estado,presupuesto,informeDeSeguimientoTemporal,resumen)
+    (nombreProyecto,fechaInicial,fechaFin,estado,presupuesto,informeDeSeguimientoTemporal,resumen,descripcion)
 VALUES
-    ('ProyectoA', '18-01-01', NULL, 0, 2000.0, 'InformeDeSeguimiento', 'Resumen'),
-    ('ProyectoB', '18-01-01', NULL , 0, 2000.0, 'InformeDeSeguimiento', 'Resumen'),
-    ('ProyectoC', '18-01-01', '18-12-01' , 2, 2000.0, 'InformeDeSeguimiento', 'Resumen');
+    ('ProyectoA', '18-01-01', NULL, 0, 2000.0, 'InformeDeSeguimiento', 'Resumen','Descripcion'),
+    ('ProyectoB', '18-01-01', NULL , 0, 2000.0, 'InformeDeSeguimiento', 'Resumen','Descripcion'),
+    ('ProyectoC', '18-01-01', '18-12-01' , 2, 2000.0, 'InformeDeSeguimiento', 'Resumen','Descripcion');
 
 INSERT INTO Usuario
     (nickUsuario,contrasenia,dni,nombre,apellido1,apellido2,fechaNacimiento,categoriaUsuario)

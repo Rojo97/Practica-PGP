@@ -31,7 +31,7 @@ const db = {
         },
         participacion: {
             insertParticipacionJefe : 'INSERT INTO Participacion VALUES (NOW(),1,?,?,0,1)',
-            insertParticipacionUsuario :'INSERT INTO Participacion VALUES (NOW(),?,?,?,0,1)' ,
+            insertParticipacionUsuario :'INSERT INTO Participacion VALUES (NOW(),?,?,?,0,?)' ,
             updateEstadoParticipacion : 'UPDATE Participacion SET estado = ? WHERE nombreProyecto = ?'
         },
         actividades : {
