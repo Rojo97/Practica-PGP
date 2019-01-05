@@ -5,8 +5,8 @@ export default class DarAltaProyecto extends Component {
         super(props);
         this.state = {
             nombre: '',
-            fechaComienzo: '',
-            presupuesto: '',
+            // fechaComienzo: '',
+            // presupuesto: '',
             idJefeProyecto: '',
             descripccion: '',
             listaJefes: [],
@@ -38,7 +38,7 @@ export default class DarAltaProyecto extends Component {
                 ...prevState, [name]: value
             }
         }
-            //, () => console.log(this.state)
+            , () => console.log(this.state)
         )
     }
 
@@ -47,28 +47,6 @@ export default class DarAltaProyecto extends Component {
         var x = document.forms["formularioProyecto"]["nombre"].value;
         if (x == '') {
             alert("Introduzca un nombre de proyecto");
-            return false;
-        }
-
-        //Se comprueba la fecha de comienzo
-        //Si se introduce una fecha que no existe el formulario devuelve '' también
-        x = document.forms["formularioProyecto"]["fechaComienzo"].value;
-        if (x == '') {
-            alert("Introduzca una fecha válida");
-            return false;
-        }
-
-        //Se comprueba el presupuesto
-        x = document.forms["formularioProyecto"]["presupuesto"].value;
-        //console.log("Ahi va: " + Number(x));
-        if (x == '') {
-            alert("Introduzca un presupuesto");
-            return false;
-        } else if (isNaN(Number(x))) {
-            alert("Introduzca un presupuesto válido");
-            return false;
-        } else if (x < 1) {
-            alert("Introduzca un presupuesto mayor que 0");
             return false;
         }
 
@@ -141,8 +119,6 @@ export default class DarAltaProyecto extends Component {
                     nombreProyecto: this.state.nombre,
                     resumen: this.state.descripccion,
                     nickUsuario: this.state.idJefeProyecto,
-                    presupuesto: this.state.presupuesto,
-                    fechaInicial: this.state.fechaComienzo,
                 })
             }).then((response) => {
                 //console.log("Codigo de estado: " + response.status);
@@ -152,8 +128,6 @@ export default class DarAltaProyecto extends Component {
 
                         //Una vez creado el proyecto se resetean los campos del formulario
                         this.setState({ nombre: '' });
-                        this.setState({ fechaComienzo: '' });
-                        this.setState({ presupuesto: '' });
                         this.setState({ idJefeProyecto: '' });
                         this.setState({ descripccion: '' });
 
@@ -164,7 +138,7 @@ export default class DarAltaProyecto extends Component {
                         break;
 
                     //TODO Falta ver que codigo de error es
-                    case 5000:
+                    case 409:
                         alert("Existe un proyecto con ese nombre");
                     default:
                         throw new Error("Bad response from server");
@@ -196,22 +170,6 @@ export default class DarAltaProyecto extends Component {
                                             <label for="nombre">Nombre</label>
                                             <input type="text" class="form-control" name="nombre" placeholder="Nombre" value={this.state.nombre} onChange={this.handleInputChange} />
                                         </div>
-                                        <div class="form-group">
-                                            <label>Fecha de comienzo:</label>
-                                            <div class="input-group date">
-                                                <div class="input-group-addon">
-                                                    <i class="fa fa-calendar"></i>
-                                                </div>
-                                                <input type="date" class="form-control pull-right" name="fechaComienzo" value={this.state.fechaComienzo} onChange={this.handleInputChange} />
-                                            </div>
-                                        </div>
-                                        <label for="nombre">Presupuesto</label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon">€</span>
-                                            <input type="text" class="form-control" name="presupuesto" placeholder="Presupuesto" value={this.state.presupuesto} onChange={this.handleInputChange} />
-                                            <span class="input-group-addon">.00</span>
-                                        </div>
-                                        <label></label>
                                         <div class="form-group">
                                             <label>Jefe de proyecto</label>
                                             <select class="form-control" name="idJefeProyecto" value={this.state.jefeProyecto} onChange={this.handleInputChange} >

@@ -4,15 +4,11 @@ export default class DarAltaProyecto extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            nombre: '',
             fechaComienzo: '',
             presupuesto: '',
-            idJefeProyecto: '',
-            descripccion: '',
-            listaJefes: [],
             listaActividades: [],
 
-            //Formato del JSon que contendrá los datos de cada jefe de proyecto
+            //Formato del JSon que contendrá los datos de las actividades
             actividad: {
                 nombre: '',
                 descripccion: ''
@@ -20,7 +16,7 @@ export default class DarAltaProyecto extends Component {
         }
 
         this.handleInputChange = this.handleInputChange.bind(this);
-        this.addProject = this.addProject.bind(this);
+        this.addDetallesProyecto = this.addDetallesProyecto.bind(this);
         this.handleFileSelect = this.handleFileSelect.bind(this);
 
     }
@@ -41,7 +37,7 @@ export default class DarAltaProyecto extends Component {
                 ...prevState, [name]: value
             }
         }
-            //, () => console.log(this.state)
+            , () => console.log(this.state)
         )
     }
 
@@ -49,23 +45,34 @@ export default class DarAltaProyecto extends Component {
         console.log(content);
     }
 
-    cargaJson(content){
-        try{
+    //Se valida el json y se carga en la lista de actividades
+    cargaJson(content) {
+        try {
             var json = JSON.parse(content);
-            for(let i in json){
-                for(let j in json[i]){
+
+            //Se realiza la validacion de los atributos del json
+            for (let i in json) {
+                for (let j in json[i]) {
                     let a = json[i][j];
-                    if (a.nombre!="" && a.descripccion!="" && a.duracion!="") {
-                        console.log("Bien "+j);
+                    if (a.nombre != "" && a.descripcion != "" && a.duracion != "") {
+                        if(isNaN(Number(a.duracion)) || Number(a.duracion)<0){
+                            throw "Argument invalid";
+                        }else if(a.duracion!=0 && (isNaN(Number(a.rol)) || a.rol<1 || a.rol>3)){
+                            throw "Argument invalid";
+                        }
+                    }else{
+                        throw "Argument invalid";
                     }
                 }
             }
-            this.setState({listaActividades: json});
+            this.setState({ listaActividades: json });
             alert("Se ha cargado el plan de proyecto satisfactoriamente");
             console.log(this.state.listaActividades);
-        }catch(err){
+        } catch (err) {
             alert("Ha habido un error al cargar el archivo json");
-            document.getElementById("archivoPlanProyecto").value="";
+            document.getElementById("archivoPlanProyecto").value = "";
+            this.setState({ listaActividades: [] });
+            console.log(this.state);
         }
         //console.log(json);
     }
@@ -76,7 +83,6 @@ export default class DarAltaProyecto extends Component {
             alert('No file select');
             return;
         }
-        let json;
         let file = files[0];
         let that = this;
         let reader = new FileReader();
@@ -89,9 +95,9 @@ export default class DarAltaProyecto extends Component {
 
     validaFormulario() {
         //Se comprueba el nombre
-        var x = document.forms["formularioProyecto"]["nombre"].value;
+        var x = document.forms["formularioProyecto"]["archivoPlanProyecto"].value;
         if (x == '') {
-            alert("Introduzca un nombre de proyecto");
+            alert("Cargue un plan de proyecto");
             return false;
         }
 
@@ -100,6 +106,13 @@ export default class DarAltaProyecto extends Component {
         x = document.forms["formularioProyecto"]["fechaComienzo"].value;
         if (x == '') {
             alert("Introduzca una fecha válida");
+            return false;
+        }
+        //Se comprueba que la fecha sea posterior o igual a la actual
+        var today = new Date();
+        var fechaIntroducida = new Date(x);
+        if(fechaIntroducida<=today){
+            alert("Introduzca una posterior a la actual");
             return false;
         }
 
@@ -117,20 +130,6 @@ export default class DarAltaProyecto extends Component {
             return false;
         }
 
-        //Se comprueba el jefe de proyecto
-        x = document.forms["formularioProyecto"]["idJefeProyecto"].value;
-        if (x == '') {
-            alert("Seleccione un jefe de proyecto");
-            return false;
-        }
-
-        //Se comprueba la descripcción
-        x = document.forms["formularioProyecto"]["descripccion"].value;
-        if (x == '') {
-            alert("Introduzca una descripcción");
-            return false;
-        }
-
         return true;
     }
 
@@ -138,47 +137,43 @@ export default class DarAltaProyecto extends Component {
     renderJefe = ({ nickUsuario }) => <option value={nickUsuario}>{nickUsuario}</option>
 
     //Manda el proyecto con todos sus datos validados al backend
-    addProject(event) {
+    addDetallesProyecto(event) {
         event.preventDefault();
 
         //Se comprueba primero que todos los campos del formulario sean validos
         if (this.validaFormulario()) {
-            fetch(`http://virtual.lab.inf.uva.es:27014/api/proyecto`, {
+            const nombre = this.props.match.params.nombre
+
+            fetch(`http://virtual.lab.inf.uva.es:27014/api/proyecto/${nombre}/cargaPlan`, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
+                    'x-access-token': window.sessionStorage.getItem('token')
                 },
                 body: JSON.stringify({
-                    nombreProyecto: this.state.nombre,
-                    resumen: this.state.descripccion,
-                    nickUsuario: this.state.idJefeProyecto,
                     presupuesto: this.state.presupuesto,
-                    fechaInicial: this.state.fechaComienzo,
+                    fechaComienzo: this.state.fechaComienzo,
+                    actividades: this.state.listaActividades.actividades,
                 })
             }).then((response) => {
                 //console.log("Codigo de estado: " + response.status);
                 switch (response.status) {
                     case 201:
-                        alert("Proyecto creado");
+                        console.log(this.state.listaActividades.actividades);
+                        alert("Detalles de proyecto cargados correctamente");
 
                         //Una vez creado el proyecto se resetean los campos del formulario
-                        this.setState({ nombre: '' });
+                        this.setState({ listaActividades: [] })
                         this.setState({ fechaComienzo: '' });
                         this.setState({ presupuesto: '' });
-                        this.setState({ idJefeProyecto: '' });
-                        this.setState({ descripccion: '' });
 
-                        //Se actualizan los jefes de proyecto restantes 
-                        //y se cambia la opcion seleccionada en el desplegable
-                        this.getJefesProyecto();
-                        document.forms["formularioProyecto"]["idJefeProyecto"].value = "";
+                        document.getElementById("archivoPlanProyecto").value = "";
+
                         break;
 
-                    //TODO Falta ver que codigo de error es
-                    case 5000:
-                        alert("Existe un proyecto con ese nombre");
                     default:
+                        alert("Algo ha pasado");
                         throw new Error("Bad response from server");
                 }
                 return response.json();
@@ -204,40 +199,33 @@ export default class DarAltaProyecto extends Component {
                                         <h3 class="box-title">Plan de proyecto</h3>
                                     </div>
                                     <div class="box-body">
-
                                         <div class="form-group">
                                             <input type="file" class="form-control" ref="file" accept=".json" name="archivoPlanProyecto" id="archivoPlanProyecto" aria-describedby="fileHelp"
                                                 onChange={this.handleFileSelect} />
                                         </div>
                                     </div>
-                                    <div class="box-footer">
-                                        <button type="submit" class="btn btn-info" onClick={this.cargaPlan}>Cargar</button>
-                                    </div>
                                 </div>
                                 <div class="box box-primary">
-                                    <div class="box-header with-border">
-                                        <h3 class="box-title">Asignar actividades</h3>
-                                    </div>
                                     <div class="box-body">
-                                        <label></label>
                                         <div class="form-group">
-                                            <label>Actividad</label>
-                                            <select class="form-control" name="idJefeProyecto" value={this.state.jefeProyecto} onChange={this.handleInputChange} >
-                                                <option disabled selected value=""> -- Sin determinar -- </option>
-                                                {/* {this.state.listaJefes.map(this.renderJefe)} */}
-                                            </select>
+                                            <label>Fecha de comienzo:</label>
+                                            <div class="input-group date">
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </div>
+                                                <input type="date" class="form-control pull-right" name="fechaComienzo" value={this.state.fechaComienzo} onChange={this.handleInputChange} />
+                                            </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label>Empleado</label>
-                                            <select class="form-control" name="idJefeProyecto" value={this.state.jefeProyecto} onChange={this.handleInputChange} >
-                                                <option disabled selected value=""> -- Sin determinar -- </option>
-                                                {/* {this.state.listaJefes.map(this.renderJefe)} */}
-                                            </select>
+                                        <label for="nombre">Presupuesto</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">€</span>
+                                            <input type="text" class="form-control" name="presupuesto" placeholder="Presupuesto" value={this.state.presupuesto} onChange={this.handleInputChange} />
+                                            <span class="input-group-addon">.00</span>
                                         </div>
                                     </div>
+
                                     <div class="box-footer">
-                                        <button type="submit" class="btn btn-info pull-left" onClick={this.addProject}>Asignar</button>
-                                        <button type="submit" class="btn btn-info pull-right" onClick={this.addProject}>Guardar</button>
+                                        <button type="submit" class="btn btn-info pull-right" onClick={this.addDetallesProyecto}>Cargar detalles</button>
                                     </div>
                                     <div>
 
