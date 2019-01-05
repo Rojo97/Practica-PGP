@@ -47,6 +47,7 @@ export default class SideBar extends Component {
                 <li className="active"><Link to="/projectManager/project/ProyectoA"><i className="fa fa-circle-o"></i>Detalles del proyecto</Link></li>
                 <li className="active"><Link to="/projectManager/project/ProyectoA/activities"><i className="fa fa-circle-o"></i>Ver actividades</Link></li>
                 <li className="active"><Link to="/projectManager/project/ProyectoA/activities/A"><i className="fa fa-circle-o"></i>Ver y editar actividad</Link></li>
+                <li className="active"><Link to="/projectManager/project/ProyectoA/informes"><i className="fa fa-circle-o"></i>Informes sin aprobar</Link></li>
               </ul>
             </li>
             <li><Link to="/projectsFinalized"><i className="fa fa-gear"></i> <span>Proyectos finalizados</span></Link></li>
