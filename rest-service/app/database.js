@@ -47,7 +47,7 @@ const db = {
             insert: 'INSERT INTO InformeSemanal (nombreActividad,nombreProyecto,nickUsuario,informeTareasPersonales,estado,horas) VALUES (?,?,?,?,3,?)',
             getInformeByEstado : 'SELECT * FROM InformeSemanal Inf WHERE Inf.estado = ? AND Inf.nombreProyecto = ?',
             getInformeDesarrollador :'SELECT * FROM InformeSemanal WHERE nombreProyecto = ? AND nombreActividad = ? AND nickUsuario = ?',
-            getInformeIntervalo : 'SELECT Inf.* FROM Usuario U NATURAL JOIN InformeSemanal Inf WHERE U.nickUsuario = ? AND Inf.fechaInicio >= ? AND Inf.fechaInicio < ?'
+            getInformeIntervalo : 'SELECT Inf.* FROM Usuario U, InformeSemanal Inf, Actividad A WHERE U.nickUsuario = Inf.nickUsuario AND A.nombreActividad = Inf.nombreActividad AND U.nickUsuario = ? AND A.fechaInicio >= ? AND A.fechaInicio < ?',
             updateEstado : 'UPDATE InformeSemanal SET estado = ?, informeTareasPersonales = ?, horas = ? WHERE numeroInforme = ?'
         }
     },
