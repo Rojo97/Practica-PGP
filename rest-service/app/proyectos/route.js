@@ -53,7 +53,10 @@ function init(app, dbPool, db) {
             if (!error) {
                 console.log("Participacion creada");
                 response.status(201).json({});
-            } else { res.status(500).send('Error on the server.'); }
+            } else {
+                console.log(error);
+                res.status(500).send('Error on the server.');
+            }
         };
 
 
@@ -111,7 +114,7 @@ function init(app, dbPool, db) {
 
     })
 
-    
+
 
     app.post('/api/proyecto/:nombreProyecto/cargaPlan', VerifyToken, (req, res) => {
 
