@@ -39,7 +39,6 @@ function init(app, dbPool, db) {
                     })
                 }
             } else { 
-                console.log(error);
                 res.status(500).send('Error on the server.'); }
         }
 
