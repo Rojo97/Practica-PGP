@@ -23,11 +23,14 @@ function init(app, dbPool, db) {
         db.execQuery(dbPool, query, args, onResults, res);
     })
 
-    app.get('/api/proyecto/finalizados', VerifyToken, (req, res) => {
-        var query = db.querys.proyectos.getProyectosFinalizados;
-
-        var args = [];
-
+    app.get('/api/proyecto', VerifyToken, (req, res) => {
+        if (req.query.estado) {
+            var query = db.querys.proyectos.getProyectosByEstado;
+            var args = [req.query.estado];
+        } else {
+            var query = db.querys.proyectos.getProyectos;
+            var args = [];
+        }
         function onResults(error, results, response) {
             if (!error) {
                 if (results.length == 0) {
@@ -38,8 +41,9 @@ function init(app, dbPool, db) {
                         data: results
                     })
                 }
-            } else { 
-                res.status(500).send('Error on the server.'); }
+            } else {
+                res.status(500).send('Error on the server.');
+            }
         }
 
         db.execQuery(dbPool, query, args, onResults, res);
