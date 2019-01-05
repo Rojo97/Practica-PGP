@@ -117,7 +117,7 @@ export default class DarAltaProyecto extends Component {
                 },
                 body: JSON.stringify({
                     nombreProyecto: this.state.nombre,
-                    resumen: this.state.descripccion,
+                    descripcion: this.state.descripccion,
                     nickUsuario: this.state.idJefeProyecto,
                 })
             }).then((response) => {
