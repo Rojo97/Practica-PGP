@@ -68,6 +68,30 @@ function init(app, dbPool, db) {
 
     })
 
+    app.put('/api/proyecto/:nombreProyecto', VerifyToken, (req, res) => {
+        const query = db.querys.proyectos.insert;
+
+        const nombreProyecto = req.params.nombreProyecto;
+        var args = [req.body.fechaFin, req.body.estado, req.body.informeDeSeguimientoTemporal, req.body.resumen, nombreProyecto];
+        
+        function onResults(error, results, response) {
+            if (!error) {
+                db.execQuery(dbPool, query2, args2, onResults2, res);
+            } else { res.status(500).send('Error on the server.'); }
+        };
+
+        function onResults2(error, results, response) {
+            if (!error) {
+                console.log("Proyecto creado");
+                response.status(201).json({});
+            } else { res.status(500).send('Error on the server.'); }
+        };
+
+
+        db.execQuery(dbPool, query, args, onResults, res);
+
+    })
+
     
 
     app.post('/api/proyecto/:nombreProyecto/cargaPlan', VerifyToken, (req, res) => {
