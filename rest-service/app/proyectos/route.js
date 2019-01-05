@@ -44,6 +44,24 @@ function init(app, dbPool, db) {
         db.execQuery(dbPool, query, args, onResults, res);
     })
 
+    app.post('/api/proyecto/:nombreProyecto/participacion', VerifyToken, (req, res) => {
+        const query = db.querys.proyectos.insert;
+        var nombreProyecto = req.params.nombreProyecto;
+
+        var args = [req.body.porcentajeParticipacion, nombreProyecto, req.body.nickUsuario, req.body.rol];
+
+        function onResults(error, results, response) {
+            if (!error) {
+                console.log("Participacion creada");
+                response.status(201).json({});
+            } else { res.status(500).send('Error on the server.'); }
+        };
+
+
+        db.execQuery(dbPool, query, args, onResults, res);
+
+    })
+
     app.post('/api/proyecto', VerifyToken, (req, res) => {
         var args = [req.body.nombreProyecto, req.body.resumen];
         var args2 = [req.body.nombreProyecto, req.body.nickUsuario];
