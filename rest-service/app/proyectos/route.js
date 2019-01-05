@@ -69,7 +69,7 @@ function init(app, dbPool, db) {
     })
 
     app.post('/api/proyecto', VerifyToken, (req, res) => {
-        var args = [req.body.nombreProyecto, req.body.resumen];
+        var args = [req.body.nombreProyecto, req.body.descripcion];
         var args2 = [req.body.nombreProyecto, req.body.nickUsuario];
         const query = db.querys.proyectos.insert;
         const query2 = db.querys.participacion.insertParticipacionJefe;
@@ -171,6 +171,28 @@ function init(app, dbPool, db) {
                     response.sendStatus(404);
                 } else {
                     console.log("Actividades enviadas");
+                    return res.status(200).json({
+                        data: results
+                    })
+                }
+            } else { res.status(500).send('Error on the server.'); }
+        }
+
+        db.execQuery(dbPool, query, args, onResults, res);
+    })
+
+    app.get('/api/proyecto/:nombreProyecto/informesSemanales', VerifyToken, (req, res) => {
+        var query = db.querys.informeSemanal.getInformeByEstado;
+
+        const nombreProyecto = req.params.nombreProyecto;
+        var args = [req.query.estado, nombreProyecto];
+
+        function onResults(error, results, response) {
+            if (!error) {
+                if (results.length == 0) {
+                    response.sendStatus(404);
+                } else {
+                    console.log("Informes semanales enviados");
                     return res.status(200).json({
                         data: results
                     })
