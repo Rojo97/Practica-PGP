@@ -21,7 +21,7 @@ const db = {
             getProyectos: 'SELECT * FROM Proyecto',
             getProyectosByEstado: 'SELECT * FROM Proyecto P WHERE P.estado = ?',
             getProyectoByNombre: 'SELECT P.nickUsuario as jefeProyecto, Pr.* FROM Proyecto Pr,Participacion P WHERE Pr.nombreProyecto = P.nombreProyecto AND P.rol = 1 AND Pr.nombreProyecto = ?',
-            insert: 'INSERT INTO Proyecto(nombreProyecto,fechaInicial,estado,resumen) VALUES (?,NOW(),0,?)',
+            insert: 'INSERT INTO Proyecto(nombreProyecto,fechaInicial,estado,resumen,descripcion) VALUES (?,NOW(),0,NULL,?)',
             countProyectosByNombre: 'SELECT COUNT(*) AS numeroProyectos FROM Proyecto Pr WHERE Pr.nombreProyecto = ?',
             getActividadesProyecto:'SELECT * FROM Actividad A WHERE A.nombreProyecto = ?',
             getParticipantesProyecto : 'SELECT U.nickUsuario,U.dni,U.nombre,U.apellido1,U.apellido2,P.porcentajeParticipacion,P.rol FROM Usuario U, Participacion P, Proyecto Pr WHERE U.nickUsuario = P.nickUsuario AND Pr.nombreProyecto = P.nombreProyecto AND P.estado = 0 AND P.nombreProyecto = ?',
