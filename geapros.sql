@@ -136,7 +136,7 @@ CREATE TABLE Participacion
     FOREIGN KEY (nombreProyecto) REFERENCES Proyecto(nombreProyecto)
         ON DELETE CASCADE
         ON UPDATE NO ACTION,
-    FOREIGN KEY (estado) REFERENCES Proyecto (estado)
+    FOREIGN KEY (estado) REFERENCES Estado (estado)
         ON DELETE CASCADE
         ON UPDATE NO ACTION,
     FOREIGN KEY (nickUsuario)  REFERENCES Usuario(nickUsuario)
