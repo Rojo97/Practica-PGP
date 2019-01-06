@@ -99,7 +99,7 @@ export default class AsignarActividades extends Component {
                         break;
                     case 404:
                         this.setState({ listaParticipantes: [] });
-                        alert("No hay participantes en el proyecto");
+                        alert("No hay participantes para esta actividad");
                         break;
                     default:
                         throw new Error("Bad response from server");
