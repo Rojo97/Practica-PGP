@@ -24,12 +24,19 @@ function init(app, dbPool, db) {
     })
 
     app.get('/api/proyecto/:nombreProyecto/actividades/:fechaInicio/:fechaFin', VerifyToken, (req, res) => {
-        var query = db.querys.actividades.getActividadIntervalo;
-
         const nombreProyecto = req.params.nombreProyecto;
         const fechaInicio = req.params.fechaInicio;
         const fechaFin = req.params.fechaFin;
-        var args = [nombreProyecto, fechaInicio, fechaFin];
+        
+        if(req.query.estado) {
+            var query = db.querys.actividades.getActividadIntervaloByEstado;
+            var args = [nombreProyecto, req.query.estado, fechaInicio, fechaFin];
+        }
+        else {
+            var query = db.querys.actividades.getActividadIntervalo;
+            var args = [nombreProyecto, fechaInicio, fechaFin];
+        }
+        
 
         function onResults(error, results, response) {
             if (!error) {
