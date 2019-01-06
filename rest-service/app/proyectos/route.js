@@ -27,8 +27,8 @@ function init(app, dbPool, db) {
         const nombreProyecto = req.params.nombreProyecto;
         const fechaInicio = req.params.fechaInicio;
         const fechaFin = req.params.fechaFin;
-        
-        if(req.query.estado) {
+
+        if (req.query.estado) {
             var query = db.querys.actividades.getActividadIntervaloByEstado;
             var args = [nombreProyecto, req.query.estado, fechaInicio, fechaFin];
         }
@@ -36,7 +36,31 @@ function init(app, dbPool, db) {
             var query = db.querys.actividades.getActividadIntervalo;
             var args = [nombreProyecto, fechaInicio, fechaFin];
         }
-        
+
+
+        function onResults(error, results, response) {
+            if (!error) {
+                if (results.length == 0) {
+                    response.sendStatus(404);
+                } else {
+                    console.log("Actividades enviadas");
+                    return res.status(200).json({
+                        data: results
+                    })
+                }
+            } else { res.status(500).send('Error on the server.'); }
+        }
+
+        db.execQuery(dbPool, query, args, onResults, res);
+    })
+
+    app.get('/api/proyecto/:nombreProyecto/actividades/pasadasDeTiempo', VerifyToken, (req, res) => {
+        const nombreProyecto = req.params.nombreProyecto;
+
+        var query = db.querys.actividades.getActividadCritica;
+        var args = [nombreProyecto];
+
+
 
         function onResults(error, results, response) {
             if (!error) {

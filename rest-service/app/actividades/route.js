@@ -23,6 +23,29 @@ function init(app, dbPool, db) {
         db.execQuery(dbPool, query, args, onResults, res);
     })
 
+    app.get('/api/actividad/pasadasDeTiempo', VerifyToken ,(req, res) => {
+        var query = db.querys.actividades.getActividadesUsuario;
+
+        const nickUsuario = req.params.nickUsuario;
+        const nombreProyecto = req.params.nombreProyecto;
+        var args = [nombreProyecto, nickUsuario];
+
+        function onResults(error, results, response) {
+            if (!error) {
+                if (results.length == 0) {
+                    response.sendStatus(404);
+                } else {
+                    console.log("Actividades del usuario enviadas");
+                    return res.status(200).json({
+                        data: results
+                    })
+                }
+            } else { res.status(500).send('Error on the server.'); }
+        };
+
+        db.execQuery(dbPool, query, args, onResults, res);
+    })
+
     app.get('/api/actividad/:nombreActividad/proyecto/:nombreProyecto', VerifyToken, (req, res) => {
         var query = db.querys.actividades.getActividadesById;
 
