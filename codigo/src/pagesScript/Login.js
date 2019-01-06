@@ -31,7 +31,7 @@ class Login extends Component {
                 window.sessionStorage.setItem('user', this.state.user);
                 this.setState({logged : 1});
             })
-            .catch(function (res) { console.log(res) });
+            .catch(function (res) { console.log(res);  alert("Usuario o contraseña incorrectos"); });
     }
 
     handleChange = event =>{

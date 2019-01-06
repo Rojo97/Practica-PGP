@@ -54,10 +54,10 @@ export default class DarAltaProyecto extends Component {
             for (let i in json) {
                 for (let j in json[i]) {
                     let a = json[i][j];
-                    if (a.nombre != "" && a.descripcion != "" && a.duracion != "") {
+                    if (a.nombre !== "" && a.descripcion !== "" && a.duracion !== "") {
                         if(isNaN(Number(a.duracion)) || Number(a.duracion)<0){
                             throw "Argument invalid";
-                        }else if(a.duracion!=0 && (isNaN(Number(a.rol)) || a.rol<1 || a.rol>3)){
+                        }else if(a.duracion!==0 && (isNaN(Number(a.rol)) || a.rol<1 || a.rol>3)){
                             throw "Argument invalid";
                         }
                     }else{
@@ -96,7 +96,7 @@ export default class DarAltaProyecto extends Component {
     validaFormulario() {
         //Se comprueba el nombre
         var x = document.forms["formularioProyecto"]["archivoPlanProyecto"].value;
-        if (x == '') {
+        if (x === '') {
             alert("Cargue un plan de proyecto");
             return false;
         }
@@ -104,7 +104,7 @@ export default class DarAltaProyecto extends Component {
         //Se comprueba la fecha de comienzo
         //Si se introduce una fecha que no existe el formulario devuelve '' también
         x = document.forms["formularioProyecto"]["fechaComienzo"].value;
-        if (x == '') {
+        if (x === '') {
             alert("Introduzca una fecha válida");
             return false;
         }
@@ -119,7 +119,7 @@ export default class DarAltaProyecto extends Component {
         //Se comprueba el presupuesto
         x = document.forms["formularioProyecto"]["presupuesto"].value;
         //console.log("Ahi va: " + Number(x));
-        if (x == '') {
+        if (x === '') {
             alert("Introduzca un presupuesto");
             return false;
         } else if (isNaN(Number(x))) {
@@ -192,7 +192,7 @@ export default class DarAltaProyecto extends Component {
                 </section>
                 <section class="content">
                     <div class="row box-body">
-                        <form role="form" name="formularioProyecto">
+                        <form name="formularioProyecto">
                             <div class="col-md-12">
                                 <div class="box box-primary">
                                     <div class="box-header with-border">

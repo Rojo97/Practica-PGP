@@ -34,6 +34,7 @@ export default class SideBar extends Component {
                 <li className="active"><Link to="/developer/selectProject"><i className="fa fa-circle-o"></i>Seleccionar proyecto</Link></li>
                 <li className="active"><Link to="/developer/project/ProyectoA/activities"><i className="fa fa-circle-o"></i>Ver actividades</Link></li>
                 <li className="active"><Link to="/developer/project/ProyectoA/activities/A"><i className="fa fa-circle-o"></i>Actividad</Link></li>
+                <li className="active"><Link to="/developer/timeDedicated"><i className="fa fa-circle-o"></i>Ver informes</Link></li>
               </ul>
             </li>
             <li className="active treeview">
@@ -47,8 +48,11 @@ export default class SideBar extends Component {
                 <li className="active"><Link to="/projectManager/project/ProyectoA"><i className="fa fa-circle-o"></i>Detalles del proyecto</Link></li>
                 <li className="active"><Link to="/projectManager/project/ProyectoA/activities"><i className="fa fa-circle-o"></i>Ver actividades</Link></li>
                 <li className="active"><Link to="/projectManager/project/ProyectoA/activities/A"><i className="fa fa-circle-o"></i>Ver y editar actividad</Link></li>
+                <li className="active"><Link to="/projectManager/project/ProyectoA/informes"><i className="fa fa-circle-o"></i>Informes sin aprobar</Link></li>
               </ul>
             </li>
+            <li><Link to="/projectsFinalized"><i className="fa fa-gear"></i> <span>Proyectos finalizados</span></Link></li>
+            <li><Link to="/projectsFinalized/ProyectoA"><i className="fa fa-gear"></i> <span>Un proyecto finalizado</span></Link></li>
             <li><a href="https://adminlte.io/docs"><i className="fa fa-book"></i> <span>Documentation</span></a></li>
           </ul>
         </section>

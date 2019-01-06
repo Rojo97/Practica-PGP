@@ -15,5 +15,7 @@ app.use(cors());
 require('./usuarios').route(app, dbPool, db);
 require('./proyectos').route(app, dbPool, db);
 require('./actividades').route(app, dbPool, db);
+require('./informeSemanal').route(app, dbPool, db);
+require('./auth').route(app, dbPool, db);
 
 module.exports = app;

@@ -6,10 +6,11 @@ export default class ActivityDetail extends Component {
         super(props);
         this.state = {
             actividad: [],
-            informe: 0,
-            fecha: '',
+            informe: [],
+            informeEdit: 0,
             texto: '',
             horas: '',
+            estadosInforme: ["Aceptado", "Rechazado", "Pendiente de aceptación", "Pendiente de envio"],
             estados: ["En curso", "Finalizada", "Cerrada", "Aprobada"],
             roles: ["Administrador", "Jefe de proyecto", "Analista", "Diseñador, Analista-Programador o Responsable del equipo de pruebas", "Programador o probador"],
         }
@@ -35,9 +36,63 @@ export default class ActivityDetail extends Component {
             .catch(function (data) { console.log(data) });
     }
 
+    putInforme =  estadoInforme => {
+        fetch(`http://virtual.lab.inf.uva.es:27014/api/informeSemanal`, {
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'x-access-token': window.sessionStorage.getItem('token')
+            },
+            body: JSON.stringify({
+                estado: estadoInforme,
+                numeroInforme: this.state.informe.numeroInforme,
+                informeTareasPersonales: this.state.texto,
+                horas: this.state.horas,
+            })
+        }).then(function (res) { console.log(res) })
+            .then(() => {
+                if (estadoInforme == 3) {
+                    alert("Informe guardado")
+                } else {
+                    alert("Informe enviado");
+                }
+            })
+            .catch(function (res) { console.log(res) });
+    }
+
     activeInforme = event => {
-        this.setState({ informe: 1 });
-        console.log(this.state);
+        const proyecto = this.props.match.params.proyecto;
+        const actividad = this.props.match.params.actividad;
+        const user = window.sessionStorage.getItem('user');
+
+        fetch(`http://virtual.lab.inf.uva.es:27014/api/usuario/${user}/proyecto/${proyecto}/actividad/${actividad}/informeSemanal`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'x-access-token': window.sessionStorage.getItem('token')
+            }
+        })
+            .then(function (response) {
+                console.log(response);
+                return response.json()
+            })
+            .then(responseJson =>{ 
+                this.setState({ informe: responseJson.data[0] });
+            }).then(()=>{
+                if(this.state.informe.estado === 3){
+                    this.setState({ informeEdit: 1 });
+                    this.setState({ texto: this.state.informe.informeTareasPersonales });
+                    this.setState({ horas: this.state.informe.horas })
+                    console.log(this.state);
+                }else{
+                    alert("El informe ya ha sido " + this.state.estadosInforme[this.state.informe.estado]);
+                    this.setState({ informeEdit: 2 });
+                }
+            })
+            .catch(function (data) { console.log(data) });
+        
     }
 
     handleInputChange = event => {
@@ -72,30 +127,20 @@ export default class ActivityDetail extends Component {
         let nuevoInforme;
         let botonInforme;
 
-        if (this.state.informe === 0) {
+        if (this.state.informeEdit === 0) {
             nuevoInforme = '';
             botonInforme =
                 <div className="box-footer">
                     <button type="submit" className="btn btn-info pull-right" onClick={this.activeInforme}>Informe de desarrollador</button>
                 </div>;
-        } else {
+        } else if(this.state.informeEdit === 1){
             botonInforme = '';
             nuevoInforme =
-                <form>
                     <div className="box ">
                         <div className="box-header with-border">
-                            <h3 className="box-title">Crear informe semanal</h3>
+                            <h3 className="box-title">Editar informe semanal</h3>
                         </div>
                         <div className="box-body">
-                            <div className="form-group">
-                                <label>Fecha:</label>
-                                <div className="input-group date">
-                                    <div className="input-group-addon">
-                                        <i className="fa fa-calendar"></i>
-                                    </div>
-                                    <input type="date" className="form-control pull-right" name="fecha" value={this.state.fecha} onChange={this.handleInputChange} />
-                                </div>
-                            </div>
                             <div className="form-group">
                                 <label htmlFor="inputDuracion">Horas trabajadas</label>
                                 <input type="input" className="form-control" name="horas" placeholder="Horas trabajadas" value={this.state.horas} onChange={this.handleInputChangeNumber} />
@@ -106,10 +151,22 @@ export default class ActivityDetail extends Component {
                             </div>
                         </div>
                         <div className="box-footer">
-                            <button type="submit" className="btn btn-info pull-right">Enviar informe</button>
+                            <button className="btn btn-info pull-right" onClick={()=>{this.putInforme(2)}}>Enviar informe</button>
+                            <button className="btn btn-info pull-left" onClick={()=>{this.putInforme(3)}}>Guardar sin enviar</button>
                         </div>
-                    </div>
-                </form>;
+                    </div>;
+        }else{
+            botonInforme = '';
+            nuevoInforme =
+                    <div className="box ">
+                        <div className="box-header with-border">
+                            <h3 className="box-title">Informe semanal</h3>
+                        </div>
+                        <div className="box-body">
+                            <h4>Horas trabajadas: {this.state.informe.horas}</h4>
+                            <h4>Comentarios: {this.state.informe.informeTareasPersonales}</h4>
+                        </div>
+                    </div>;
         }
 
         return (

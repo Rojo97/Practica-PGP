@@ -36,8 +36,33 @@ export default class ProjectDetailsManager extends Component {
             .then(() => {
                 this.setState({ informeTemporal: this.state.proyecto.informeDeSeguimientoTemporal });
                 this.setState({ estadoProyecto: this.state.proyecto.estado });
+                this.setState({ resumen: this.state.proyecto.resumen });
+                this.setState({ fechaFin: Moment(this.state.proyecto.fechaFin).format('YYYY-MM-DD') });
             })
             .catch(function (data) { console.log(data) });
+    }
+
+    editProject = event => {
+        event.preventDefault();
+        const proyecto = this.props.match.params.proyecto;
+
+        fetch(`http://virtual.lab.inf.uva.es:27014/api/proyecto/${proyecto}`, {
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'x-access-token': window.sessionStorage.getItem('token')
+            },
+            body: JSON.stringify({
+                fechaFin: this.state.fechaFin,
+                estado: this.state.estadoProyecto,
+                informeDeSeguimientoTemporal: this.state.informeTemporal,
+                resumen: this.state.resumen,
+            })
+        }).then(function (res) { console.log(res) })
+            .then(() => { alert("Proyecto modificado"); window.location.reload(false); })
+            .catch(function (res) { console.log(res) });
+
     }
 
     handleInputChange = event => {
@@ -131,7 +156,7 @@ export default class ProjectDetailsManager extends Component {
                         </div>
                     </div>
                     <div className="box-footer">
-                        <button className="btn btn-info pull-right">Editar</button>
+                        <button className="btn btn-info pull-right" onClick={this.editProject}>Editar</button>
                     </div>
                 </div>
             </form>;
@@ -166,7 +191,7 @@ export default class ProjectDetailsManager extends Component {
         return (
             <div className="content-wrapper">
                 <section className="content-header">
-                    <h1>Poryecto {this.state.proyecto.nombreProyecto}</h1>
+                    <h1>Proyecto {this.state.proyecto.nombreProyecto}</h1>
                 </section>
                 <section className="content">
                     <div className="row">
