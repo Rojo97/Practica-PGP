@@ -47,7 +47,7 @@ const db = {
         },
         informeSemanal :{
             insert: 'INSERT INTO InformeSemanal (nombreActividad,nombreProyecto,nickUsuario,informeTareasPersonales,estado,horas) VALUES (?,?,?,?,3,?)',
-            getInformeByEstado : 'SELECT * FROM InformeSemanal Inf WHERE Inf.estado = ? AND Inf.nombreProyecto = ?',
+            getInformeByEstado : 'SELECT Inf.*, A.fechaInicio FROM InformeSemanal Inf, Actividad A WHERE A.nombreActividad =Inf.nombreActividad AND A.nombreProyecto = Infr.nombreProyecto AND Inf.estado = ? AND Inf.nombreProyecto = ?',
             getInformeDesarrollador :'SELECT * FROM InformeSemanal WHERE nombreProyecto = ? AND nombreActividad = ? AND nickUsuario = ?',
             getInformeIntervalo : 'SELECT Inf.* FROM Usuario U, InformeSemanal Inf, Actividad A WHERE U.nickUsuario = Inf.nickUsuario AND A.nombreActividad = Inf.nombreActividad AND U.nickUsuario = ? AND A.fechaInicio >= ? AND A.fechaInicio < ?',
             updateEstado : 'UPDATE InformeSemanal SET estado = ?, informeTareasPersonales = ?, horas = ? WHERE numeroInforme = ?'
