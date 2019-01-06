@@ -210,7 +210,7 @@ function init(app, dbPool, db) {
 
         const nombreProyecto = req.params.nombreProyecto;
         const nombreActividad = req.params.nombreActividad;
-        var args = [nombreActividad, nombreProyecto];
+        var args = [nombreActividad, nombreProyecto, nombreActividad, nombreProyecto, nombreActividad, nombreProyecto, nombreProyecto];
 
         function onResults(error, results, response) {
             if (!error) {
