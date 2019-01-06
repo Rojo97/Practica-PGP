@@ -21,3 +21,7 @@ FROM  Participacion P, Proyecto Pr
 WHERE Pr.nombreProyecto = P.nombreProyecto AND
       P.estado = 0 AND
       P.nickUsuario = 'chicho';
+
+SELECT A.nombreActividad, A.nombreProyecto, A.descripcion, A.duracionEstimada, A.duracionReal, A.fechaInicio, A.fechaFin, A.estado, A.rol
+FROM Actividad A, InformeSemanal I
+WHERE A.nombreActividad = I.nombreActividad AND A.nombreProyecto = I.nombreProyecto AND A.nombreProyecto = 'ProyectoA' AND I.nickUsuario = 'ivan';

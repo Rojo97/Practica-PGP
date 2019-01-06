@@ -191,7 +191,7 @@ export default class ProjectDetailsManager extends Component {
         return (
             <div className="content-wrapper">
                 <section className="content-header">
-                    <h1>Poryecto {this.state.proyecto.nombreProyecto}</h1>
+                    <h1>Proyecto {this.state.proyecto.nombreProyecto}</h1>
                 </section>
                 <section className="content">
                     <div className="row">
