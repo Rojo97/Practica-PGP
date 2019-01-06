@@ -45,21 +45,21 @@ export default class DarAltaProyecto extends Component {
     validaFormulario() {
         //Se comprueba el nombre
         var x = document.forms["formularioProyecto"]["nombre"].value;
-        if (x == '') {
+        if (x === '') {
             alert("Introduzca un nombre de proyecto");
             return false;
         }
 
         //Se comprueba el jefe de proyecto
         x = document.forms["formularioProyecto"]["idJefeProyecto"].value;
-        if (x == '') {
+        if (x === '') {
             alert("Seleccione un jefe de proyecto");
             return false;
         }
 
         //Se comprueba la descripcción
         x = document.forms["formularioProyecto"]["descripccion"].value;
-        if (x == '') {
+        if (x === '') {
             alert("Introduzca una descripcción");
             return false;
         }
@@ -140,6 +140,7 @@ export default class DarAltaProyecto extends Component {
                     //TODO Falta ver que codigo de error es
                     case 409:
                         alert("Existe un proyecto con ese nombre");
+                        break;
                     default:
                         throw new Error("Bad response from server");
                 }
@@ -159,7 +160,7 @@ export default class DarAltaProyecto extends Component {
                 </section>
                 <section class="content">
                     <div class="row box-body">
-                        <form role="form" name="formularioProyecto">
+                        <form name="formularioProyecto">
                             <div class="col-md-12">
                                 <div class="box box-primary">
                                     <div class="box-header with-border">
