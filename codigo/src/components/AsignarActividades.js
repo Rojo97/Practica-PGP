@@ -350,7 +350,7 @@ export default class AsignarActividades extends Component {
                                             <label>Actividad</label>
                                             <select class="form-control" name="idActividad" value={this.state.idActividad} onChange={this.handleInputChange} onClick={this.cargaParticipantesCandidatos}>
                                                 <option disabled selected value=""> -- Sin determinar -- </option>
-                                                {this.state.listaActividades.map(actividad => (
+                                                {this.state.listaActividades.filter(a => a.duracionEstimada > 0).map(actividad => (
                                                     <option value={actividad.nombreActividad}>{actividad.nombreActividad}</option>
                                                 ))}
                                             </select>
