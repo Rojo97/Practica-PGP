@@ -182,7 +182,7 @@ function init(app, dbPool, db) {
     })
 
     app.get('/api/proyecto/:nombreProyecto/actividades/:fechaInicio/:fechaFin', VerifyToken, (req, res) => {
-        var query = db.querys.proyectos.getActividadesProyecto;
+        var query = db.querys.actividades.getActividadIntervalo;
 
         const nombreProyecto = req.params.nombreProyecto;
         const fechaInicio = req.params.fechaInicio;
