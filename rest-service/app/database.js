@@ -16,7 +16,7 @@ const db = {
             getProyectosActualesUsuario:'SELECT * FROM Participacion P, Proyecto Pr WHERE Pr.nombreProyecto = P.nombreProyecto AND P.estado = 0 AND P.nickUsuario = ?',
             getProyectosUsuario :'SELECT * FROM Participacion P, Proyecto Pr WHERE Pr.nombreProyecto = P.nombreProyecto AND P.nickUsuario = ?',
             getParticipaciones : 'SELECT U.categoriaUsuario,P.nombreProyecto, P.rol FROM Usuario U NATURAL JOIN Participacion P WHERE U.nickUsuario = ? AND P.estado = 0',
-            getCategoria : 'SELECT U.categoriaUsuario FROM Usario U WHERE U.nickUsuario = ?',
+            getCategoria : 'SELECT U.categoriaUsuario FROM Usuario U WHERE U.nickUsuario = ?',
             insert: 'INSERT INTO Usuario(nickUsuario,contrasenia,dni,nombre,apellido1,apellido2,fechaNacimiento,categoriaUsuario) VALUES (?,?,?,?,?,?,?,?)'
         },
         proyectos: {
