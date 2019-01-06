@@ -46,6 +46,9 @@ export default class SideBar extends Component {
             <li className="active"><Link to={"/projectManager/project/"+this.state.proyecto}><i className="fa fa-circle-o"></i>Detalles del proyecto</Link></li>
             <li className="active"><Link to={"/projectManager/project/"+this.state.proyecto+"/activities"}><i className="fa fa-circle-o"></i>Ver actividades</Link></li>
             <li className="active"><Link to={"/projectManager/project/"+this.state.proyecto+"/informes"}><i className="fa fa-circle-o"></i>Informes sin aprobar</Link></li>
+            <li className="active"><Link to={"/projectManager/project/"+this.state.proyecto+"/loadProjectPlan"}><i className="fa fa-circle-o"></i>Cargar plan de proyecto</Link></li>
+            <li className="active"><Link to={"/projectManager/project/"+this.state.proyecto+"/loadParticipants"}><i className="fa fa-circle-o"></i>Añadir participantes</Link></li>
+            <li className="active"><Link to={"/projectManager/project/"+this.state.proyecto+"/assignActivities"}><i className="fa fa-circle-o"></i>Asignar actividades</Link></li>
           </ul>
         </li>
     } else if (this.state.tipoUser == 2) {
