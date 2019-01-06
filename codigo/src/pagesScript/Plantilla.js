@@ -14,6 +14,7 @@ import ProjectDetailsManager from '../components/ProjectDetailsManager';
 import ProjectsFinalized from '../components/ProjectsFinalized';
 import ProjectDetailsAll from '../components/ProjectDetailsAll';
 import AnadirParticipantes from '../components/AnadirParticipantes';
+import AsignarActividades from '../components/AsignarActividades';
 import InformesSemanales from '../components/InformesSemanales';
 import InformeTiempoDedicado from '../components/InformeTiempoDedicado';
 
@@ -38,6 +39,7 @@ class Plantilla extends Component {
           <Route exact path="/projectsFinalized/:proyecto" component={ProjectDetailsAll}/>
           <Route exact path="/projectManager/project/:proyecto/loadProyectPlan" component={AnadirPlanProyecto}/>
           <Route exact path="/projectManager/project/:proyecto/loadParticipants" component={AnadirParticipantes}/>
+          <Route exact path="/projectManager/project/:proyecto/assignActivities" component={AsignarActividades}/>
         </Switch>
       </div>
     );
