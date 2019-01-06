@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom";
 import Moment from 'moment';
 
 export default class ProjectDetailsManager extends Component {
@@ -15,6 +16,7 @@ export default class ProjectDetailsManager extends Component {
             tipoInformeTmp: "", //Informe marcado en el select
             subEstado: "", //Esta a 1 cuando se va a mostar un inorme (Se muestra segunda parte)
             estadoProyecto: "", //Estado proyecto
+            estadoInformes: "", //1 activo, 0
             datosInforme: [], //Variable donde guardamos el fetch de los datos del proyecto
             estados: ["En curso", "Finalizado", "Cerrado", "Aprobado"],
             roles: ["Administrador", "Jefe de proyecto", "Analista", "Diseñador, Analista-Programador o Responsable del equipo de pruebas", "Programador o probador"],
@@ -111,6 +113,105 @@ export default class ProjectDetailsManager extends Component {
         this.setState({ subEstado: 1 });
         this.setState({ tipoInforme: this.state.tipoInformeTmp });
         //Aqui en caso de que el informe necesita el fetch se llama a la funcion del fetch
+
+        var informe = this.state.tipoInformeTmp;
+        //console.log("Informe: "+informe);
+        if (informe !== "trabajadoresActividades" && informe !== "actividadesActivasOFinalizadas") {
+            this.cargaDatos(0);
+        }
+    }
+
+    cargaDatos = (value) => {
+        var tipoInforme;
+        if (value === 0) {
+            tipoInforme = this.state.tipoInformeTmp;
+        } else {
+            tipoInforme = this.state.tipoInforme;
+        }
+
+        console.log("Informe: " + tipoInforme);
+        switch (tipoInforme) {
+            case "trabajadoresActividades":
+                this.informeTrabajadores();
+                break;
+            case "informesPendientesEnvio":
+                this.informesActividadesPendientesDeEnvio();
+                break;
+            case "informesPendientesAprobacion":
+                this.informesActividadesPendientesDeAprobacion();
+                break;
+            case "actividadesActivasOFinalizadas":
+                break;
+            case "actividadesDemasiadoConsumoTiempo":
+                break;
+            case "actividadesARealizar":
+                break;
+            case "actividadesPeriodoTiempoPosterior":
+                break;
+        }
+
+        console.log(this.state);
+    }
+
+    informesActividadesPendientesDeAprobacion = () => {
+        const proyecto = this.props.match.params.proyecto;
+
+        fetch(`http://virtual.lab.inf.uva.es:27014/api/proyecto/${proyecto}/informesSemanales?estado=2}`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'x-access-token': window.sessionStorage.getItem('token')
+            }
+        }).then(function (response) {
+
+            switch (response.status) {
+                case 200:
+                    console.log(response);
+                    break;
+                case 404:
+                    alert("No hay actividades pendientes de aprobación");
+                    break;
+                default:
+                    throw new Error("Bad response from server");
+            }
+            return response.json()
+        })
+            .then((responseJson) => {
+                this.setState({ datosInforme: responseJson.data });
+                console.log(responseJson.data);
+            })
+            .catch(function (data) { console.log(data) });
+    }
+
+    informesActividadesPendientesDeEnvio = () => {
+        const proyecto = this.props.match.params.proyecto;
+
+        fetch(`http://virtual.lab.inf.uva.es:27014/api/proyecto/${proyecto}/informesSemanales?estado=3}`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'x-access-token': window.sessionStorage.getItem('token')
+            }
+        }).then(function (response) {
+            switch (response.status) {
+                case 200:
+                    console.log(response);
+                    break;
+                case 404:
+                    alert("No hay actividades pendientes de envío");
+                    break;
+                default:
+                    throw new Error("Bad response from server");
+            }
+            return response.json()
+        })
+            .then((responseJson) => {
+                this.setState({ datosInforme: responseJson.data });
+                console.log(responseJson.data);
+            })
+            .catch(function (data) { console.log(data) });
     }
 
     informeTrabajadores = () => {
@@ -208,6 +309,12 @@ export default class ProjectDetailsManager extends Component {
                             <select className="form-control" name="tipoInformeTmp" value={this.state.tipoInformeTmp} onChange={this.handleInputChange} >
                                 <option disabled value=''> -- Seleccione informe -- </option>
                                 <option value="trabajadoresActividades">Trabajadores de las actividades</option>
+                                <option value="informesPendientesEnvio">Informes pendientes de envío</option>
+                                <option value="informesPendientesAprobacion">Informes pendientes de aprobación</option>
+                                <option value="actividadesActivasOFinalizadas">Actividades activas o finalizadas</option>
+                                <option value="actividadesDemasiadoConsumoTiempo">Actividades con demasiado consumo de tiempo</option>
+                                <option value="actividadesARealizar">Actividades a realizar</option>
+                                <option value="actividadesPeriodoTiempoPosterior">Personas con actividades asignadas</option>
                                 <option value="WIP">WIP</option> {/*TODO AÑADIR TIPOS DE INFORME */}
                             </select>
                         </div>
@@ -219,7 +326,8 @@ export default class ProjectDetailsManager extends Component {
         }
 
         if (this.state.subEstado == 1) {
-            if (this.state.tipoInforme == "trabajadoresActividades") {
+            var informe = this.state.tipoInforme;
+            if (informe == "trabajadoresActividades" || informe == "actividadesActivasOFinalizadas") {
                 intervalo = <div className="box ">
                     <div className="box-header with-border">
                         <h3 className="box-title">Periodo</h3>
@@ -249,14 +357,60 @@ export default class ProjectDetailsManager extends Component {
                         </div>
                     </div>
                     <div className="box-footer">
-                        <button type="submit" className="btn btn-info pull-right" onClick={this.informeTrabajadores}>Buscar</button>
+                        <button type="submit" className="btn btn-info pull-right" onClick={this.cargaDatos(1)}>Buscar</button>
                     </div>
                 </div>;
+                if (this.state.tipoInforme == "trabajadoresActividades") {
+                    datos =
+                        <div className="box">
+                            <div className="box-body">
+                                {this.state.datosInforme.map(datos => (
+                                    <h3>Actividad: {datos.nombreActividad}, Participante: {datos.nickUsuario}</h3>
+                                ))}
+                            </div>
+                        </div>
+                }
+            } else if (informe == "actividadesActivasOFinalizadas") {
+                datos =
+                <div>
+                    <div className="box-header with-border">
+                        <h3 className="box-title">Estado</h3>
+                    </div>
+                    <div className="box-body">
+                        <div className="form-group">
+                            <select className="form-control" name="tipoInformeTmp" value={this.state.tipoInformeTmp} onChange={this.handleInputChange} >
+                                <option disabled value=''> -- Seleccione estado -- </option>
+                                <option value="activos">Activos</option>
+                                <option value="finalizados">Finalizados</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div className="box-footer">
+                        <button type="submit" className="btn btn-info pull-right" onClick={this.cargaDatos(1)}>Buscar</button>
+                    </div>
+                </div>
+            } else if (informe == "informesPendientesEnvio") {
                 datos =
                     <div className="box">
                         <div className="box-body">
                             {this.state.datosInforme.map(datos => (
-                                <h3>Actividad: {datos.nombreActividad}, Participante: {datos.nickUsuario}</h3>
+                                <div>
+                                    <h3>Trabajador: {datos.nickUsuario}, Actividad: {datos.nombreActividad}</h3>
+                                    <h3>Fecha: {datos.fechaInicio.substring(0, 10)}</h3>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+            } else if (informe == "informesPendientesAprobacion") {
+                datos =
+                    <div className="box">
+                        <div className="box-body">
+                        <Link to={"/projectManager/project/"+this.props.match.params.proyecto+"/informes"} className="small-box-footer"><button className="btn btn-info">Ver detalles informes</button></Link>
+                            {this.state.datosInforme.map(datos => (
+                                <div>
+                                    <h3>Trabajador: {datos.nickUsuario}, Actividad: {datos.nombreActividad}</h3>
+                                    <h3>Fecha: {datos.fechaInicio.substring(0, 10)}</h3>
+                                </div>
                             ))}
                         </div>
                     </div>
