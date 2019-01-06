@@ -2,6 +2,13 @@ import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 
 export default class Header extends Component {
+    constructor(props){
+        super(props);
+        this.state={
+            tipoUser: ["Administrador", "Jefe de proyecto", "Desarrollador"],
+        }
+    }
+
     render() {
         return (
             <header className="main-header">
@@ -31,7 +38,7 @@ export default class Header extends Component {
                                     {/* <!-- User image --> */}
                                     <li className="user-header">
                                         <img src="oneUser.png" className="img-circle" alt="User Image" />
-                                        <p>{window.sessionStorage.getItem('user')}<small>Here goes the rol</small></p>
+                                        <p>{window.sessionStorage.getItem('user')}<small>{this.state.tipoUser[window.sessionStorage.getItem('tipoUser')]}</small></p>
                                     </li>
                                     {/* <!-- Menu Footer--> */}
                                     <li className="user-footer">

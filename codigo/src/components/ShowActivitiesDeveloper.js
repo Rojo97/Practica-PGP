@@ -13,6 +13,7 @@ export default class ShowActivitiesDeveloper extends Component {
 
     componentDidMount() {
         const proyecto = this.props.match.params.proyecto
+        window.sessionStorage.setItem('proyecto', proyecto);
 
         fetch(`http://virtual.lab.inf.uva.es:27014/api/actividad/${window.sessionStorage.getItem('user')}/${proyecto}`, {
             method: 'GET',
