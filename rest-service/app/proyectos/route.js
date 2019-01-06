@@ -181,6 +181,30 @@ function init(app, dbPool, db) {
         db.execQuery(dbPool, query, args, onResults, res);
     })
 
+    app.get('/api/proyecto/:nombreProyecto/actividades/:fechaInicio/:fechaFin', VerifyToken, (req, res) => {
+        var query = db.querys.proyectos.getActividadesProyecto;
+
+        const nombreProyecto = req.params.nombreProyecto;
+        const fechaInicio = req.params.fechaInicio;
+        const fechaFin = req.params.fechaFin;
+        var args = [nombreProyecto, fechaInicio, fechaFin];
+
+        function onResults(error, results, response) {
+            if (!error) {
+                if (results.length == 0) {
+                    response.sendStatus(404);
+                } else {
+                    console.log("Actividades enviadas");
+                    return res.status(200).json({
+                        data: results
+                    })
+                }
+            } else { res.status(500).send('Error on the server.'); }
+        }
+
+        db.execQuery(dbPool, query, args, onResults, res);
+    })
+
     app.get('/api/proyecto/:nombreProyecto/actividad/:nombreActividad/candidatos', VerifyToken, (req, res) => {
         var query = db.querys.actividades.getCandidatosActividad;
 
