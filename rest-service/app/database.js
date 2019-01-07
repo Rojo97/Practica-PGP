@@ -44,7 +44,7 @@ const db = {
             getActividadIntervalo : 'SELECT Inf.nickUsuario, A.nombreActividad FROM InformeSemanal Inf, Actividad A WHERE A.nombreActividad = Inf.nombreActividad AND A.nombreProyecto = Inf.nombreProyecto AND A.nombreProyecto = ? AND A.fechaInicio >= ? AND A.fechaInicio <= ?',
             getActividadIntervaloByEstado : 'SELECT Inf.nickUsuario, A.* FROM InformeSemanal Inf, Actividad A WHERE A.nombreActividad = Inf.nombreActividad AND A.nombreProyecto = Inf.nombreProyecto AND A.nombreProyecto = ? AND A.estado = ? AND A.fechaInicio >= ? AND A.fechaInicio <= ?',
             getActividadCritica : 'SELECT A.*, Horas.horasTotales FROM Actividad A, (SELECT Inf.nombreActividad, SUM(Inf.horas) AS horasTotales FROM InformeSemanal Inf,Actividad A WHERE A.nombreActividad = Inf.nombreActividad AND A.nombreProyecto = Inf.nombreProyecto) Horas WHERE A.nombreProyecto = ? AND A.duracionEstimada < Horas.horasTotales',
-            updateActividad : 'UPDATE Actividad SET fechaFin = ?, estado = ?, duracionReal = ? WHERE nombreActividad = ? AND nombreProyecto=?',
+            updateActividad : 'UPDATE Actividad SET fechaInicio = ?, fechaFin = ?, estado = ?, duracionReal = ? WHERE nombreActividad = ? AND nombreProyecto=?',
             insert : 'INSERT INTO Actividad (nombreActividad,nombreProyecto,descripcion,duracionEstimada,estado, rol) VALUES (?,?,?,?,0,?)',
             insertPredecesora : 'INSERT INTO Predecesora (precedida,predecesora,nombreProyecto) VALUES (?,?,?)'
         },
