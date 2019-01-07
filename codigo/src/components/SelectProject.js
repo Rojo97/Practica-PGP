@@ -45,7 +45,6 @@ export default class SelectProject extends Component {
                                     <div className="inner">
                                         <h3>{proyecto.nombreProyecto}</h3>
                                         <p>Descripción: {proyecto.descripcion}</p>
-                                        <p>Jefe de proyecto: {proyecto.nickUsuario}</p>
                                     </div>
                                     <div className="icon">
                                         <i className="fa fa-gear"></i>
