@@ -500,6 +500,7 @@ export default class ProjectDetailsManager extends Component {
                         </div>
                     </div>;
             } else if (informe == "actividadesCriticas") {
+                intervalo = "";
                 datos =
 
                     <div className="box">
