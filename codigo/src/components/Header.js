@@ -10,13 +10,16 @@ export default class Header extends Component {
         }
     }
 
+    //Limpia la sesion y hace logOut
     logOut = () => {
         window.sessionStorage.clear();
         this.setState({logOut: 1});
     }
+
+    //Genera la vista
     render() {
         let redirect = '';
-        if(this.state.logOut === 1){
+        if(this.state.logOut === 1){ //Si hemos hecho logOut nos manda al login
             redirect = <Redirect to="/"></Redirect>
         }
         return (

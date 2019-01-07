@@ -18,6 +18,7 @@ export default class CrearUsuario extends Component {
         this.addUser = this.addUser.bind(this);
     }
 
+    //Cambia el estado cuando se modifica un input
     handleInputChange(event) {
         let target = event.target;
         let name = target.name;
@@ -31,6 +32,7 @@ export default class CrearUsuario extends Component {
         )
     }
 
+    //Manda el user al backend
     addUser(event) {
         event.preventDefault();
         fetch(`http://virtual.lab.inf.uva.es:27014/api/usuario`, {
@@ -55,6 +57,7 @@ export default class CrearUsuario extends Component {
             .catch(function (res) { console.log(res) });
     }
 
+    //Genera la vista
     render() {
         return (
             <div className="content-wrapper" >

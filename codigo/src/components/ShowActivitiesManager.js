@@ -11,6 +11,7 @@ export default class ShowActivitiesManager extends Component {
         }
     }
 
+    //Obtiene las actividades
     componentDidMount() {
         const proyecto = this.props.match.params.proyecto
 
@@ -29,6 +30,7 @@ export default class ShowActivitiesManager extends Component {
             .catch(function (data) { console.log(data) });
     }
 
+    //Elige un color segun el estado
     color = estado =>{
         if(estado === 0){
             return "small-box bg-yellow";
@@ -41,6 +43,7 @@ export default class ShowActivitiesManager extends Component {
         }
     }
 
+    //Generar vista
     render() {
         return (
             <div className="content-wrapper">

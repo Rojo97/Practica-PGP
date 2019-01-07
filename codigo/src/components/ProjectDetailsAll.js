@@ -10,6 +10,7 @@ export default class ProjectDetailsAll extends Component {
         }
     }
 
+    //Obtiene el proyecto
     componentDidMount() {
         const proyecto = this.props.match.params.proyecto;
 
@@ -27,7 +28,8 @@ export default class ProjectDetailsAll extends Component {
             })
             .then(responseJson => this.setState({ proyecto: responseJson.data[0] }))
             .catch(function (data) { console.log(data) });
-    }
+    } 
+    //Genera la vista
     render() {
         return (
             <div className="content-wrapper">
