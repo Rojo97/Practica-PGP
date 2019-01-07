@@ -12,6 +12,7 @@ class Login extends Component {
             tipoUser: '',
             loged: 0,
             datosUser: [],
+            notFound:0,
         }
     }
 
@@ -32,8 +33,10 @@ class Login extends Component {
             .then(() => {
                 window.sessionStorage.setItem('token', this.state.xaccesstoken);
                 window.sessionStorage.setItem('user', this.state.user);
+                this.setState({notFound: 0});
             })
-            .catch(function (res) { console.log(res); alert("Usuario o contraseña incorrectos"); });
+            .catch(res=> { console.log(res); alert("Usuario o contraseña incorrectos"); this.setState({notFound: 1}); });
+
         let variable2 = await fetch(`http://virtual.lab.inf.uva.es:27014/api/usuario/${this.state.user}/categoria`, {
             method: 'GET',
             headers: {
@@ -76,8 +79,10 @@ class Login extends Component {
             window.sessionStorage.setItem('tipoUser', 2);
             this.setState({ tipoUser: 2 });
         }
-        
-        this.setState({loged: 1});
+
+        if(this.state.notFound===0){
+            this.setState({loged: 1});
+        }
     }
 
     handleChange = event => {
