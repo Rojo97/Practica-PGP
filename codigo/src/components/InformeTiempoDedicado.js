@@ -12,6 +12,7 @@ export default class InformeTiempoDedicado extends Component {
         }
     }
 
+    //Obtengo mi informes en un intervalo
     getInformes = () => {
         fetch(`http://virtual.lab.inf.uva.es:27014/api/usuario/${window.sessionStorage.getItem('user')}/informes/${this.state.fechaInicio}/${this.state.fechaFin}`, {
             method: 'GET',
@@ -29,6 +30,7 @@ export default class InformeTiempoDedicado extends Component {
             .catch(function (data) { console.log(data) });
     }
 
+    //Actualiza el estado con los cambios del input
     handleInputChange = event => {
         let target = event.target;
         let name = target.name;
@@ -42,6 +44,7 @@ export default class InformeTiempoDedicado extends Component {
         )
     }
 
+    //Genera la vista
     render() {
         return (
             <div className="content-wrapper">

@@ -16,6 +16,7 @@ class Login extends Component {
         }
     }
 
+    //Obtiene el token y despues determina el tipo de usuario
     handleFormSubmit = async event => {
         event.preventDefault();
         let variable = await fetch(`http://virtual.lab.inf.uva.es:27014/api/login`, {
@@ -85,6 +86,7 @@ class Login extends Component {
         }
     }
 
+    //Actualiza el estado si se modifica un input
     handleChange = event => {
         this.setState({
             [event.target.name]: event.target.value
@@ -93,13 +95,14 @@ class Login extends Component {
         console.log(this.state);
     }
 
+    //Muestra la vista
     render() {
         let redirection;
         let tipoUser = this.state.tipoUser;
 
         if (this.state.loged === 0) {
             redirection = '';
-        } else {
+        } else { //Si se ha logueado con exito redirige el usuario a su pagina principal
             if (tipoUser == 0) {
                 redirection = <Redirect to="/admin/createUser"></Redirect>;
             } else if (tipoUser == 1) {
@@ -108,7 +111,7 @@ class Login extends Component {
                 redirection = <Redirect to="/developer/selectProject"></Redirect>;
             }
         }
-
+        //Vista base
         return (
             <div className="login-box">
                 <div className="login-logo">

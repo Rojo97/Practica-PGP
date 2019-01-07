@@ -18,6 +18,7 @@ export default class ActivityDetailAndEdit extends Component {
         this.editActivity = this.editActivity.bind(this);
     }
 
+    //Obtine la actividad
     componentDidMount() {
         const proyecto = this.props.match.params.proyecto;
         const actividad = this.props.match.params.actividad;
@@ -44,11 +45,13 @@ export default class ActivityDetailAndEdit extends Component {
             .catch(function (data) { console.log(data) });
     }
 
+    //Activa la edicion de la actividad
     activeEdit(event) {
         this.setState({ edit: 1 });
         console.log(this.state);
     }
 
+    //Actualiza el estado cuando se modifica un input
     handleInputChange = event => {
         let target = event.target;
         let name = target.name;
@@ -62,6 +65,7 @@ export default class ActivityDetailAndEdit extends Component {
         )
     }
 
+    //Actualiza el estado cuando se modifica un input y lo intoducido tiene que ser un numero
     handleInputChangeNumber = event => {
         let target = event.target;
         let name = target.name;
@@ -77,6 +81,7 @@ export default class ActivityDetailAndEdit extends Component {
         }
     }
 
+    //Actualiza la actividad con los nuevos parametros
     editActivity(event) {
         event.preventDefault();
         fetch(`http://virtual.lab.inf.uva.es:27014/api/actividad`, {
@@ -102,18 +107,20 @@ export default class ActivityDetailAndEdit extends Component {
             .catch(function (res) { console.log(res) });
 
     }
+    
 
+    //Genera la vista
     render() {
         let edit;
         let editmenu;
 
-        if (this.state.edit === 0) {
+        if (this.state.edit === 0) { //Edicion desactivada
             edit =
                 <div className="box-footer">
                     <button type="submit" className="btn btn-info pull-right" onClick={this.activeEdit}>Editar</button>
                 </div>;
             editmenu = "";
-        } else {
+        } else { //Edicion activada
             edit = "";
             editmenu =
                 <form>
@@ -162,7 +169,7 @@ export default class ActivityDetailAndEdit extends Component {
                 </form>
         }
 
-        return (
+        return ( //Vista base
             <div className="content-wrapper">
                 <section className="content-header">
                     <h1>Actividad {this.state.actividad.nombreActividad}</h1>

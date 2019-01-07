@@ -9,6 +9,7 @@ export default class SelectProject extends Component {
         }
     }
 
+    //Obtiene los proyectos del desarrollador
     componentDidMount() {
         fetch(`http://virtual.lab.inf.uva.es:27014/api/usuario/${window.sessionStorage.getItem('user')}/proyectos?actual=1`,{
                 method: 'GET',
@@ -26,7 +27,7 @@ export default class SelectProject extends Component {
     }
 
 
-
+    //Muestra la vista
     render() {
         return (
             <div className="content-wrapper">

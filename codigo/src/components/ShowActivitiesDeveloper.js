@@ -11,6 +11,7 @@ export default class ShowActivitiesDeveloper extends Component {
         }
     }
 
+    //Obtiene las actividades de un proyecto
     componentDidMount() {
         const proyecto = this.props.match.params.proyecto
         window.sessionStorage.setItem('proyecto', proyecto);
@@ -30,6 +31,7 @@ export default class ShowActivitiesDeveloper extends Component {
             .catch(function (data) { console.log(data) });
     }
 
+    //Cambia el color dependiendo del estado
     color = estado =>{
         if(estado === 0){
             return "small-box bg-yellow";
@@ -42,6 +44,7 @@ export default class ShowActivitiesDeveloper extends Component {
         }
     }
 
+    //Genera la vista
     render() {
         return (
             <div className="content-wrapper">

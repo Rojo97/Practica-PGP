@@ -10,6 +10,7 @@ export default class ProjectsFinalized extends Component {
         }
     }
 
+    //Obtiene los proyectos acabados
     componentDidMount() {
 
         fetch(`http://virtual.lab.inf.uva.es:27014/api/proyecto?estado=1`, {
@@ -27,6 +28,7 @@ export default class ProjectsFinalized extends Component {
             .catch(function (data) { console.log(data) });
     }
 
+    //Genera la vista
     render() {
         return (
             <div className="content-wrapper">
