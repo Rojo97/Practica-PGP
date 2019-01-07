@@ -59,13 +59,13 @@ export default class AnadirParticipantes extends Component {
 
         switch (this.state.rol) {
             case "4":
-                this.setState({ listaRoles: [1] });
+                this.setState({ listaRoles: [6, 7] });
                 break;
             case "3":
-                this.setState({ listaRoles: [1, 2] });
+                this.setState({ listaRoles: [3, 4, 5, 6, 7] });
                 break;
             case "2":
-                this.setState({ listaRoles: [1, 2, 3, 4, 5] });
+                this.setState({ listaRoles: [2, 3, 4, 5, 6, 7] });
                 break;
             case "1":
                 this.setState({ listaRoles: [1, 2, 3, 4, 5, 6, 7] });
