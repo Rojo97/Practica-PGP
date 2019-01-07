@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+//Implementación de la vista para añadir el plan de proyecto a un proyecto
 export default class DarAltaProyecto extends Component {
     constructor(props) {
         super(props);
@@ -21,11 +22,6 @@ export default class DarAltaProyecto extends Component {
 
     }
 
-
-    //Acciones que se realizan antes de montar el componente
-    componentDidMount() {
-    }
-
     //Actualiza el valor de this.state con cada cambio en el formulario
     handleInputChange(event) {
         let target = event.target;
@@ -41,9 +37,6 @@ export default class DarAltaProyecto extends Component {
         )
     }
 
-    displayData(content) {
-        console.log(content);
-    }
 
     //Se valida el json y se carga en la lista de actividades
     cargaJson(content) {
@@ -75,9 +68,9 @@ export default class DarAltaProyecto extends Component {
             this.setState({ listaActividades: [] });
             console.log(this.state);
         }
-        //console.log(json);
     }
 
+    //Se carga el archivo seleccionado como plan de proyecto
     handleFileSelect(evt) {
         let files = evt.target.files;
         if (!files.length) {
@@ -87,13 +80,15 @@ export default class DarAltaProyecto extends Component {
         let file = files[0];
         let that = this;
         let reader = new FileReader();
+
+        //Se asigna la función que se realiza al cargar el archivo
         reader.onload = function (e) {
-            //that.displayData(e.target.result);
             that.cargaJson(e.target.result);
         };
         reader.readAsText(file);
     }
 
+    //Se validan los campos del formulario y se suben las actividades y detalles del proyecto
     validaFormulario() {
         //Se comprueba el nombre
         var x = document.forms["formularioProyecto"]["archivoPlanProyecto"].value;
@@ -134,10 +129,7 @@ export default class DarAltaProyecto extends Component {
         return true;
     }
 
-    //Render para añadir los jefes como opcion del desplegable
-    renderJefe = ({ nickUsuario }) => <option value={nickUsuario}>{nickUsuario}</option>
-
-    //Manda el proyecto con todos sus datos validados al backend
+    //Manda la lista de actividades y los detalles del proyecto validados al backend
     addDetallesProyecto(event) {
         event.preventDefault();
 
@@ -158,7 +150,6 @@ export default class DarAltaProyecto extends Component {
                     actividades: this.state.listaActividades.actividades,
                 })
             }).then((response) => {
-                //console.log("Codigo de estado: " + response.status);
                 switch (response.status) {
                     case 201:
                         console.log(this.state.listaActividades.actividades);

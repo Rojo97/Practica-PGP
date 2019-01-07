@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import Moment from 'moment';
 
+//Implementación de la vista para editar, visualizar y generar los informes de un proyecto
 export default class ProjectDetailsManager extends Component {
     constructor(props) {
         super(props);
@@ -23,7 +24,10 @@ export default class ProjectDetailsManager extends Component {
         }
     }
 
+    //Acciones que se realizan antes de montar el componente
     componentDidMount() {
+
+        //Se cargan los detalles del proyecto
         const proyecto = this.props.match.params.proyecto;
 
         fetch(`http://virtual.lab.inf.uva.es:27014/api/proyecto/${proyecto}`, {
@@ -48,6 +52,7 @@ export default class ProjectDetailsManager extends Component {
             .catch(function (data) { console.log(data) });
     }
 
+    //Edita el proyecto con los nuevos detalles
     editProject = event => {
         event.preventDefault();
         const proyecto = this.props.match.params.proyecto;
@@ -71,6 +76,7 @@ export default class ProjectDetailsManager extends Component {
 
     }
 
+    //Actualiza el valor de this.state con cada cambio
     handleInputChange = event => {
         let target = event.target;
         let name = target.name;
@@ -84,6 +90,7 @@ export default class ProjectDetailsManager extends Component {
         )
     }
 
+    //Actualiza el valor de this.state con cada cambio cuando es un numero
     handleInputChangeNumber = event => {
         let target = event.target;
         let name = target.name;
@@ -99,16 +106,19 @@ export default class ProjectDetailsManager extends Component {
         }
     }
 
+    //Se activa el modo de edicion
     activeEdit = event => {
         this.setState({ estado: "editar" });
         console.log(this.state);
     }
 
+    //Se activa el modo de generar informes
     activeInformes = event => {
         this.setState({ estado: "generarInformes" });
         console.log(this.state);
     }
 
+    //Activa el subestado al elegir un tipo de informe y carga los datos si es necesario
     seleccionarInforme = () => {
         this.setState({ subEstado: 1 });
         this.setState({ tipoInforme: this.state.tipoInformeTmp });
@@ -122,6 +132,7 @@ export default class ProjectDetailsManager extends Component {
         }
     }
 
+    //Carga los datos correspondientes al tipo de informe elegido
     cargaDatos = () => {
         var tipoInforme;
         tipoInforme = this.state.tipoInformeTmp;
@@ -145,16 +156,13 @@ export default class ProjectDetailsManager extends Component {
             case "actividadesCriticas":
                 this.actividadesCriticas();
                 break;
-            case "actividadesARealizar":
-                break;
-            case "actividadesPeriodoTiempoPosterior":
-                break;
         }
 
         console.log(this.state);
 
     }
 
+    //Carga los datos de las actividades que han consumido mas tiempo del necesario 
     actividadesCriticas = () => {
         const proyecto = this.props.match.params.proyecto;
 
@@ -186,6 +194,7 @@ export default class ProjectDetailsManager extends Component {
             .catch(function (data) { console.log(data) });
     }
 
+    //Carga los datos de las actividades con estado 0 en un intervalo de tiempo
     informesActividadesActivasOFinalizadas = (x) => {
         const proyecto = this.props.match.params.proyecto;
 
@@ -228,6 +237,7 @@ export default class ProjectDetailsManager extends Component {
             .catch(function (data) { console.log(data) });
     }
 
+    //Carga los informes de actividades pendientes de aprobacion
     informesActividadesPendientesDeAprobacion = () => {
         const proyecto = this.props.match.params.proyecto;
 
@@ -260,6 +270,7 @@ export default class ProjectDetailsManager extends Component {
             .catch(function (data) { console.log(data) });
     }
 
+    //Carga los informes de actividades pendientes de envio
     informesActividadesPendientesDeEnvio = () => {
         const proyecto = this.props.match.params.proyecto;
 
@@ -291,6 +302,7 @@ export default class ProjectDetailsManager extends Component {
             .catch(function (data) { console.log(data) });
     }
 
+    //Carga los informes de los trabajadores en un intervalo de tiempo
     informeTrabajadores = () => {
         const proyecto = this.props.match.params.proyecto;
 
@@ -310,12 +322,15 @@ export default class ProjectDetailsManager extends Component {
     }
 
     render() {
+
+        //Se crean las variables para gestionar que partes se muestran del la vista
         let botones;
         let edicion;
         let informes;
         let intervalo;
         let datos = '';
 
+        //Se renderiza según se ha elegido ver, editar o generar informes
         if (this.state.estado === "ver") {
             botones =
                 <div className="box-footer">
@@ -403,8 +418,11 @@ export default class ProjectDetailsManager extends Component {
                 </div>;
         }
 
+        //Se comprueba si la segunda parte de la vista del informe tiene que mostrarse o no
         if (this.state.subEstado == 1) {
             var informe = this.state.tipoInforme;
+
+            //Se gestiona si debe seleccionarse un intervalo de tiempo o no segun el tipo de informe
             if (informe == "trabajadoresActividades" || informe == "actividadesActivas" || informe == "actividadesFinalizadas") {
                 intervalo = <div className="box ">
                     <div className="box-header with-border">
@@ -438,6 +456,8 @@ export default class ProjectDetailsManager extends Component {
                         <button type="submit" className="btn btn-info pull-right" name="botonBuscar" onClick={this.cargaDatos}>Buscar</button>
                     </div>
                 </div>;
+
+                //Se gestiona como ha de mostrarse la información dependiendo del tipo de informe
                 if (this.state.tipoInforme == "trabajadoresActividades") {
                     datos =
 
@@ -468,6 +488,7 @@ export default class ProjectDetailsManager extends Component {
                             </div>
                         </div>;
                 }
+            //Se gestiona como ha de mostrarse la información dependiendo del tipo de informe sin intervalo de tiempo
             } else if (informe == "informesPendientesEnvio") {
                 intervalo = "";
                 datos =
@@ -518,6 +539,7 @@ export default class ProjectDetailsManager extends Component {
             }
         }
 
+        //Se renderiza el contenido principal de la vista con el resto de la vista parametrizada
         return (
             <div className="content-wrapper">
                 <section className="content-header">
