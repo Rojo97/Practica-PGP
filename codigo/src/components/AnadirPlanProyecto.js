@@ -50,7 +50,7 @@ export default class DarAltaProyecto extends Component {
                     if (a.nombre !== "" && a.descripcion !== "" && a.duracion !== "") {
                         if(isNaN(Number(a.duracion)) || Number(a.duracion)<0){
                             throw "Argument invalid";
-                        }else if(a.duracion!=="0" && (isNaN(Number(a.rol)) || a.rol<1 || a.rol>3)){
+                        }else if(a.duracion!=="0" && (isNaN(Number(a.rol)) || a.rol<1 || a.rol>7)){
                             console.log(a.duracion);
                             throw "Argument invalid";
                         }
