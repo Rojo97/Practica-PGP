@@ -63,8 +63,8 @@ FROM Usuario U, Participacion P,(SELECT U2.*, COUNT(*) as numActividades
                                  WHERE U2.nickUsuario = Inf2.nickUsuario 
                                  AND A2.nombreActividad = Inf2.nombreActividad 
                                  AND A2.nombreProyecto = Inf2.nombreProyecto
-                                 AND A2.nombreActividad = 'A'
-                                 AND A2.nombreProyecto = 'ProyectoA'
+                                 AND A2.nombreActividad = 'PruebaB'
+                                 AND A2.nombreProyecto = 'ProyectoDeIsma'
                                  AND A2.fechaInicio = (SELECT A3.fechaInicio 
                                                        FROM Actividad A3 
                                                        WHERE A3.nombreActividad = A2.nombreActividad) 
@@ -73,9 +73,11 @@ WHERE U.nickUsuario = P.nickUsuario AND Pr.nombreProyecto = P.nombreProyecto
 AND U.nickUsuario NOT IN (SELECT Inf.nickUsuario
                             FROM InformeSemanal Inf,Actividad A
                             WHERE A.nombreActividad = Inf.nombreActividad AND A.nombreProyecto = Inf.nombreProyecto
-                            AND A.nombreActividad = 'A' AND A.nombreProyecto = 'ProyectoA')
+                            AND A.nombreActividad = 'PruebaB' AND A.nombreProyecto = 'ProyectoDeIsma')
 AND P.rol = (SELECT A2.rol
             FROM Actividad A2
-            WHERE A2.nombreActividad = 'A' AND A2.nombreProyecto = 'ProyectoA')
+            WHERE A2.nombreActividad = 'PruebaB' AND A2.nombreProyecto = 'ProyectoDeIsma')
 AND temp.numActividades < 4
-AND Pr.nombreProyecto = 'ProyectoA';
+AND Pr.nombreProyecto = 'ProyectoDeIsma';
+
+SELECT A.nombreActividad FROM Actividad A, (SELECT Inf.nombreActividad, SUM(Inf.horas) AS horasTotales FROM InformeSemanal Inf,Actividad A WHERE A.nombreActividad = Inf.nombreActividad AND A.nombreProyecto = Inf.nombreProyecto) Horas WHERE A.nombreProyecto = ? AND A.duracionEstimada < Horas.horasTotales;
