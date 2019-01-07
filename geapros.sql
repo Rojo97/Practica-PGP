@@ -165,39 +165,10 @@ VALUES
     (2, 'Cerrado'),
     (3, 'Pendiente');
 
-INSERT INTO Proyecto
-    (nombreProyecto,fechaInicial,fechaFin,estado,presupuesto,informeDeSeguimientoTemporal,resumen,descripcion)
-VALUES
-    ('ProyectoA', '18-01-01', NULL, 0, 2000.0, 'InformeDeSeguimiento', 'Resumen','Descripcion'),
-    ('ProyectoB', '18-01-01', NULL , 0, 2000.0, 'InformeDeSeguimiento', 'Resumen','Descripcion'),
-    ('ProyectoC', '18-01-01', '18-12-01' , 2, 2000.0, 'InformeDeSeguimiento', 'Resumen','Descripcion');
-
 INSERT INTO Usuario
     (nickUsuario,contrasenia,dni,nombre,apellido1,apellido2,fechaNacimiento,categoriaUsuario)
 VALUES
-    ('admin', 'admin', '23456789A', 'fulanito', 'fulano', 'fulanete', '1990-01-01', 0),
-    ('ivan', 'ivan', '12345678A', 'ivan', 'gonzalez', 'rincon', '94-10-17', 1),
-    ('pepe', 'pepe', '32456798B', 'pepe', 'el', 'tramas', '90-10-16', 1),
-    ('chicho', 'pepe', '32456799B', 'pepe', 'el', 'tramas', '90-10-16', 1),
-    ('El jefe', 'pepe', '33456799B', 'pepe', 'el', 'tramas', '90-10-16', 1);
-
-INSERT INTO Actividad
-    (nombreActividad,nombreProyecto,descripcion,duracionEstimada,duracionReal,fechaInicio,fechaFin,estado,rol)
-VALUES
-    ('A', 'ProyectoA', 'Descripcion', 25, 50, '18-12-01', '18-12-07', 2, 1),
-    ('B','ProyectoA', 'Descripcion', 25 , 50, '18-12-07', '14-12-18', 2, 1);
-
-INSERT INTO Predecesora
-    (precedida,predecesora,nombreProyecto)
-VALUES
-    ('B', 'A', 'ProyectoA');
-
-INSERT INTO Participacion
-    (fechaParticipacion,porcentajeParticipacion,nombreProyecto,nickUsuario,estado,rol)
-VALUES
-    ('18-12-01', '0.25', 'ProyectoA', 'ivan', 0, 2),
-    ('18-12-01', '0.25', 'ProyectoA', 'pepe', 0, 2),
-    ('17-12-01', '0.25', 'ProyectoC', 'chicho', 2, 2);
+    ('admin', 'admin', '11111111A', 'admin', 'admin', 'admin', '1990-01-01', 0);
 
 INSERT INTO EstadoInforme
     (estado, valorEstado)
@@ -206,7 +177,3 @@ VALUES
     (1, 'Rechazado'),
     (2, 'PendienteAceptacion'),
     (3, 'PendienteEnvio');
-INSERT INTO InformeSemanal
-    ( nombreActividad,nombreProyecto,nickUsuario,informeTareasPersonales,estado,horas)
-VALUES
-    ( 'A', 'ProyectoA', 'ivan', 'informe', 0, 10);
