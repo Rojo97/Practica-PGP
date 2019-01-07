@@ -11,6 +11,7 @@ export default class InformesSemanales extends Component {
         }
     }
 
+    //Obtiene los informes semanales a pendientes de aprobar
     componentDidMount() {
         const proyecto = this.props.match.params.proyecto
 
@@ -30,6 +31,7 @@ export default class InformesSemanales extends Component {
             .catch(function (data) { console.log(data) });
     }
 
+    //Cambia el estado de un informe
     updateInforme = (informe, estadoInforme) =>{
         fetch(`http://virtual.lab.inf.uva.es:27014/api/informeSemanal`, {
             method: 'PUT',
@@ -50,6 +52,7 @@ export default class InformesSemanales extends Component {
         .catch(function (res) { console.log(res) });
     }
 
+    //Genera la vista
     render() {
         return (
             <div className="content-wrapper">

@@ -11,6 +11,7 @@ export default class SideBar extends Component {
     }
   }
 
+  //Obtiene el usuario
   componentDidMount() {
     this.setState({ user: window.sessionStorage.getItem('user') });
     this.setState({ tipoUser: window.sessionStorage.getItem('tipoUser') });
@@ -19,7 +20,7 @@ export default class SideBar extends Component {
 
   render() {
     let links;
-    if (this.state.tipoUser == 0) {
+    if (this.state.tipoUser == 0) { //Si el usuario es un admin
       links =
         <li className="active treeview">
           <a href="#">
@@ -33,7 +34,7 @@ export default class SideBar extends Component {
             <li className="active"><Link to="/admin/createProject"><i className="fa fa-circle-o"></i>Crear Proyecto</Link></li>
           </ul>
         </li>
-    } else if (this.state.tipoUser == 1) {
+    } else if (this.state.tipoUser == 1) { //Si es un jefe de proyecto
       links =
         <li className="active treeview">
           <a href="#">
@@ -51,7 +52,7 @@ export default class SideBar extends Component {
             <li className="active"><Link to={"/projectManager/project/"+this.state.proyecto+"/assignActivities"}><i className="fa fa-circle-o"></i>Asignar actividades</Link></li>
           </ul>
         </li>
-    } else if (this.state.tipoUser == 2) {
+    } else if (this.state.tipoUser == 2) { //Si es un desarrollador
       links =
         <li className="active treeview">
           <a href="#">

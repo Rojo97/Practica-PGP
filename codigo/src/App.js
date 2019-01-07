@@ -5,7 +5,7 @@ import Plantilla from './pagesScript/Plantilla';
 class App extends Component {
     render() {
         return (
-            <Switch>
+            <Switch> {/*Si la url es / redirige a login */}
                 <Route exact path="/" component={Login} />
                 <Route component={Plantilla} />
             </Switch>

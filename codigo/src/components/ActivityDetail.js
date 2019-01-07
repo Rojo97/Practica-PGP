@@ -16,6 +16,7 @@ export default class ActivityDetail extends Component {
         }
     }
 
+    /*Al montar el componente se carga la actividad */
     componentDidMount() {
         const proyecto = this.props.match.params.proyecto;
         const actividad = this.props.match.params.actividad;
@@ -36,6 +37,7 @@ export default class ActivityDetail extends Component {
             .catch(function (data) { console.log(data) });
     }
 
+    /*Actualizacion de la actividad */
     putInforme =  estadoInforme => {
         fetch(`http://virtual.lab.inf.uva.es:27014/api/informeSemanal`, {
             method: 'PUT',
@@ -61,6 +63,7 @@ export default class ActivityDetail extends Component {
             .catch(function (res) { console.log(res) });
     }
 
+    /*Obtine el informe semanal y habilita su edicion */
     activeInforme = event => {
         const proyecto = this.props.match.params.proyecto;
         const actividad = this.props.match.params.actividad;
@@ -94,7 +97,8 @@ export default class ActivityDetail extends Component {
             .catch(function (data) { console.log(data) });
         
     }
-
+    
+    /*Actualiza el estado cuando se cambia un input */
     handleInputChange = event => {
         let target = event.target;
         let name = target.name;
@@ -108,6 +112,7 @@ export default class ActivityDetail extends Component {
         )
     }
 
+    /*Actualiza el estado cuando se cambia un input y lo que se introduce es un numero */
     handleInputChangeNumber = event => {
         let target = event.target;
         let name = target.name;
@@ -123,17 +128,18 @@ export default class ActivityDetail extends Component {
         }
     }
 
+    /*Genera la vista */
     render() {
         let nuevoInforme;
         let botonInforme;
 
-        if (this.state.informeEdit === 0) {
+        if (this.state.informeEdit === 0) { //Si no hemos accedido al inorme
             nuevoInforme = '';
             botonInforme =
                 <div className="box-footer">
                     <button type="submit" className="btn btn-info pull-right" onClick={this.activeInforme}>Informe de desarrollador</button>
                 </div>;
-        } else if(this.state.informeEdit === 1){
+        } else if(this.state.informeEdit === 1){ //edicion de informe activada
             botonInforme = '';
             nuevoInforme =
                     <div className="box ">
@@ -155,7 +161,7 @@ export default class ActivityDetail extends Component {
                             <button className="btn btn-info pull-left" onClick={()=>{this.putInforme(3)}}>Guardar sin enviar</button>
                         </div>
                     </div>;
-        }else{
+        }else{ //Informe enviado o aprobado
             botonInforme = '';
             nuevoInforme =
                     <div className="box ">
@@ -169,7 +175,7 @@ export default class ActivityDetail extends Component {
                     </div>;
         }
 
-        return (
+        return ( //Vista base
             <div className="content-wrapper">
                 <section className="content-header">
                     <h1>Actividad {this.state.actividad.nombreActividad}</h1>
