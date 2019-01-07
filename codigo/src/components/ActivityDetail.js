@@ -10,7 +10,7 @@ export default class ActivityDetail extends Component {
             informeEdit: 0,
             texto: '',
             horas: '',
-            estadosInforme: ["Aceptado", "Rechazado", "Pendiente de aceptación", "Pendiente de envio"],
+            estadosInforme: ["Aceptado", "Rechazado", "Enviado y pendiente de aceptación", "Pendiente de envio"],
             estados: ["En curso", "Finalizada", "Cerrada", "Aprobada"],
             roles: ["Administrador", "Jefe de proyecto", "Analista", "Diseñador, Analista-Programador o Responsable del equipo de pruebas", "Programador o probador"],
         }
@@ -81,7 +81,7 @@ export default class ActivityDetail extends Component {
             .then(responseJson =>{ 
                 this.setState({ informe: responseJson.data[0] });
             }).then(()=>{
-                if(this.state.informe.estado === 3){
+                if(this.state.informe.estado === 3 || this.state.informe.estado === 1){
                     this.setState({ informeEdit: 1 });
                     this.setState({ texto: this.state.informe.informeTareasPersonales });
                     this.setState({ horas: this.state.informe.horas })

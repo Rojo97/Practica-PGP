@@ -161,8 +161,8 @@ INSERT INTO Estado
     (estado,valorEstado)
 VALUES
     (0, 'En curso'),
-    (1, 'Cerrado'),
-    (2, 'Finalizado'),
+    (1, 'Finalizado'),
+    (2, 'Cerrado'),
     (3, 'Pendiente');
 
 INSERT INTO Proyecto

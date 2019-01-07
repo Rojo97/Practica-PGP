@@ -7,8 +7,10 @@ export default class AnadirParticipantes extends Component {
             idUsuario: '',
             participacion: '',
             rol: '',
+            rolSeleccionado: '',
             listaParticipantes: [],
             listaCandidatos: [],
+            listaRoles: [],
         }
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -37,18 +39,51 @@ export default class AnadirParticipantes extends Component {
         )
     }
 
+    cargaRoles = () => {
+        this.setState({rolSeleccionado: ''});
+        document.forms["formularioProyecto"]["rolSeleccionado"].value = "";
+
+        var x1 = this.state.idUsuario;
+        console.log("Ei: " + x1);
+        var lista = this.state.listaCandidatos;
+        for (var i = 0; i < lista.length; i++) {
+            if (lista[i].nickUsuario.localeCompare(x1) === 0) {
+                // this.setState({rol: lista[i].categoriaUsuario.toString()});
+                this.state.rol = lista[i].categoriaUsuario.toString();
+                console.log(this.state);
+                break;
+            }
+        }
+
+        switch (this.state.rol) {
+            case "1":
+                this.setState({ listaRoles: [1] });
+                break;
+            case "2":
+                this.setState({ listaRoles: [1, 2] });
+                break;
+            case "3":
+                this.setState({ listaRoles: [1, 2, 3, 4, 5] });
+                break;
+            case "4":
+                this.setState({ listaRoles: [1, 2, 3, 4, 5, 6, 7] });
+                break;
+        }
+
+
+    }
+
     validaFormulario() {
         //Se comprueba el nombre
         var x1 = document.forms["formularioProyecto"]["idUsuario"].value;
-        if (x1 == '') {
+        if (x1 === '') {
             alert("Seleccione un usuario");
             return false;
         }
 
         //Se comprueba el jefe de proyecto
         var x = document.forms["formularioProyecto"]["participacion"].value;
-        //console.log("Ahi va: " + Number(x));
-        if (x == '') {
+        if (x === '') {
             alert("Introduzca un porcentaje de participación");
             return false;
         } else if (isNaN(Number(x))) {
@@ -63,16 +98,17 @@ export default class AnadirParticipantes extends Component {
         }
 
         var lista = this.state.listaCandidatos;
-        for (var i=0; i<lista.length; i++){
-            if(lista[i].nickUsuario.localeCompare(x1)==0){
-                console.log("Nick: "+lista[i].nickUsuario);
-                if(lista[i].participacion+Number(x)>1){
+        for (var i = 0; i < lista.length; i++) {
+            if (lista[i].nickUsuario.localeCompare(x1) === 0) {
+                console.log("Nick: " + lista[i].nickUsuario);
+                if (lista[i].participacion + Number(x) > 1) {
                     alert("La suma de participaciones es mayor que 1");
                     return false;
-                }else{
+                } else {
                     // console.log("Rol: " + lista[i].categoriaUsuario);
                     this.state.rol = lista[i].categoriaUsuario.toString();
                     console.log(this.state);
+                    break;
                 }
             }
         }
@@ -171,7 +207,7 @@ export default class AnadirParticipantes extends Component {
                 },
                 body: JSON.stringify({
                     nickUsuario: this.state.idUsuario,
-                    rol: this.state.rol,
+                    rol: this.state.rolSeleccionado,
                     porcentajeParticipacion: this.state.participacion,
                 })
             }).then((response) => {
@@ -184,8 +220,10 @@ export default class AnadirParticipantes extends Component {
                         this.setState({ idUsuario: '' });
                         this.setState({ participacion: '' });
                         this.setState({ rol: '' });
+                        this.setState({listaRoles: []});
 
                         document.forms["formularioProyecto"]["idUsuario"].value = "";
+                        document.forms["formularioProyecto"]["rolSeleccionado"].value = "";
                         this.getParticipantes();
                         this.getCandidatos();
                         break;
@@ -212,7 +250,7 @@ export default class AnadirParticipantes extends Component {
                 </section>
                 <section class="content">
                     <div class="row box-body">
-                        <form role="form" name="formularioProyecto">
+                        <form name="formularioProyecto">
                             <div class="col-md-12">
                                 <div class="box box-primary">
                                     <div class="box-header with-border">
@@ -221,10 +259,19 @@ export default class AnadirParticipantes extends Component {
                                     <div class="box-body">
                                         <div class="form-group">
                                             <label>Usuario</label>
-                                            <select class="form-control" name="idUsuario" value={this.state.idUsuario} onChange={this.handleInputChange} >
+                                            <select class="form-control" name="idUsuario" value={this.state.idUsuario} onChange={this.handleInputChange} onClick={this.cargaRoles}>
                                                 <option disabled selected value=""> -- Sin determinar -- </option>
                                                 {this.state.listaCandidatos.map(candidato => (
                                                     <option value={candidato.nickUsuario}>{candidato.nickUsuario} - Rol: {candidato.categoriaUsuario} - Participación: {candidato.participacion}</option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Rol en el proyecto</label>
+                                            <select class="form-control" name="rolSeleccionado" value={this.state.rolSeleccionado} onChange={this.handleInputChange} >
+                                                <option disabled selected value=""> -- Sin determinar -- </option>
+                                                {this.state.listaRoles.map(rol => (
+                                                    <option value={rol}>{rol}</option>
                                                 ))}
                                             </select>
                                         </div>

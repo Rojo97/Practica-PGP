@@ -2,19 +2,23 @@ import React, { Component } from 'react';
 import { Link, Redirect } from "react-router-dom";
 
 class Login extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state={
-            user:'',
-            password:'',
-            xaccesstoken:'',
-            logged: 0
+        this.state = {
+            user: '',
+            password: '',
+            xaccesstoken: '',
+            categoria: '',
+            tipoUser: '',
+            loged: 0,
+            datosUser: [],
+            notFound:0,
         }
     }
 
     handleFormSubmit = async event => {
         event.preventDefault();
-        fetch(`http://virtual.lab.inf.uva.es:27014/api/login`, {
+        let variable = await fetch(`http://virtual.lab.inf.uva.es:27014/api/login`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -29,12 +33,59 @@ class Login extends Component {
             .then(() => {
                 window.sessionStorage.setItem('token', this.state.xaccesstoken);
                 window.sessionStorage.setItem('user', this.state.user);
-                this.setState({logged : 1});
+                this.setState({notFound: 0});
             })
-            .catch(function (res) { console.log(res);  alert("Usuario o contraseña incorrectos"); });
+            .catch(res=> { console.log(res); alert("Usuario o contraseña incorrectos"); this.setState({notFound: 1}); });
+
+        let variable2 = await fetch(`http://virtual.lab.inf.uva.es:27014/api/usuario/${this.state.user}/categoria`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'x-access-token': window.sessionStorage.getItem('token')
+            }
+        })
+            .then(function (response) {
+                console.log(response);
+                return response.json()
+            })
+            .then(responseJson => this.setState({ categoria: responseJson.data[0].categoriaUsuario }))
+            .catch(function (data) { console.log(data) });
+
+        let variable3 = await fetch(`http://virtual.lab.inf.uva.es:27014/api/usuario/${this.state.user}/participaciones`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'x-access-token': window.sessionStorage.getItem('token')
+            }
+        })
+            .then(function (response) {
+                console.log(response);
+                return response.json()
+            })
+            .then(responseJson => this.setState({ datosUser: responseJson.data[0] }))
+            .catch(function (data) { console.log(data) });
+
+
+        if (this.state.categoria === 0) {
+            window.sessionStorage.setItem('tipoUser', 0);
+            this.setState({ tipoUser: 0 });
+        } else if (this.state.categoria === 1 && this.state.datosUser.rol === 1) {
+            window.sessionStorage.setItem('tipoUser', 1);
+            window.sessionStorage.setItem('proyecto', this.state.datosUser.nombreProyecto);
+            this.setState({ tipoUser: 1 });
+        } else {
+            window.sessionStorage.setItem('tipoUser', 2);
+            this.setState({ tipoUser: 2 });
+        }
+
+        if(this.state.notFound===0){
+            this.setState({loged: 1});
+        }
     }
 
-    handleChange = event =>{
+    handleChange = event => {
         this.setState({
             [event.target.name]: event.target.value
 
@@ -44,10 +95,18 @@ class Login extends Component {
 
     render() {
         let redirection;
-        if (this.state.logged === 0) {
+        let tipoUser = this.state.tipoUser;
+
+        if (this.state.loged === 0) {
             redirection = '';
         } else {
-            redirection = <Redirect to="/inicio"></Redirect>;
+            if (tipoUser == 0) {
+                redirection = <Redirect to="/admin/createUser"></Redirect>;
+            } else if (tipoUser == 1) {
+                redirection = <Redirect to={"/projectManager/project/" + window.sessionStorage.getItem('proyecto')}></Redirect>;
+            } else if (tipoUser == 2) {
+                redirection = <Redirect to="/developer/selectProject"></Redirect>;
+            }
         }
 
         return (
@@ -57,19 +116,18 @@ class Login extends Component {
                 </div>
                 <div className="login-box-body">
                     <p className="login-box-msg">Inicie sesión</p>
-                    {/* <form method="post"> */}
                     <form>
                         <div className="form-group has-feedback">
-                            <input type="text" className="form-control" placeholder="nick" name="user" value={this.state.user} onChange={this.handleChange}/>
+                            <input type="text" className="form-control" placeholder="nick" name="user" value={this.state.user} onChange={this.handleChange} />
                             <span className="glyphicon glyphicon-envelope form-control-feedback"></span>
                         </div>
                         <div className="form-group has-feedback">
-                            <input type="password" className="form-control" placeholder="Password" name="password" value={this.state.password} onChange={this.handleChange}/>
+                            <input type="password" className="form-control" placeholder="Password" name="password" value={this.state.password} onChange={this.handleChange} />
                             <span className="glyphicon glyphicon-lock form-control-feedback"></span>
                         </div>
                         <div className="col-xs-14">
-                        <Link to="/palntilla"><button type="submit" class="btn btn-primary btn-block btn-flat" onClick={this.handleFormSubmit}>Iniciar sesión</button></Link>
-                        {redirection}
+                            <button type="submit" class="btn btn-primary btn-block btn-flat" onClick={this.handleFormSubmit}>Iniciar sesión</button>
+                            {redirection}
                         </div>
                     </form>
                 </div>

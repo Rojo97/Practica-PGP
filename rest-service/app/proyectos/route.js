@@ -23,6 +23,107 @@ function init(app, dbPool, db) {
         db.execQuery(dbPool, query, args, onResults, res);
     })
 
+    app.get('/api/proyecto/:nombreProyecto/actividades/:fechaInicio/:fechaFin', VerifyToken, (req, res) => {
+        const nombreProyecto = req.params.nombreProyecto;
+        const fechaInicio = req.params.fechaInicio;
+        const fechaFin = req.params.fechaFin;
+
+        if (req.query.estado) {
+            var query = db.querys.actividades.getActividadIntervaloByEstado;
+            var args = [nombreProyecto, req.query.estado, fechaInicio, fechaFin];
+        }
+        else {
+            var query = db.querys.actividades.getActividadIntervalo;
+            var args = [nombreProyecto, fechaInicio, fechaFin];
+        }
+
+
+        function onResults(error, results, response) {
+            if (!error) {
+                if (results.length == 0) {
+                    response.sendStatus(404);
+                } else {
+                    console.log("Actividades enviadas");
+                    return res.status(200).json({
+                        data: results
+                    })
+                }
+            } else { res.status(500).send('Error on the server.'); }
+        }
+
+        db.execQuery(dbPool, query, args, onResults, res);
+    })
+
+    app.get('/api/proyecto/:nombreProyecto/actividades/criticas', VerifyToken, (req, res) => {
+        const nombreProyecto = req.params.nombreProyecto;
+
+        var query = db.querys.actividades.getActividadCritica;
+        var args = [nombreProyecto];
+
+
+
+        function onResults(error, results, response) {
+            if (!error) {
+                if (results.length == 0) {
+                    response.sendStatus(404);
+                } else {
+                    console.log("Actividades enviadas");
+                    return res.status(200).json({
+                        data: results
+                    })
+                }
+            } else { res.status(500).send('Error on the server.'); }
+        }
+
+        db.execQuery(dbPool, query, args, onResults, res);
+    })
+
+    app.get('/api/proyecto/:nombreProyecto/actividad/:nombreActividad/candidatos', VerifyToken, (req, res) => {
+        var query = db.querys.actividades.getCandidatosActividad;
+
+        const nombreProyecto = req.params.nombreProyecto;
+        const nombreActividad = req.params.nombreActividad;
+        var args = [nombreActividad, nombreProyecto, nombreActividad, nombreProyecto, nombreActividad, nombreProyecto, nombreProyecto];
+
+        function onResults(error, results, response) {
+            if (!error) {
+                if (results.length == 0) {
+                    response.sendStatus(404);
+                } else {
+                    console.log("Candidatos enviados");
+                    return res.status(200).json({
+                        data: results
+                    })
+                }
+            } else { res.status(500).send('Error on the server.'); }
+        }
+
+        db.execQuery(dbPool, query, args, onResults, res);
+    })
+
+    app.get('/api/proyecto/:nombreProyecto/informesSemanales', VerifyToken, (req, res) => {
+        var query = db.querys.informeSemanal.getInformeByEstado;
+
+        const nombreProyecto = req.params.nombreProyecto;
+        var args = [req.query.estado, nombreProyecto];
+
+        function onResults(error, results, response) {
+            if (!error) {
+                if (results.length == 0) {
+                    response.sendStatus(404);
+                } else {
+                    console.log("Informes semanales enviados");
+                    return res.status(200).json({
+                        data: results
+                    })
+                }
+            } else { res.status(500).send('Error on the server.'); }
+        }
+
+        db.execQuery(dbPool, query, args, onResults, res);
+    })
+
+
     app.get('/api/proyecto', VerifyToken, (req, res) => {
         if (req.query.estado) {
             var query = db.querys.proyectos.getProyectosByEstado;
@@ -69,7 +170,7 @@ function init(app, dbPool, db) {
     })
 
     app.post('/api/proyecto', VerifyToken, (req, res) => {
-        var args = [req.body.nombreProyecto, req.body.descripcion];
+        var args = [req.body.nombreProyecto, req.body.resumen];
         var args2 = [req.body.nombreProyecto, req.body.nickUsuario];
         const query = db.querys.proyectos.insert;
         const query2 = db.querys.participacion.insertParticipacionJefe;
@@ -171,51 +272,6 @@ function init(app, dbPool, db) {
                     response.sendStatus(404);
                 } else {
                     console.log("Actividades enviadas");
-                    return res.status(200).json({
-                        data: results
-                    })
-                }
-            } else { res.status(500).send('Error on the server.'); }
-        }
-
-        db.execQuery(dbPool, query, args, onResults, res);
-    })
-
-    app.get('/api/proyecto/:nombreProyecto/actividad/:nombreActividad/candidatos', VerifyToken, (req, res) => {
-        var query = db.querys.actividades.getCandidatosActividad;
-
-        const nombreProyecto = req.params.nombreProyecto;
-        const nombreActividad = req.params.nombreActividad;
-        var args = [nombreActividad, nombreProyecto];
-
-        function onResults(error, results, response) {
-            if (!error) {
-                if (results.length == 0) {
-                    response.sendStatus(404);
-                } else {
-                    console.log("Candidatos enviados");
-                    return res.status(200).json({
-                        data: results
-                    })
-                }
-            } else { res.status(500).send('Error on the server.'); }
-        }
-
-        db.execQuery(dbPool, query, args, onResults, res);
-    })
-
-    app.get('/api/proyecto/:nombreProyecto/informesSemanales', VerifyToken, (req, res) => {
-        var query = db.querys.informeSemanal.getInformeByEstado;
-
-        const nombreProyecto = req.params.nombreProyecto;
-        var args = [req.query.estado, nombreProyecto];
-
-        function onResults(error, results, response) {
-            if (!error) {
-                if (results.length == 0) {
-                    response.sendStatus(404);
-                } else {
-                    console.log("Informes semanales enviados");
                     return res.status(200).json({
                         data: results
                     })
