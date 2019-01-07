@@ -1,15 +1,24 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 
 export default class Header extends Component {
     constructor(props){
         super(props);
         this.state={
             tipoUser: ["Administrador", "Jefe de proyecto", "Desarrollador"],
+            logOut:0,
         }
     }
 
+    logOut = () => {
+        window.sessionStorage.clear();
+        this.setState({logOut: 1});
+    }
     render() {
+        let redirect = '';
+        if(this.state.logOut === 1){
+            redirect = <Redirect to="/"></Redirect>
+        }
         return (
             <header className="main-header">
                 {/* <!-- Logo --> */}
@@ -43,7 +52,8 @@ export default class Header extends Component {
                                     {/* <!-- Menu Footer--> */}
                                     <li className="user-footer">
                                         <div className="pull-right">
-                                            <Link to="/" className="btn btn-default btn-flat">Sign out</Link>
+                                            <button className="btn btn-default btn-flat" onClick={()=>{this.logOut()}} >Sign out</button>
+                                            {redirect}
                                         </div>
                                     </li>
                                 </ul>
