@@ -112,11 +112,11 @@ export default class CrearUsuario extends Component {
                                                 <label>Categoria</label>
                                                 <select className="form-control" name="categoria" value={this.state.categoria} onChange={this.handleInputChange}>
                                                     <option disabled value=''> -- Seleccione una categoría -- </option>
-                                                    <option value="0">0</option>
-                                                    <option value="1">1</option>
-                                                    <option value="2">2</option>
-                                                    <option value="3">3</option>
-                                                    <option value="4">4</option>
+                                                    <option value="0">0 - Administrador</option>
+                                                    <option value="1">1 - Jefe de proyecto</option>
+                                                    <option value="2">2 - Analista</option>
+                                                    <option value="3">3 - Diseñador, Analista-Programador, Responsable de equipo de pruebas</option>
+                                                    <option value="4">4 - Programador, Probador</option>
                                                 </select>
                                             </div>
                                         </div>
