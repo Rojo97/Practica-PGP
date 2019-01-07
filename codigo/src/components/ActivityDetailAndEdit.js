@@ -8,6 +8,7 @@ export default class ActivityDetailAndEdit extends Component {
             actividad: [],
             edit: 0,
             fechaFin: '',
+            fechaInicio:'',
             estado: '',
             duracionReal: '',
             estados: ["En curso", "Finalizada", "Cerrada", "Aprobada"],
@@ -92,12 +93,12 @@ export default class ActivityDetailAndEdit extends Component {
                 'x-access-token': window.sessionStorage.getItem('token')
             },
             body: JSON.stringify({
+                fechaInicio: this.state.fechaInicio,
                 nombreActividad: this.state.actividad.nombreActividad,
                 nombreProyecto: this.state.actividad.nombreProyecto,
                 descripcion: this.state.actividad.descripcion,
                 duracionEstimada: this.state.actividad.duracionEstimada,
                 duracionReal: this.state.duracionReal,
-                fechaInicio: this.state.actividad.fechaInicio,
                 fechaFin: this.state.fechaFin,
                 estado: this.state.estado,
                 rol: this.state.actividad.rol,
