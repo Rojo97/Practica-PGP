@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+//Implementacion de la vista para asignar actividades a participantes de un proyecto
 export default class AsignarActividades extends Component {
     constructor(props) {
         super(props);
@@ -61,6 +62,7 @@ export default class AsignarActividades extends Component {
         }
     }
 
+    //Se comprueban todos los campos del formulario para asignar la actividad
     validaFormulario() {
         //Se comprueba el nombre de la actividad
         var x1 = document.forms["formularioProyecto"]["idActividad"].value;
@@ -79,7 +81,7 @@ export default class AsignarActividades extends Component {
         return true;
     }
 
-    //Se extraen del backend los participantes del proyecto
+    //Se extraen del backend los participantes del proyecto candidatos a la actividad
     getParticipantes() {
         const nombre = this.props.match.params.proyecto;
         const actividad = this.state.idActividad;
@@ -116,7 +118,7 @@ export default class AsignarActividades extends Component {
             });
     }
 
-    //Se extraen del backend los jefes de proyecto que no tienen ningún proyecto activo asociado
+    //Se extraen las actividades del proyecto
     getActividades() {
         const nombre = this.props.match.params.proyecto
 
@@ -281,7 +283,7 @@ export default class AsignarActividades extends Component {
             });
     }
 
-    //Manda el proyecto con todos sus datos validados al backend
+    //Manda la actividad y el usuario a quien se asigna al backend con todos los datos validados
     assignActivitie(event) {
         event.preventDefault();
 
@@ -313,13 +315,9 @@ export default class AsignarActividades extends Component {
                         this.setState({ listaParticipantes: [] });
 
                         document.forms["formularioProyecto"]["idUsuario"].value = "";
-                        //this.getParticipantes();
                         this.getInformes();
                         break;
 
-                    //TODO Falta ver que codigo de error es
-                    // case 409:
-                    //     alert("Existe un proyecto con ese nombre");
                     default:
                         throw new Error("Bad response from server");
                 }

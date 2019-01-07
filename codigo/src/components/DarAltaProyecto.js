@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 
+//Implementacion de la vista para dar de alta un nuevo proyecto
 export default class DarAltaProyecto extends Component {
     constructor(props) {
         super(props);
         this.state = {
             nombre: '',
-            // fechaComienzo: '',
-            // presupuesto: '',
             idJefeProyecto: '',
             descripccion: '',
             listaJefes: [],
@@ -42,6 +41,7 @@ export default class DarAltaProyecto extends Component {
         )
     }
 
+    //Se comprueban los datos del formulario para poder crear el proyecto
     validaFormulario() {
         //Se comprueba el nombre
         var x = document.forms["formularioProyecto"]["nombre"].value;

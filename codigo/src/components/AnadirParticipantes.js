@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+//Implementación de la vista para añadir participantes a un proyecto
 export default class AnadirParticipantes extends Component {
     constructor(props) {
         super(props);
@@ -39,6 +40,7 @@ export default class AnadirParticipantes extends Component {
         )
     }
 
+    //Carga los roles correspondientes a la categoria del usuario
     cargaRoles = () => {
         this.setState({rolSeleccionado: ''});
         document.forms["formularioProyecto"]["rolSeleccionado"].value = "";
@@ -50,7 +52,6 @@ export default class AnadirParticipantes extends Component {
             if (lista[i].nickUsuario.localeCompare(x1) === 0) {
                 // this.setState({rol: lista[i].categoriaUsuario.toString()});
                 this.state.rol = lista[i].categoriaUsuario.toString();
-                console.log(this.state);
                 break;
             }
         }
@@ -73,6 +74,7 @@ export default class AnadirParticipantes extends Component {
 
     }
 
+    //Validacion de los campos del formulario para añadir la participacion
     validaFormulario() {
         //Se comprueba el nombre
         var x1 = document.forms["formularioProyecto"]["idUsuario"].value;
@@ -190,7 +192,7 @@ export default class AnadirParticipantes extends Component {
             });
     }
 
-    //Manda el proyecto con todos sus datos validados al backend
+    //Añade la participación con todos sus datos validados
     addParticipacion(event) {
         event.preventDefault();
 
@@ -211,7 +213,6 @@ export default class AnadirParticipantes extends Component {
                     porcentajeParticipacion: this.state.participacion,
                 })
             }).then((response) => {
-                //console.log("Codigo de estado: " + response.status);
                 switch (response.status) {
                     case 201:
                         alert("Participacion creada");
@@ -228,9 +229,6 @@ export default class AnadirParticipantes extends Component {
                         this.getCandidatos();
                         break;
 
-                    //TODO Falta ver que codigo de error es
-                    // case 409:
-                    //     alert("Existe un proyecto con ese nombre");
                     default:
                         throw new Error("Bad response from server");
                 }
@@ -240,6 +238,7 @@ export default class AnadirParticipantes extends Component {
 
     }
 
+    //Se renderiza la vista
     render() {
         return (
             <div className="content-wrapper">
