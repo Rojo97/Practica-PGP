@@ -15,6 +15,8 @@ const db = {
             getJefesSinProyecto: 'select U.nickUsuario FROM Usuario U WHERE U.categoriaUsuario = 1 AND U.nickUsuario NOT IN (SELECT P.nickUsuario FROM Participacion P WHERE P.estado = 0 OR P.estado = 1)',
             getProyectosActualesUsuario:'SELECT * FROM Participacion P, Proyecto Pr WHERE Pr.nombreProyecto = P.nombreProyecto AND P.estado = 0 AND P.nickUsuario = ?',
             getProyectosUsuario :'SELECT * FROM Participacion P, Proyecto Pr WHERE Pr.nombreProyecto = P.nombreProyecto AND P.nickUsuario = ?',
+            getParticipaciones : 'SELECT U.categoriaUsuario,P.nombreProyecto, P.rol FROM Usuario U NATURAL JOIN Participacion P WHERE U.nickUsuario = ? AND P.estado = 0',
+            getCategoria : 'SELECT U.categoriaUsuario FROM Usuario U WHERE U.nickUsuario = ?',
             insert: 'INSERT INTO Usuario(nickUsuario,contrasenia,dni,nombre,apellido1,apellido2,fechaNacimiento,categoriaUsuario) VALUES (?,?,?,?,?,?,?,?)'
         },
         proyectos: {
@@ -38,16 +40,19 @@ const db = {
         actividades : {
             getActividadesUsuario : 'SELECT A.nombreActividad, A.nombreProyecto, A.descripcion, A.duracionEstimada, A.duracionReal, A.fechaInicio, A.fechaFin, A.estado, A.rol FROM Actividad A, InformeSemanal I WHERE A.nombreActividad = I.nombreActividad AND A.nombreProyecto = I.nombreProyecto AND A.nombreProyecto = ? AND I.nickUsuario = ?',
             getActividadesById : 'SELECT * FROM Actividad A WHERE A.nombreActividad = ? AND A.nombreProyecto = ?',
-            getCandidatosActividad : 'SELECT DISTINCT U.* FROM Usuario U, Participacion P, Proyecto Pr,(SELECT U2.*, COUNT(*) as numActividades FROM Usuario U2, InformeSemanal Inf2, Actividad A2 WHERE U2.nickUsuario = Inf2.nickUsuario AND A2.nombreActividad = Inf2.nombreActividad AND A2.fechaInicio = (SELECT A3.fechaInicio FROM Actividad A3 WHERE A3.nombreActividad = A2.nombreActividad) GROUP BY U2.nickUsuario) Num WHERE U.nickUsuario = P.nickUsuario AND Pr.nombreProyecto = P.nombreProyecto AND U.nickUsuario NOT IN (SELECT Inf.nickUsuario FROM InformeSemanal Inf NATURAL JOIN Actividad A WHERE A.rol = P.rol AND A.nombreActividad = ?) AND Num.numActividades < 4 AND Pr.nombreProyecto = ?',
+            getCandidatosActividad : 'SELECT U.* FROM Usuario U, Participacion P,(SELECT U2.*, COUNT(*) as numActividades FROM Usuario U2, InformeSemanal Inf2, Actividad A2 WHERE U2.nickUsuario = Inf2.nickUsuario AND A2.nombreActividad = Inf2.nombreActividad AND A2.nombreProyecto = Inf2.nombreProyecto AND A2.nombreActividad = ? AND A2.nombreProyecto = ? AND A2.fechaInicio = (SELECT A3.fechaInicio FROM Actividad A3 WHERE A3.nombreActividad = A2.nombreActividad) GROUP BY U2.nickUsuario) temp, Proyecto Pr WHERE U.nickUsuario = P.nickUsuario AND Pr.nombreProyecto = P.nombreProyecto AND U.nickUsuario NOT IN (SELECT Inf.nickUsuario FROM InformeSemanal Inf,Actividad A WHERE A.nombreActividad = Inf.nombreActividad AND A.nombreProyecto = Inf.nombreProyecto AND A.nombreActividad = ? AND A.nombreProyecto = ?)AND P.rol = (SELECT A2.rol FROM Actividad A2 WHERE A2.nombreActividad = ? AND A2.nombreProyecto = ?) AND temp.numActividades < 4 AND Pr.nombreProyecto = ?',
+            getActividadIntervalo : 'SELECT Inf.nickUsuario, A.nombreActividad FROM InformeSemanal Inf, Actividad A WHERE A.nombreActividad = Inf.nombreActividad AND A.nombreProyecto = Inf.nombreProyecto AND A.nombreProyecto = ? AND A.fechaInicio >= ? AND A.fechaInicio <= ?',
+            getActividadIntervaloByEstado : 'SELECT Inf.nickUsuario, A.* FROM InformeSemanal Inf, Actividad A WHERE A.nombreActividad = Inf.nombreActividad AND A.nombreProyecto = Inf.nombreProyecto AND A.nombreProyecto = ? AND A.estado = ? AND A.fechaInicio >= ? AND A.fechaInicio <= ?',
+            getActividadCritica : 'SELECT A.*, Horas.horasTotales FROM Actividad A, (SELECT Inf.nombreActividad, SUM(Inf.horas) AS horasTotales FROM InformeSemanal Inf,Actividad A WHERE A.nombreActividad = Inf.nombreActividad AND A.nombreProyecto = Inf.nombreProyecto) Horas WHERE A.nombreProyecto = ? AND A.duracionEstimada < Horas.horasTotales',
             updateActividad : 'UPDATE Actividad SET fechaFin = ?, estado = ?, duracionReal = ? WHERE nombreActividad = ? AND nombreProyecto=?',
             insert : 'INSERT INTO Actividad (nombreActividad,nombreProyecto,descripcion,duracionEstimada,estado, rol) VALUES (?,?,?,?,0,?)',
             insertPredecesora : 'INSERT INTO Predecesora (precedida,predecesora,nombreProyecto) VALUES (?,?,?)'
         },
         informeSemanal :{
             insert: 'INSERT INTO InformeSemanal (nombreActividad,nombreProyecto,nickUsuario,informeTareasPersonales,estado,horas) VALUES (?,?,?,?,3,?)',
-            getInformeByEstado : 'SELECT * FROM InformeSemanal Inf WHERE Inf.estado = ? AND Inf.nombreProyecto = ?',
+            getInformeByEstado : 'SELECT Inf.*, A.fechaInicio FROM InformeSemanal Inf, Actividad A WHERE A.nombreActividad =Inf.nombreActividad AND A.nombreProyecto = Inf.nombreProyecto AND Inf.estado = ? AND Inf.nombreProyecto = ?',
             getInformeDesarrollador :'SELECT * FROM InformeSemanal WHERE nombreProyecto = ? AND nombreActividad = ? AND nickUsuario = ?',
-            getInformeIntervalo : 'SELECT Inf.* FROM Usuario U, InformeSemanal Inf, Actividad A WHERE U.nickUsuario = Inf.nickUsuario AND A.nombreActividad = Inf.nombreActividad AND U.nickUsuario = ? AND A.fechaInicio >= ? AND A.fechaInicio < ?',
+            getInformeIntervalo : 'SELECT Inf.* FROM Usuario U, InformeSemanal Inf, Actividad A WHERE U.nickUsuario = Inf.nickUsuario AND A.nombreActividad = Inf.nombreActividad AND U.nickUsuario = ? AND A.fechaInicio >= ? AND A.fechaInicio <= ?',
             updateEstado : 'UPDATE InformeSemanal SET estado = ?, informeTareasPersonales = ?, horas = ? WHERE numeroInforme = ?'
         }
     },

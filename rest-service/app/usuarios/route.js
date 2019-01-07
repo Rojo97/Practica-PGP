@@ -46,6 +46,48 @@ function init(app, dbPool, db) {
         db.execQuery(dbPool, query, args, onResults, res);
     })
 
+    app.get('/api/usuario/:nickUsuario/participaciones', VerifyToken, (req, res) => {
+        const nickUsuario = req.params.nickUsuario;
+        var query = db.querys.usuarios.getParticipaciones;
+        var args = [nickUsuario];
+
+        function onResults(error, results, response) {
+            if (!error) {
+                if (results.length == 0) {
+                    response.sendStatus(404);
+                } else {
+                    console.log("Usuario enviado");
+                    return res.status(200).json({
+                        data: results
+                    })
+                }
+            } else { res.status(500).send('Error on the server.'); }
+        }
+
+        db.execQuery(dbPool, query, args, onResults, res);
+    })
+
+    app.get('/api/usuario/:nickUsuario/categoria', VerifyToken, (req, res) => {
+        const nickUsuario = req.params.nickUsuario;
+        var query = db.querys.usuarios.getCategoria;
+        var args = [nickUsuario];
+
+        function onResults(error, results, response) {
+            if (!error) {
+                if (results.length == 0) {
+                    response.sendStatus(404);
+                } else {
+                    console.log("Usuario enviado");
+                    return res.status(200).json({
+                        data: results
+                    })
+                }
+            } else { res.status(500).send('Error on the server.'); }
+        }
+
+        db.execQuery(dbPool, query, args, onResults, res);
+    })
+
     app.get('/api/usuario/:nickUsuario/proyectos', VerifyToken, (req, res) => {
         const nickUsuario = req.params.nickUsuario;
         if (req.query.actual == 1) {
