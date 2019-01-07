@@ -72,12 +72,13 @@ function init(app, dbPool, db) {
     app.put('/api/actividad', VerifyToken, (req, res) => {
         var query = db.querys.actividades.updateActividad;
 
+        const fechaInicio  = req.body.fechaInicio;
         const fechaFin = req.body.fechaFin;
         const estado = req.body.estado;
         const nombreActividad = req.body.nombreActividad;
         const nombreProyecto = req.body.nombreProyecto;
         const duracionReal = req.body.duracionReal;
-        var args = [fechaFin, estado, duracionReal, nombreActividad, nombreProyecto];
+        var args = [fechaInicio,fechaFin, estado, duracionReal, nombreActividad, nombreProyecto];
 
         function onResults(error, results, response) {
             if (!error) {
