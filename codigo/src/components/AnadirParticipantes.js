@@ -12,6 +12,7 @@ export default class AnadirParticipantes extends Component {
             listaParticipantes: [],
             listaCandidatos: [],
             listaRoles: [],
+            nombresRoles: ["Jefe de proyecto", "Analista", "Diseñador", "Analista-programador", "Responsable equipo de pruebas", "Programador", "Probador"],
         }
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -270,7 +271,7 @@ export default class AnadirParticipantes extends Component {
                                             <select class="form-control" name="rolSeleccionado" value={this.state.rolSeleccionado} onChange={this.handleInputChange} >
                                                 <option disabled selected value=""> -- Sin determinar -- </option>
                                                 {this.state.listaRoles.map(rol => (
-                                                    <option value={rol}>{rol}</option>
+                                                    <option value={rol}>{this.state.nombresRoles[rol-1]}</option>
                                                 ))}
                                             </select>
                                         </div>
@@ -294,7 +295,7 @@ export default class AnadirParticipantes extends Component {
                                                     <h3>{participante.nickUsuario}</h3>
                                                     <p>Nombre: {participante.nombre} {participante.apellido1} {participante.apellido2}</p>
                                                     <p>Porcentaje participacion: {participante.porcentajeParticipacion}</p>
-                                                    <p>Rol participación: {participante.rol}</p>
+                                                    <p>Rol participación: {this.state.nombresRoles[participante.rol-1]}</p>
                                                 </div>
                                                 <div className="icon">
                                                     <i className="fa fa-gear"></i>

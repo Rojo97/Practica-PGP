@@ -10,6 +10,7 @@ export default class AsignarActividades extends Component {
             rol: '',
             listaParticipantes: [],
             listaActividades: [],
+            nombresEstados: ["Aceptado", "Rechazado", "Pendiente de aceptacion", "Pendiente de envio"],
 
             //Es una manera de evitar implementar la consulta para todos los informes del proyecto
             listaInformes0: [],
@@ -378,7 +379,7 @@ export default class AsignarActividades extends Component {
                                                     <h3>{informe.numeroInforme}</h3>
                                                     <p>Actividad: {informe.nombreActividad}</p>
                                                     <p>Usuario: {informe.nickUsuario}</p>
-                                                    <p>Estado: {informe.estado}</p>
+                                                    <p>Estado: {this.state.nombresEstados[informe.estado-1]}</p>
                                                     <p>Horas: {informe.horas}</p>
                                                     <p>Informe: {informe.informeTareasPersonales}</p>
                                                 </div>
@@ -394,7 +395,7 @@ export default class AsignarActividades extends Component {
                                                     <h3>{informe.numeroInforme}</h3>
                                                     <p>Actividad: {informe.nombreActividad}</p>
                                                     <p>Usuario: {informe.nickUsuario}</p>
-                                                    <p>Estado: {informe.estado}</p>
+                                                    <p>Estado: {this.state.nombresEstados[informe.estado-1]}</p>
                                                     <p>Horas: {informe.horas}</p>
                                                     <p>Informe: {informe.informeTareasPersonales}</p>
                                                 </div>
@@ -410,7 +411,7 @@ export default class AsignarActividades extends Component {
                                                     <h3>{informe.numeroInforme}</h3>
                                                     <p>Actividad: {informe.nombreActividad}</p>
                                                     <p>Usuario: {informe.nickUsuario}</p>
-                                                    <p>Estado: {informe.estado}</p>
+                                                    <p>Estado: {this.state.nombresEstados[informe.estado-1]}</p>
                                                     <p>Horas: {informe.horas}</p>
                                                     <p>Informe: {informe.informeTareasPersonales}</p>
                                                 </div>
@@ -426,7 +427,7 @@ export default class AsignarActividades extends Component {
                                                     <h3>{informe.numeroInforme}</h3>
                                                     <p>Actividad: {informe.nombreActividad}</p>
                                                     <p>Usuario: {informe.nickUsuario}</p>
-                                                    <p>Estado: {informe.estado}</p>
+                                                    <p>Estado: {this.state.nombresEstados[informe.estado-1]}</p>
                                                     <p>Horas: {informe.horas}</p>
                                                     <p>Informe: {informe.informeTareasPersonales}</p>
                                                 </div>
