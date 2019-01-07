@@ -16,8 +16,8 @@ export default class ProjectDetailsManager extends Component {
             tipoInformeTmp: "", //Informe marcado en el select
             subEstado: "", //Esta a 1 cuando se va a mostar un inorme (Se muestra segunda parte)
             estadoProyecto: "", //Estado proyecto
-            estadoInformes: "", //1 activo, 0
             datosInforme: [], //Variable donde guardamos el fetch de los datos del proyecto
+            informeSeleccionado: 1,
             estados: ["En curso", "Finalizado", "Cerrado", "Aprobado"],
             roles: ["Administrador", "Jefe de proyecto", "Analista", "Diseñador, Analista-Programador o Responsable del equipo de pruebas", "Programador o probador"],
         }
@@ -112,24 +112,20 @@ export default class ProjectDetailsManager extends Component {
     seleccionarInforme = () => {
         this.setState({ subEstado: 1 });
         this.setState({ tipoInforme: this.state.tipoInformeTmp });
+        this.setState({ datosInforme: [] });
         //Aqui en caso de que el informe necesita el fetch se llama a la funcion del fetch
 
         var informe = this.state.tipoInformeTmp;
-        //console.log("Informe: "+informe);
-        if (informe !== "trabajadoresActividades" && informe !== "actividadesActivasOFinalizadas") {
-            this.cargaDatos(0);
+        console.log(informe !== "trabajadoresActividades" && informe !== "actividadesActivas" && informe !== "actividadesFinalizadas");
+        if (informe !== "trabajadoresActividades" && informe !== "actividadesActivas" && informe !== "actividadesFinalizadas") {
+            this.cargaDatos();
         }
     }
 
-    cargaDatos = (value) => {
+    cargaDatos = () => {
         var tipoInforme;
-        if (value === 0) {
-            tipoInforme = this.state.tipoInformeTmp;
-        } else {
-            tipoInforme = this.state.tipoInforme;
-        }
+        tipoInforme = this.state.tipoInformeTmp;
 
-        console.log("Informe: " + tipoInforme);
         switch (tipoInforme) {
             case "trabajadoresActividades":
                 this.informeTrabajadores();
@@ -140,9 +136,14 @@ export default class ProjectDetailsManager extends Component {
             case "informesPendientesAprobacion":
                 this.informesActividadesPendientesDeAprobacion();
                 break;
-            case "actividadesActivasOFinalizadas":
+            case "actividadesActivas":
+                this.informesActividadesActivasOFinalizadas(0);
                 break;
-            case "actividadesDemasiadoConsumoTiempo":
+            case "actividadesFinalizadas":
+                this.informesActividadesActivasOFinalizadas(2);
+                break;
+            case "actividadesCriticas":
+                this.actividadesCriticas();
                 break;
             case "actividadesARealizar":
                 break;
@@ -151,6 +152,80 @@ export default class ProjectDetailsManager extends Component {
         }
 
         console.log(this.state);
+
+    }
+
+    actividadesCriticas = () => {
+        const proyecto = this.props.match.params.proyecto;
+
+        fetch(`http://virtual.lab.inf.uva.es:27014/api/proyecto/${proyecto}/actividades/criticas`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'x-access-token': window.sessionStorage.getItem('token')
+            }
+        }).then(function (response) {
+            switch (response.status) {
+                case 200:
+                    console.log(response);
+                    break;
+                case 404:
+                    alert("No hay actividades criticas");
+                    this.setState({datosInforme: []});
+                    break;
+                default:
+                    throw new Error("Bad response from server");
+            }
+            return response.json()
+        })
+            .then((responseJson) => {
+                this.setState({ datosInforme: responseJson.data });
+                console.log(responseJson.data);
+            })
+            .catch(function (data) { console.log(data) });
+    }
+
+    informesActividadesActivasOFinalizadas = (x) => {
+        const proyecto = this.props.match.params.proyecto;
+
+        console.log(x);
+
+        if (this.state.fechaFinIntervalo == '') {
+            this.state.fechaFinIntervalo = this.state.fechaInicioIntervalo;
+        }
+
+        fetch(`http://virtual.lab.inf.uva.es:27014/api/proyecto/${proyecto}/actividades/${this.state.fechaInicioIntervalo}/${this.state.fechaFinIntervalo}?estado=${x}}`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'x-access-token': window.sessionStorage.getItem('token')
+            }
+        }).then(function (response) {
+
+            switch (response.status) {
+                case 200:
+                    console.log(response);
+                    break;
+                case 404:
+                    if(x==0){
+                        alert("No hay actividade activas en dicho intervalo");
+                    }else if(x==2){
+                        alert("No hay actividades finalizadas en dicho intervalo");
+                    }
+                    this.setState({datosInforme: []});
+                    break;
+                default:
+                    throw new Error("Bad response from server");
+            }
+            return response.json()
+        })
+            .then((responseJson) => {
+                this.setState({ datosInforme: responseJson.data });
+                console.log(responseJson.data);
+            })
+            .catch(function (data) { console.log(data) });
     }
 
     informesActividadesPendientesDeAprobacion = () => {
@@ -171,6 +246,7 @@ export default class ProjectDetailsManager extends Component {
                     break;
                 case 404:
                     alert("No hay actividades pendientes de aprobación");
+                    this.setState({datosInforme: []});
                     break;
                 default:
                     throw new Error("Bad response from server");
@@ -201,6 +277,7 @@ export default class ProjectDetailsManager extends Component {
                     break;
                 case 404:
                     alert("No hay actividades pendientes de envío");
+                    this.setState({datosInforme: []});
                     break;
                 default:
                     throw new Error("Bad response from server");
@@ -298,6 +375,7 @@ export default class ProjectDetailsManager extends Component {
                     <button className="btn btn-info pull-right" onClick={this.activeEdit}>Editar</button>
                 </div>;
             edicion = "";
+            intervalo = "";
             informes =
                 <div className="box ">
                     <div className="box-header with-border">
@@ -311,11 +389,11 @@ export default class ProjectDetailsManager extends Component {
                                 <option value="trabajadoresActividades">Trabajadores de las actividades</option>
                                 <option value="informesPendientesEnvio">Informes pendientes de envío</option>
                                 <option value="informesPendientesAprobacion">Informes pendientes de aprobación</option>
-                                <option value="actividadesActivasOFinalizadas">Actividades activas o finalizadas</option>
-                                <option value="actividadesDemasiadoConsumoTiempo">Actividades con demasiado consumo de tiempo</option>
-                                <option value="actividadesARealizar">Actividades a realizar</option>
-                                <option value="actividadesPeriodoTiempoPosterior">Personas con actividades asignadas</option>
-                                <option value="WIP">WIP</option> {/*TODO AÑADIR TIPOS DE INFORME */}
+                                <option value="actividadesActivas">Actividades activas</option>
+                                <option value="actividadesFinalizadas">Actividades finalizadas</option>
+                                <option value="actividadesCriticas">Actividades con demasiado consumo de tiempo</option>
+                                {/* <option value="actividadesARealizar">Actividades a realizar</option>
+                                <option value="actividadesPeriodoTiempoPosterior">Personas con actividades asignadas</option> */}
                             </select>
                         </div>
                     </div>
@@ -327,7 +405,7 @@ export default class ProjectDetailsManager extends Component {
 
         if (this.state.subEstado == 1) {
             var informe = this.state.tipoInforme;
-            if (informe == "trabajadoresActividades" || informe == "actividadesActivasOFinalizadas") {
+            if (informe == "trabajadoresActividades" || informe == "actividadesActivas" || informe == "actividadesFinalizadas") {
                 intervalo = <div className="box ">
                     <div className="box-header with-border">
                         <h3 className="box-title">Periodo</h3>
@@ -357,63 +435,85 @@ export default class ProjectDetailsManager extends Component {
                         </div>
                     </div>
                     <div className="box-footer">
-                        <button type="submit" className="btn btn-info pull-right" onClick={this.cargaDatos(1)}>Buscar</button>
+                        <button type="submit" className="btn btn-info pull-right" name="botonBuscar" onClick={this.cargaDatos}>Buscar</button>
                     </div>
                 </div>;
                 if (this.state.tipoInforme == "trabajadoresActividades") {
                     datos =
+
                         <div className="box">
                             <div className="box-body">
                                 {this.state.datosInforme.map(datos => (
-                                    <h3>Actividad: {datos.nombreActividad}, Participante: {datos.nickUsuario}</h3>
+                                    <div className="small-box bg-green">
+                                        <div className="inner">
+                                            <h3>Actividad: {datos.nombreActividad}, Participante: {datos.nickUsuario}</h3>
+                                        </div>
+                                    </div>
                                 ))}
                             </div>
-                        </div>
+                        </div>;
+                } else if (informe == "actividadesActivas" || informe == "actividadesFinalizadas") {
+                    datos =
+
+                        <div className="box">
+                            <div className="box-body">
+                                {this.state.datosInforme.map(datos => (
+                                    <div className="small-box bg-green">
+                                        <div className="inner">
+                                            <h3>Actividad: {datos.nombreActividad}, Participante: {datos.nickUsuario}</h3>
+                                            <h3>Horas estimadas: {datos.duracionEstimada}, Horas usadas: {datos.duracionReal}</h3>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>;
                 }
-            } else if (informe == "actividadesActivasOFinalizadas") {
-                datos =
-                <div>
-                    <div className="box-header with-border">
-                        <h3 className="box-title">Estado</h3>
-                    </div>
-                    <div className="box-body">
-                        <div className="form-group">
-                            <select className="form-control" name="tipoInformeTmp" value={this.state.tipoInformeTmp} onChange={this.handleInputChange} >
-                                <option disabled value=''> -- Seleccione estado -- </option>
-                                <option value="activos">Activos</option>
-                                <option value="finalizados">Finalizados</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div className="box-footer">
-                        <button type="submit" className="btn btn-info pull-right" onClick={this.cargaDatos(1)}>Buscar</button>
-                    </div>
-                </div>
             } else if (informe == "informesPendientesEnvio") {
+                intervalo = "";
                 datos =
                     <div className="box">
                         <div className="box-body">
                             {this.state.datosInforme.map(datos => (
-                                <div>
-                                    <h3>Trabajador: {datos.nickUsuario}, Actividad: {datos.nombreActividad}</h3>
-                                    <h3>Fecha: {datos.fechaInicio.substring(0, 10)}</h3>
+                                <div className="small-box bg-green">
+                                    <div>
+                                        <h3>Trabajador: {datos.nickUsuario}, Actividad: {datos.nombreActividad}</h3>
+                                        <h3>Fecha: {datos.fechaInicio.substring(0, 10)}</h3>
+                                    </div>
                                 </div>
                             ))}
                         </div>
-                    </div>
+                    </div>;
             } else if (informe == "informesPendientesAprobacion") {
+                intervalo = "";
                 datos =
                     <div className="box">
                         <div className="box-body">
-                        <Link to={"/projectManager/project/"+this.props.match.params.proyecto+"/informes"} className="small-box-footer"><button className="btn btn-info">Ver detalles informes</button></Link>
+                            <Link to={"/projectManager/project/" + this.props.match.params.proyecto + "/informes"} className="small-box-footer"><button className="btn btn-info">Ver detalles informes</button></Link>
                             {this.state.datosInforme.map(datos => (
-                                <div>
-                                    <h3>Trabajador: {datos.nickUsuario}, Actividad: {datos.nombreActividad}</h3>
-                                    <h3>Fecha: {datos.fechaInicio.substring(0, 10)}</h3>
+                                <div className="small-box bg-green">
+                                    <div>
+                                        <h3>Trabajador: {datos.nickUsuario}, Actividad: {datos.nombreActividad}</h3>
+                                        <h3>Fecha: {datos.fechaInicio.substring(0, 10)}</h3>
+                                    </div>
                                 </div>
                             ))}
                         </div>
-                    </div>
+                    </div>;
+            } else if (informe == "actividadesCriticas") {
+                datos =
+
+                    <div className="box">
+                        <div className="box-body">
+                            {this.state.datosInforme.map(datos => (
+                                <div className="small-box bg-green">
+                                    <div className="inner">
+                                        <h3>Actividad: {datos.nombreActividad}</h3>
+                                        <h3>Horas estimadas: {datos.duracionEstimada}, Horas usadas: {datos.duracionReal}</h3>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>;
             }
         }
 
