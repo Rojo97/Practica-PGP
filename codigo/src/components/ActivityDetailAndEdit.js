@@ -37,6 +37,7 @@ export default class ActivityDetailAndEdit extends Component {
             .then(responseJson => this.setState({ actividad: responseJson.data[0] }))
             .then(() => {
                 this.setState({ fechaFin: Moment(this.state.actividad.fechaFin).format('YYYY-MM-DD') });
+                this.setState({ fechaInicio: Moment(this.state.actividad.fechaInicio).format('YYYY-MM-DD') });
                 this.setState({ estado: this.state.actividad.estado });
                 this.setState({ duracionReal: this.state.actividad.duracionReal });
             })
@@ -121,6 +122,15 @@ export default class ActivityDetailAndEdit extends Component {
                             <h3 className="box-title">Editar actividad</h3>
                         </div>
                         <div className="box-body">
+                            <div className="form-group">
+                                <label>Fecha de inicio:</label>
+                                <div className="input-group date">
+                                    <div className="input-group-addon">
+                                        <i className="fa fa-calendar"></i>
+                                    </div>
+                                    <input type="date" className="form-control pull-right" name="fechaInicio" value={this.state.fechaInicio} onChange={this.handleInputChange} />
+                                </div>
+                            </div>
                             <div className="form-group">
                                 <label>Fecha de finalización:</label>
                                 <div className="input-group date">
